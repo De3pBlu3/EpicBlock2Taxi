@@ -12,34 +12,17 @@ package network;
  */
 
 public class Network {
-    private node[] nodes;
-    private edge[] edges;
-    private node centralNode;
+    private Node[] nodes;
+    private Edge[] edges;
 
-    public class edge {
-        int weight; // length of edge / speed of edge = time to traverse edge (in ticks)
-        node start;
-        node end;
-        entities.Entity[] occupants;
+    public Network() {
+        this.nodes = new Node[0]; // This could start with a size of much more than 1, but just for testing purposes this is ok
+        this.edges = new Edge[0];
     }
 
-    public class node {
-        String id;
-        int x;
-        int y;
-        edge[] edges;
-        entities.Entity[] occupants;
-    }
-
-    Network(node initNode) {
-        this.centralNode = initNode; // TODO: make this be the central node (the betweenness centrality node)
-        this.nodes = new node[1]; // This could start with a size of much more than 1, but just for testing purposes this is ok
-    }
-
-
-    private void addNodeToNodesArray(node UserNode) {
+    private void addNodeToNodesArray(Node UserNode) {
 //         add node to network
-        node[] temp_nodes = new node[this.nodes.length + 1]; // TODO create new array with more space, maybe create dynamic array
+        Node[] temp_nodes = new Node[this.nodes.length + 1]; // TODO create new array with more space, maybe create dynamic array
 //         https://www.geeksforgeeks.org/creating-a-dynamic-array-in-java/ SOMETHING LIKE THIS
 
         System.arraycopy(this.nodes, 0, temp_nodes, 0, this.nodes.length);
@@ -53,9 +36,9 @@ public class Network {
         this.nodes = temp_nodes;
 
     }
-    private void addEdgeToEdgesArray(edge UserEdge) {
+    private void addEdgeToEdgesArray(Edge UserEdge) {
         // add edge to network
-        edge[] temp_edges = new edge[this.edges.length + 1]; // TODO create new array with more space, maybe create dynamic array
+        Edge[] temp_edges = new Edge[this.edges.length + 1]; // TODO create new array with more space, maybe create dynamic array
 
         System.arraycopy(this.edges, 0, temp_edges, 0, this.edges.length);
 
@@ -67,10 +50,10 @@ public class Network {
 
 
 //    SEARCHING FOR NODES AND EDGES IN NETWORK ---- TODO: implement searching algorithms
-    private boolean checkNodeExists(node UserNode) {
+    private boolean checkNodeExists(Node UserNode) {
         // check if node exists in network
-        for (node n : this.nodes) {
-            if (n.id.equals(UserNode.id)) {
+        for (Node n : this.nodes) {
+            if (UserNode == n) { // == and not .equals because we are looking for the same object, not the same value
                 return true;
             }
         }
@@ -78,16 +61,16 @@ public class Network {
     }
     private boolean checkNodeExists(String nodeID) {
         // check if node exists in network
-        for (node n : this.nodes) {
+        for (Node n : this.nodes) {
             if (n.id.equals(nodeID)) {
                 return true;
             }
         }
         return false;
     }
-    private boolean checkEdgeExists(edge UserEdge) {
+    private boolean checkEdgeExists(Edge UserEdge) {
         // check if edge exists in network
-        for (edge e : this.edges) {
+        for (Edge e : this.edges) {
             if (e.start.id.equals(UserEdge.start.id) && e.end.id.equals(UserEdge.end.id)) {
                 return true;
             }
@@ -96,7 +79,7 @@ public class Network {
     }
     private boolean checkEdgeExists(String nodeID1, String nodeID2) {
         // check if edge exists in network
-        for (edge e : this.edges) {
+        for (Edge e : this.edges) {
             if (e.start.id.equals(nodeID1) && e.end.id.equals(nodeID2)) {
                 return true;
             }
@@ -106,12 +89,12 @@ public class Network {
 // ----------------------------------------------------
 
 
-    private void removeNode(node UserNode) {
+    private void removeNode(Node UserNode) {
         // remove node from network
     }
 
     // TODO: give the ability to add edges by two node id's. this will be public addEdge(String node1, String node2) or something idk.
-    public void addEdge(node node1, node node2) {
+    public void addEdge(Node node1, Node node2) {
         // add edge to network
         if (!checkNodeExists(node1)) {
             addNodeToNodesArray(node1);
@@ -119,7 +102,7 @@ public class Network {
         if (!checkNodeExists(node2)) {
             addNodeToNodesArray(node2);
         }
-        edge UserEdge = new edge();
+        Edge UserEdge = new Edge();
         UserEdge.start = node1;
         UserEdge.end = node2;
         UserEdge.weight = 1; // TODO: make this be the distance between the two nodes (in ticks)
@@ -127,17 +110,15 @@ public class Network {
 
     }
 
-    public node[] getNodes() {
+
+    public Node[] getNodes() {
         return nodes;
     }
 
-    public edge[] getEdges() {
+    public Edge[] getEdges() {
         return edges;
     }
 
-    public node getCentralNode() {
-        return centralNode;
-    }
 
 
 }
