@@ -47,7 +47,15 @@ public class Network {
 
     }
 
-
+    private Node getNode(String nodeID) {
+        // get node from network
+        for (Node n : this.nodes) {
+            if (n.id.equals(nodeID)) {
+                return n;
+            }
+        }
+        return null;
+    }
 
 //    SEARCHING FOR NODES AND EDGES IN NETWORK ---- TODO: implement searching algorithms
     private boolean checkNodeExists(Node UserNode) {
@@ -110,6 +118,57 @@ public class Network {
 
     }
 
+    public void addEdge(String nodeID1, String nodeID2) {
+        // add edge to network
+        if (!checkNodeExists(nodeID1)) {
+            Node node1 = new Node(nodeID1, 0, 0);
+            addNodeToNodesArray(node1);
+        }
+        if (!checkNodeExists(nodeID2)) {
+            Node node2 = new Node(nodeID2, 0, 0);
+            addNodeToNodesArray(node2);
+        }
+        Edge UserEdge = new Edge();
+        UserEdge.start = getNode(nodeID1);
+        UserEdge.end = getNode(nodeID2);
+        UserEdge.weight = 1; // TODO: make this be the distance between the two nodes (in ticks)
+        addEdgeToEdgesArray(UserEdge);
+
+    }
+
+    public void addEdge(Node node1, Node node2, int weight) {
+        // add edge to network
+        if (!checkNodeExists(node1)) {
+            addNodeToNodesArray(node1);
+        }
+        if (!checkNodeExists(node2)) {
+            addNodeToNodesArray(node2);
+        }
+        Edge UserEdge = new Edge();
+        UserEdge.start = node1;
+        UserEdge.end = node2;
+        UserEdge.weight = weight; // TODO: make this be the distance between the two nodes (in ticks)
+        addEdgeToEdgesArray(UserEdge);
+
+    }
+
+    public void addEdge(String nodeID1, String nodeID2, int weight) {
+        // add edge to network
+        if (!checkNodeExists(nodeID1)) {
+            Node node1 = new Node(nodeID1, 0, 0);
+            addNodeToNodesArray(node1);
+        }
+        if (!checkNodeExists(nodeID2)) {
+            Node node2 = new Node(nodeID2, 0, 0);
+            addNodeToNodesArray(node2);
+        }
+        Edge UserEdge = new Edge();
+        UserEdge.start = getNode(nodeID1);
+        UserEdge.end = getNode(nodeID2);
+        UserEdge.weight = weight; // TODO: make this be the distance between the two nodes (in ticks)
+        addEdgeToEdgesArray(UserEdge);
+
+    }
 
     public Node[] getNodes() {
         return nodes;
