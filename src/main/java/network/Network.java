@@ -36,7 +36,8 @@ public class Network {
         node nodes[] = new node[1]; // This could start with a size of much more than 1, but just for testing purposes this is ok
     }
 
-    private void addNode(node UserNode) {
+
+    private void addNodeToNodesArray(node UserNode) {
 //         add node to network
         node[] temp_nodes = new node[this.nodes.length + 1]; // TODO create new array with more space, maybe create dynamic array
 //         https://www.geeksforgeeks.org/creating-a-dynamic-array-in-java/ SOMETHING LIKE THIS
@@ -52,6 +53,17 @@ public class Network {
         this.nodes = temp_nodes;
 
     }
+    private void addEdgeToEdgesArray(edge UserEdge) {
+        // add edge to network
+        edge[] temp_edges = new edge[this.edges.length + 1]; // TODO create new array with more space, maybe create dynamic array
+
+        System.arraycopy(this.edges, 0, temp_edges, 0, this.edges.length);
+
+        temp_edges[this.edges.length] = UserEdge;
+        this.edges = temp_edges;
+
+    }
+
 
 
 //    SEARCHING FOR NODES AND EDGES IN NETWORK ---- TODO: implement searching algorithms
@@ -73,21 +85,45 @@ public class Network {
         }
         return false;
     }
-
-
-
-    private void addEdgeToNodes(edge UserEdge) {
-        // add edge to network
+    private boolean checkEdgeExists(edge UserEdge) {
+        // check if edge exists in network
+        for (edge e : this.edges) {
+            if (e.start.id.equals(UserEdge.start.id) && e.end.id.equals(UserEdge.end.id)) {
+                return true;
+            }
+        }
+        return false;
     }
+    private boolean checkEdgeExists(String nodeID1, String nodeID2) {
+        // check if edge exists in network
+        for (edge e : this.edges) {
+            if (e.start.id.equals(nodeID1) && e.end.id.equals(nodeID2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+// ----------------------------------------------------
+
 
     private void removeNode(node UserNode) {
         // remove node from network
     }
 
     // TODO: give the ability to add edges by two node id's. this will be public addEdge(String node1, String node2) or something idk.
-
     public void addEdge(node node1, node node2) {
         // add edge to network
+        if (!checkNodeExists(node1)) {
+            addNodeToNodesArray(node1);
+        }
+        if (!checkNodeExists(node2)) {
+            addNodeToNodesArray(node2);
+        }
+        edge UserEdge = new edge();
+        UserEdge.start = node1;
+        UserEdge.end = node2;
+        UserEdge.weight = 1; // TODO: make this a random number between 1 and 10
+        addEdgeToEdgesArray(UserEdge);
 
     }
 
