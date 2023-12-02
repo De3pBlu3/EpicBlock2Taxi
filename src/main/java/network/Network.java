@@ -12,18 +12,18 @@ package network;
  */
 
 public class Network {
-    node[] nodes;
-    edge[] edges;
-    node currentLocation;
+    private node[] nodes;
+    private edge[] edges;
+    private node centralNode;
 
-    class edge {
+    public class edge {
         int weight; // length of edge / speed of edge = time to traverse edge (in ticks)
         node start;
         node end;
         entities.Entity[] occupants;
     }
 
-    class node {
+    public class node {
         String id;
         int x;
         int y;
@@ -32,8 +32,8 @@ public class Network {
     }
 
     Network(node initNode) {
-        node currentLocation = initNode;
-        node nodes[] = new node[1]; // This could start with a size of much more than 1, but just for testing purposes this is ok
+        this.centralNode = initNode; // TODO: make this be the central node (the betweenness centrality node)
+        this.nodes = new node[1]; // This could start with a size of much more than 1, but just for testing purposes this is ok
     }
 
 
@@ -122,9 +122,21 @@ public class Network {
         edge UserEdge = new edge();
         UserEdge.start = node1;
         UserEdge.end = node2;
-        UserEdge.weight = 1; // TODO: make this a random number between 1 and 10
+        UserEdge.weight = 1; // TODO: make this be the distance between the two nodes (in ticks)
         addEdgeToEdgesArray(UserEdge);
 
+    }
+
+    public node[] getNodes() {
+        return nodes;
+    }
+
+    public edge[] getEdges() {
+        return edges;
+    }
+
+    public node getCentralNode() {
+        return centralNode;
     }
 
 
