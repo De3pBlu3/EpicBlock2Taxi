@@ -19,11 +19,6 @@ public class Taxi extends Entity {
         this.setCapacity(capacity);
     }
 
-    public Taxi(Cell cell) {
-        super(1, cell);
-        this.capacity = 1;  // Can a taxi have 0 as their capacity?
-    }
-
     public int getCapacity() {
         return this.capacity;
     }
