@@ -12,7 +12,7 @@ public class Party extends Entity {
     }
 
     public Party(Cell cell) {
-        super(cell);
+        super(1, cell);
     }
 
     @Override

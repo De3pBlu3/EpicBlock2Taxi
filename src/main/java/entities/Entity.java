@@ -15,11 +15,6 @@ public abstract class Entity {
         this.cell = cell;
     }
 
-    public Entity(Cell cell) {
-        this.headcount = 1;  // Idk if we can have empty entities?
-        this.cell = cell;
-    }
-
     public Cell getCell() {
         return this.cell;
     }
