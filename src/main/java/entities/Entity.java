@@ -1,6 +1,6 @@
 package entities;
 
-import not_implemented_yet.Cell;
+import not_implemented_yet.Node;
 
 /**
  * Entity abstract class
@@ -8,20 +8,20 @@ import not_implemented_yet.Cell;
 public abstract class Entity {
 
     private int headcount;
-    private Cell cell;
+    private Node node;
 
-    public Entity(int headcount, Cell cell) {
+    public Entity(int headcount, Node node) {
         this.setHeadcount(headcount);
-        this.cell = cell;
+        this.node = node;
     }
 
-    public Cell getCell() {
-        return this.cell;
+    public Node getNode() {
+        return this.node;
     }
 
-    public void setCell(Cell cell) {
+    public void setNode(Node node) {
         // Some logic maybe
-        this.cell = cell;
+        this.node = node;
     }
 
     public int getHeadcount() {
@@ -42,7 +42,7 @@ public abstract class Entity {
 
     // For simplifying toString() implementations
     protected String getAttributeValues() {
-        return "headcount=" + this.headcount + ", cell=" + this.cell;
+        return "headcount=" + this.headcount + ", node=" + this.node;
     }
 
 }
