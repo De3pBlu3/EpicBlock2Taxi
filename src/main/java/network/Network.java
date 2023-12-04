@@ -141,6 +141,7 @@ public class Network {
 
     }
 
+    // with weight should be default, NOT other way round TODO invert this
     public void addEdge(Node node1, Node node2, int weight) {
         this.addEdge(node1, node2);
         this.getEdge(node1, node2).weight = weight;
