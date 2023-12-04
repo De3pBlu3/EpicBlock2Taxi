@@ -4,14 +4,11 @@ package lists;
 import java.util.Iterator;
 
 /**
- * lists.DynamicArray:
+ * DynamicArray:
  * Similar to java.util.ArrayList in the sense that the size
  * of this array can grow, i.e. there is no specific size limit,
  * assuming you do not go over the (theoretical) maximum Java
  * array size of 2,147,483,647.
- * <p>
- * Available Methods:
- *
  *
  * @author Darragh Luby
  * @param <T>   The type/class of the elements in the list.
@@ -78,8 +75,10 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
      * Clears all elements in the list.
      */
     public void clear() {
-        if (this.count != 0)
+        if (this.count != 0) {
             this.array = this.elementInstance.newArray(1);
+            this.count = 0;
+        }
     }
 
     /**
@@ -89,6 +88,12 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
      * @throws ArrayIndexOutOfBoundsException if index out of bounds.
      */
     public T get(int index) {
+        if (this.count < 1)
+            throw new ArrayIndexOutOfBoundsException("Cannot invoke get() on empty list");
+
+        if (index >= this.count)
+            throw new ArrayIndexOutOfBoundsException("Index " + index + " out of bounds for length " + this.count);
+
         return this.array[index];
     }
 
@@ -293,7 +298,7 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
 
     /**
      * Returns an iterator for the list.
-     * This enables the ability to use enhanced for loops.
+     * This enables the ability to use enhanced for loops & the forEach method.
      */
     @Override
     public Iterator<T> iterator() {
@@ -364,29 +369,6 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
     private void outOfBoundsCheck(int index) {
         if (index >= this.count)
             throw new ArrayIndexOutOfBoundsException("Index " + index + " out of bounds for length " + this.size());
-    }
-
-    public static void main(String[] args) {
-
-//        // Example
-//        DynamicArray<Animal> test = new DynamicArray<>(new Animal());
-//
-//        Animal a1 = new Animal("Joseph");
-//        Animal a2 = new Animal("Steven");
-//        Animal a3 = new Animal("Maria");
-//        Animal a4 = new Animal("Darragh");
-//        Animal a5 = new Animal("Joe");
-//
-//        test.add(a1);
-//        test.add(a2);
-//        test.add(a1);
-//        test.add(a3);
-//        test.add(a4);
-//        test.add(a5);
-//
-//        System.out.println(test);
-//        test.remove(2);
-//        System.out.println(test);
     }
 
 }

@@ -17,7 +17,15 @@ public class Animal implements DynamicArrayable<Animal> {
 
     @Override
     public String toString() {
-        return "'" + this.name + "'";
+        return this.name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Animal)
+            return o.toString().equals(this.toString());
+
+        return false;
     }
 
 }
