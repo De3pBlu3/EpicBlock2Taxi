@@ -52,7 +52,7 @@ public class Network {
         UserEdge.end.addEdge(UserEdge);
     }
 
-    private Node getNode(String nodeID) {
+    public Node getNode(String nodeID) {
         // get node from network
         for (Node n : this.nodes) {
             if (n.id.equals(nodeID)) {
