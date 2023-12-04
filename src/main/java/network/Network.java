@@ -94,6 +94,7 @@ public class Network {
         }
         return false;
     }
+
 // ----------------------------------------------------
 
 
@@ -101,7 +102,6 @@ public class Network {
         // remove node from network
     }
 
-    // TODO: give the ability to add edges by two node id's. this will be public addEdge(String node1, String node2) or something idk.
     public void addEdge(Node node1, Node node2) {
         // add edge to network
         if (!checkNodeExists(node1)) {
@@ -137,38 +137,35 @@ public class Network {
     }
 
     public void addEdge(Node node1, Node node2, int weight) {
-        // add edge to network
-        if (!checkNodeExists(node1)) {
-            addNodeToNodesArray(node1);
-        }
-        if (!checkNodeExists(node2)) {
-            addNodeToNodesArray(node2);
-        }
-        Edge UserEdge = new Edge();
-        UserEdge.start = node1;
-        UserEdge.end = node2;
-        UserEdge.weight = weight; // TODO: make this be the distance between the two nodes (in ticks)
-        addEdgeToEdgesArray(UserEdge);
-
+        this.addEdge(node1, node2);
+        this.getEdge(node1, node2).weight = weight;
     }
 
     public void addEdge(String nodeID1, String nodeID2, int weight) {
-        // add edge to network
-        if (!checkNodeExists(nodeID1)) {
-            Node node1 = new Node(nodeID1, 0, 0);
-            addNodeToNodesArray(node1);
-        }
-        if (!checkNodeExists(nodeID2)) {
-            Node node2 = new Node(nodeID2, 0, 0);
-            addNodeToNodesArray(node2);
-        }
-        Edge UserEdge = new Edge();
-        UserEdge.start = getNode(nodeID1);
-        UserEdge.end = getNode(nodeID2);
-        UserEdge.weight = weight; // TODO: make this be the distance between the two nodes (in ticks)
-        addEdgeToEdgesArray(UserEdge);
+        this.addEdge(nodeID1, nodeID2);
+        this.getEdge(nodeID1, nodeID2).weight = weight;
 
     }
+
+    private Edge getEdge(String nodeID1, String nodeID2) {
+        // get edge from network
+        for (Edge e : this.edges) {
+            if (e.start.id.equals(nodeID1) && e.end.id.equals(nodeID2)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+    private Edge getEdge(Node node1, Node node2) {
+        for (Edge e : this.edges) {
+            if (e.start == node1 && e.end == node2) {
+                return e;
+            }
+        }
+        return null;
+    }
+
 
     public Node[] getNodes() {
         return nodes;
@@ -176,6 +173,16 @@ public class Network {
 
     public Edge[] getEdges() {
         return edges;
+    }
+
+    public Node[] findPath(Node start, Node end) {
+        // find path from start to end
+        // A* would be cool, but would require a direct line of distance to target node geometrically
+        // so we will use Dijkstra's algorithm
+
+
+
+        return null;
     }
 
 
