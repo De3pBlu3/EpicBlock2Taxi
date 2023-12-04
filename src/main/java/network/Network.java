@@ -267,6 +267,9 @@ public class Network {
                     }
                 }
                 int alt = u.dist + e.weight;
+                if (v == null) {
+                    continue;
+                }
                 if (alt < v.dist) {
                     v.dist = alt;
                     v.prev = u;
