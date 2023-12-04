@@ -1,6 +1,10 @@
 package network;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Network class! Will have edges and nodes, and will be used to keep track of the network. once the network is created, we will
  * find the central node and call that the "root" node. Though it will be cool to add an entity based on x,y or address?
@@ -44,7 +48,8 @@ public class Network {
 
         temp_edges[this.edges.length] = UserEdge;
         this.edges = temp_edges;
-
+        UserEdge.start.addEdge(UserEdge);
+        UserEdge.end.addEdge(UserEdge);
     }
 
     private Node getNode(String nodeID) {
