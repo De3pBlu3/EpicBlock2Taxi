@@ -57,13 +57,33 @@ public class NetworkTest {
         testNet.addEdge("first", "second", 5);
         testNet.addEdge("first", "second", 5);
 
-        assertEquals(2, testNet.getEdges().length);
+        assertEquals(1, testNet.getEdges().length);
         assertEquals("first", testNet.getEdges()[0].start.id);
         assertEquals("second", testNet.getEdges()[0].end.id);
         assertEquals(5, testNet.getEdges()[0].weight);
         assertEquals(testNet.getEdges()[0].start.edges[0], testNet.getEdges()[0]);
         assertEquals(testNet.getEdges()[0].end.edges[0], testNet.getEdges()[0]);
     }
+
+    @Test
+    public void testAddEdgeUnhappy() {
+        // add edge to network with node IDs and weight
+        Network testNet = new Network();
+        testNet.addEdge("first", "second", 5);
+        testNet.addEdge("first", "second", 5);
+        testNet.addEdge("first", "second", 5);
+
+        assertEquals(2, testNet.getNodes().length);
+        assertEquals(1, testNet.getEdges().length);
+
+        assertEquals("first", testNet.getEdges()[0].start.id);
+        assertEquals("second", testNet.getEdges()[0].end.id);
+        assertEquals(5, testNet.getEdges()[0].weight);
+        assertEquals(testNet.getEdges()[0].start.edges[0], testNet.getEdges()[0]);
+        assertEquals(testNet.getEdges()[0].end.edges[0], testNet.getEdges()[0]);
+    }
+
+
 
     @Test
     public void getNodes() {
@@ -99,11 +119,19 @@ public class NetworkTest {
         assertEquals(node2.edges[0], testNet.getEdges()[0]);
 
         testNet.addEdge(node1, node2);
-        assertEquals(2, testNet.getEdges().length);
+        assertEquals(1, testNet.getEdges().length);
         assertEquals(node1, testNet.getEdges()[0].start);
         assertEquals(node2, testNet.getEdges()[0].end);
         assertEquals(node1.edges[0], testNet.getEdges()[0]);
         assertEquals(node2.edges[0], testNet.getEdges()[0]);
+
+        testNet.addEdge("first", "second");
+        assertEquals(1, testNet.getEdges().length);
+        assertEquals(node1, testNet.getEdges()[0].start);
+        assertEquals(node2, testNet.getEdges()[0].end);
+        assertEquals(node1.edges[0], testNet.getEdges()[0]);
+        assertEquals(node2.edges[0], testNet.getEdges()[0]);
+
     }
 
     @Test
