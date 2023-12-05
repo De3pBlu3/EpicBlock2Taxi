@@ -1,8 +1,10 @@
 package network;
 
+import lists.DynamicArrayable;
+
 import java.util.Arrays;
 
-public class Edge {
+public class Edge implements DynamicArrayable<Edge> {
     int weight; // length of edge / speed of edge = time to traverse edge (in ticks)
     Node start;
     Node end;
@@ -28,6 +30,11 @@ public class Edge {
                 ", end = " + end +
                 ", occupants = " + Arrays.toString(occupants) +
                 '}';
+    }
+
+    @Override
+    public Edge[] newArray(int length) {
+        return new Edge[length];
     }
 }
 
