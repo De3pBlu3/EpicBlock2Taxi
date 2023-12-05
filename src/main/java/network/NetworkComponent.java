@@ -1,31 +1,24 @@
 package network;
 
+import entities.Entity;
+import lists.DynamicArray;
+
 public class NetworkComponent {
-    protected entities.Entity[] occupants;
+    DynamicArray<Entity> occupants = new DynamicArray<Entity>();
 
     public void addOccupant(entities.Entity occupant) {
         // check if occupant is already in occupants
-        for (entities.Entity e : occupants) {
+        for (Entity e : occupants) {
             if (e == occupant) {
                 return;
             }
         }
 
-        // create new array with length + 1 TODO dynamic-ify
-        entities.Entity[] newOccupants = new entities.Entity[occupants.length + 1];
-
-        // copy
-        System.arraycopy(occupants, 0, newOccupants, 0, occupants.length);
-
-
-        // append
-        newOccupants[occupants.length] = occupant;
-        occupants = newOccupants;
-
+        occupants.append(occupant);
 
     }
 
-    public void removeOccupant(entities.Entity occupant) {
+    public void removeOccupant(Entity occupant) {
         // check if occupant is already in occupants
         for (entities.Entity e : occupants) {
             if (e == occupant) {
@@ -33,19 +26,11 @@ public class NetworkComponent {
             }
         }
 
-        // create new array with length - 1 TODO dynamic-ify
-        entities.Entity[] newOccupants = new entities.Entity[occupants.length - 1];
-
-        for (int i = 0; i < occupants.length; i++) {
-            if (occupants[i] != occupant) {
-                newOccupants[i] = occupants[i];
-            }
-        }
-
+        occupants.removeAllOccurrences(occupant);
 
     }
 
-    public entities.Entity[] getOccupants(){
+    public DynamicArray getOccupants(){
         return occupants;
     }
 
