@@ -284,7 +284,7 @@ public class Network {
         }
 
 
-        DynamicArray<DijkstraNode> pathList = new DynamicArray<>(new DijkstraNode());
+        DynamicArray<DijkstraNode> pathList = new DynamicArray<DijkstraNode>(DijkstraNode.class);
         for (DijkstraNode dn = endNode; dn != null; dn = dn.prev) {
             pathList.append(dn); // append node to the path
         }
