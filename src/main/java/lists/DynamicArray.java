@@ -1,7 +1,11 @@
 package lists;
 
+import java.lang.reflect.Array;
+
+
 // To implement enhanced for-loop capability
 import java.util.Iterator;
+
 
 /**
  * DynamicArray:
@@ -15,10 +19,10 @@ import java.util.Iterator;
  *              The given class must implement the {@code lists.DynamicArrayable} interface.
  */
 
-public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> {
+public class DynamicArray<T> implements Iterable<T> {
 
     private T[] array;
-    private final T elementInstance;
+    private final Class<T> type;
     private int count;
 
     // ======================== CONSTRUCTORS ========================
@@ -31,16 +35,16 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
      * Example:
      * {@code lists.DynamicArray<lists.Animal> list = new lists.DynamicArray<>(new lists.Animal(), 5);}
      *
-     * @param elementInstance An instance of the type that will be held in the array.
+     * @param type An instance of the type that will be held in the array.
      * @param length Length of the initial array (the space allocated for the array
      *               used in the lists.DynamicArray implementation).
      */
-    public DynamicArray(T elementInstance, int length) {
+    public DynamicArray(Class<T> type, int length) {
         if (length < 1)
             throw new IllegalArgumentException("'length' argument cannot be less than 1");
 
-        this.elementInstance = elementInstance;
-        this.array = elementInstance.newArray(length);
+        this.type = type;
+        this.array = (T[]) Array.newInstance(type, length);
     }
 
     /**
@@ -49,10 +53,10 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
      * Example:
      * {@code lists.DynamicArray<lists.Animal> list = new lists.DynamicArray<>(new lists.Animal());}
      *
-     * @param elementInstance An instance of the type that will be held in the array.
+     * @param type </T> An instance of the type that will be held in the array.
      */
-    public DynamicArray(T elementInstance) {
-        this(elementInstance, 1);
+    public DynamicArray(Class<T> type) {
+        this(type, 1);
     }
 
     // ======================== PUBLIC METHODS ========================
@@ -76,7 +80,7 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
      */
     public void clear() {
         if (this.count != 0) {
-            this.array = this.elementInstance.newArray(1);
+            this.array = (T[]) Array.newInstance(type, 1);
             this.count = 0;
         }
     }
@@ -351,7 +355,7 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
      * array that is used in the lists.DynamicArray implementation.
      */
     private void doubleSize() {
-        T[] newArray = this.elementInstance.newArray(this.count * 2);
+        T[] newArray = (T[]) Array.newInstance(type, this.count * 2);
 
         // Copy elements to new array
         System.arraycopy(array, 0, newArray, 0, this.count);

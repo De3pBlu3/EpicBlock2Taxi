@@ -10,11 +10,11 @@ import java.util.Objects;
 
 public class DynamicArrayTest {
 
-    private static final TestObject test1 = new TestObject("Joe");
-    private static final TestObject test2 = new TestObject("Steve");
-    private static final TestObject test3 = new TestObject("Mary");
-    private static final TestObject test4 = new TestObject("Jane");
-    private static final TestObject test5 = new TestObject("Jack");
+    private static final Integer test1 = 1;
+    private static final Integer test2 = 2;
+    private static final Integer test3 = 3;
+    private static final Integer test4 = 4;
+    private static final Integer test5 = 5;
 
     @Ignore
     static class TestObject implements DynamicArrayable<TestObject> {
@@ -47,22 +47,21 @@ public class DynamicArrayTest {
     }
 
     @Ignore
-    private static void appendItems(DynamicArray<TestObject> list, int times) {
+    private static void appendItems(DynamicArray<Integer> list, int times) {
         for (int i = 0; i < times; i++) {
-            list.append(new TestObject());
+            list.append(i);
         }
     }
 
     @Ignore
-    private static DynamicArray<TestObject> newList(int length) {
-        return new DynamicArray<>(new TestObject(), length);
+    private static DynamicArray<Integer> newList(int length) {
+        return new DynamicArray<>(Integer.class, length);
     }
 
     @Ignore
-    private static DynamicArray<TestObject> newList() {
+    private static DynamicArray<Integer> newList() {
         return newList(1);
     }
-
     @Test
     public void testConstructorLengthLessThanOne() {
         assertThrows(
@@ -73,14 +72,14 @@ public class DynamicArrayTest {
 
     @Test
     public void testListSizeReturnsValidIntegerOnEmpty() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         assertEquals(test.size(), 0);
     }
 
     @Test
     public void testListSizeReturnsValidIntegerOnNotEmpty() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         appendItems(test, 3);
         assertEquals(test.size(), 3);
@@ -88,14 +87,14 @@ public class DynamicArrayTest {
 
     @Test
     public void testIsEmptyOnEmptyList() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         assertTrue(test.isEmpty());
     }
 
     @Test
     public void testIsEmptyOnNotEmpty() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         appendItems(test, 3);
         assertFalse(test.isEmpty());
@@ -103,7 +102,7 @@ public class DynamicArrayTest {
 
     @Test
     public void testMethodsAfterClear() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         appendItems(test, 5);
         test.clear();
@@ -113,7 +112,7 @@ public class DynamicArrayTest {
 
     @Test
     public void testGetMethodOnEmpty() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         assertThrows(
                 ArrayIndexOutOfBoundsException.class,
@@ -123,10 +122,10 @@ public class DynamicArrayTest {
 
     @Test
     public void testGetMethodsOnNotEmpty() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
-        appendItems(test, 1);
-        assertEquals(test.get(0), new TestObject());
+        appendItems(test, 5);
+        assertEquals(test.get(3), Integer.valueOf(3));
 
         assertThrows(
                 ArrayIndexOutOfBoundsException.class,
@@ -136,26 +135,26 @@ public class DynamicArrayTest {
 
     @Test
     public void testToString() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         test.append(test4);
         test.append(test2);
 
         assertEquals(
-                "[TestObject['Jane'], TestObject['Steve']]",
+                "[" + test4 + ", " + test2 + "]",
                 test.toString()
         );
     }
 
     @Test
     public void testIterator() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         test.append(test1);
         test.append(test2);
 
         int count = 0;
-        for (TestObject _t : test) {
+        for (Integer item : test) {
             count++;
         }
 
@@ -164,7 +163,7 @@ public class DynamicArrayTest {
 
     @Test
     public void testIndexOf() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         test.append(test1);
         test.append(test2);
@@ -179,7 +178,7 @@ public class DynamicArrayTest {
 
     @Test
     public void testLastIndexOf() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         test.append(test1);
         test.append(test2);
@@ -194,7 +193,7 @@ public class DynamicArrayTest {
 
     @Test
     public void testRemoveAllOccurrences() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         test.append(test1);
         test.append(test2);
@@ -207,7 +206,7 @@ public class DynamicArrayTest {
 
     @Test
     public void testRemove() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         test.append(test1);
         test.remove(0);
@@ -217,7 +216,7 @@ public class DynamicArrayTest {
 
     @Test
     public void testPop() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         test.append(test5);
         test.pop();
@@ -227,7 +226,7 @@ public class DynamicArrayTest {
 
     @Test
     public void testInsert() {
-        DynamicArray<TestObject> test = newList();
+        DynamicArray<Integer> test = newList();
 
         assertThrows(
                 IndexOutOfBoundsException.class,
