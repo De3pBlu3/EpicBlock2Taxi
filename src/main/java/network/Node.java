@@ -2,12 +2,11 @@ package network;
 
 import lists.DynamicArrayable;
 
-public class Node implements DynamicArrayable<Node> {
+public class Node extends NetworkComponent implements DynamicArrayable<Node> {
     String id;
     int x;
     int y;
     Edge[] edges;
-    entities.Entity[] occupants;
 
     public void addEdge(Edge UserEdge){
         if (this.edges == null) {

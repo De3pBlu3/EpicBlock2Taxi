@@ -4,11 +4,10 @@ import lists.DynamicArrayable;
 
 import java.util.Arrays;
 
-public class Edge implements DynamicArrayable<Edge> {
+public class Edge extends NetworkComponent implements DynamicArrayable<Edge> {
     int weight; // length of edge / speed of edge = time to traverse edge (in ticks)
     Node start;
     Node end;
-    entities.Entity[] occupants;
 
     public Edge(Node first, Node second, int weight) {
         this.start = first;
