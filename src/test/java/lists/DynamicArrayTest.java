@@ -47,9 +47,9 @@ public class DynamicArrayTest {
     }
 
     @Ignore
-    private static void addItems(DynamicArray<TestObject> list, int times) {
+    private static void appendItems(DynamicArray<TestObject> list, int times) {
         for (int i = 0; i < times; i++) {
-            list.add(new TestObject());
+            list.append(new TestObject());
         }
     }
 
@@ -82,7 +82,7 @@ public class DynamicArrayTest {
     public void testListSizeReturnsValidIntegerOnNotEmpty() {
         DynamicArray<TestObject> test = newList();
 
-        addItems(test, 3);
+        appendItems(test, 3);
         assertEquals(test.size(), 3);
     }
 
@@ -97,7 +97,7 @@ public class DynamicArrayTest {
     public void testIsEmptyOnNotEmpty() {
         DynamicArray<TestObject> test = newList();
 
-        addItems(test, 3);
+        appendItems(test, 3);
         assertFalse(test.isEmpty());
     }
 
@@ -105,7 +105,7 @@ public class DynamicArrayTest {
     public void testMethodsAfterClear() {
         DynamicArray<TestObject> test = newList();
 
-        addItems(test, 5);
+        appendItems(test, 5);
         test.clear();
         assertTrue(test.isEmpty());
         assertEquals(test.size(), 0);
@@ -125,7 +125,7 @@ public class DynamicArrayTest {
     public void testGetMethodsOnNotEmpty() {
         DynamicArray<TestObject> test = newList();
 
-        addItems(test, 1);
+        appendItems(test, 1);
         assertEquals(test.get(0), new TestObject());
 
         assertThrows(
@@ -138,11 +138,11 @@ public class DynamicArrayTest {
     public void testToString() {
         DynamicArray<TestObject> test = newList();
 
-        test.add(test4);
-        test.add(test2);
+        test.append(test4);
+        test.append(test2);
 
         assertEquals(
-                "[TestObject['Joe'], TestObject['Steve']]",
+                "[TestObject['Jane'], TestObject['Steve']]",
                 test.toString()
         );
     }
@@ -151,8 +151,8 @@ public class DynamicArrayTest {
     public void testIterator() {
         DynamicArray<TestObject> test = newList();
 
-        test.add(test1);
-        test.add(test2);
+        test.append(test1);
+        test.append(test2);
 
         int count = 0;
         for (TestObject _t : test) {
@@ -166,10 +166,10 @@ public class DynamicArrayTest {
     public void testIndexOf() {
         DynamicArray<TestObject> test = newList();
 
-        test.add(test1);
-        test.add(test2);
-        test.add(test3);
-        test.add(test1);
+        test.append(test1);
+        test.append(test2);
+        test.append(test3);
+        test.append(test1);
 
         assertEquals(
                 0,
@@ -181,10 +181,10 @@ public class DynamicArrayTest {
     public void testLastIndexOf() {
         DynamicArray<TestObject> test = newList();
 
-        test.add(test1);
-        test.add(test2);
-        test.add(test3);
-        test.add(test1);
+        test.append(test1);
+        test.append(test2);
+        test.append(test3);
+        test.append(test1);
 
         assertEquals(
                 3,
@@ -196,10 +196,10 @@ public class DynamicArrayTest {
     public void testRemoveAllOccurrences() {
         DynamicArray<TestObject> test = newList();
 
-        test.add(test1);
-        test.add(test2);
-        test.add(test3);
-        test.add(test1);
+        test.append(test1);
+        test.append(test2);
+        test.append(test3);
+        test.append(test1);
         test.removeAllOccurrences(test1);
 
         assertEquals(test.size(), 2);
@@ -209,7 +209,7 @@ public class DynamicArrayTest {
     public void testRemove() {
         DynamicArray<TestObject> test = newList();
 
-        test.add(test1);
+        test.append(test1);
         test.remove(0);
 
         assertEquals(0, test.size());
@@ -219,7 +219,7 @@ public class DynamicArrayTest {
     public void testPop() {
         DynamicArray<TestObject> test = newList();
 
-        test.add(test5);
+        test.append(test5);
         test.pop();
 
         assertEquals(0, test.size());
@@ -234,8 +234,8 @@ public class DynamicArrayTest {
                 () -> test.insert(69, test1)
         );
 
-        test.add(test1);
-        test.add(test2);
+        test.append(test1);
+        test.append(test2);
         test.insert(1, test3);
 
         assertEquals(

@@ -6,21 +6,21 @@ public class Main {
         // Random examples of using list
         DynamicArray<Animal> list = new DynamicArray<>(new Animal());
 
-        list.add(new Animal("Peter"));
-        list.add(new Animal("Meow"));
-        list.add(new Animal("Milk"));
-        list.add(new Animal("Piss"));
-        list.add(new Animal("Milk"));
-        list.add(new Animal("Cheese"));
-        list.add(new Animal("Milk"));
-        list.add(new Animal("Milk"));
+        list.append(new Animal("Peter"));
+        list.append(new Animal("Meow"));
+        list.append(new Animal("Milk"));
+        list.append(new Animal("Piss"));
+        list.append(new Animal("Milk"));
+        list.append(new Animal("Cheese"));
+        list.append(new Animal("Milk"));
+        list.append(new Animal("Milk"));
 
         list.insert(2, new Animal("WOOF WOOF"));
 
-        list.add(new Animal("Josephine"));
-        list.add(new Animal("Laptop"));
-        list.add(new Animal("Anne"));
-        list.add(new Animal("Milk"));
+        list.append(new Animal("Josephine"));
+        list.append(new Animal("Laptop"));
+        list.append(new Animal("Anne"));
+        list.append(new Animal("Milk"));
 
         System.out.println(list);
 
