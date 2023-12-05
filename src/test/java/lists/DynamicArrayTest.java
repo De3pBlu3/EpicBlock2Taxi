@@ -142,7 +142,7 @@ public class DynamicArrayTest {
         test.add(test2);
 
         assertEquals(
-                "[TestObject['Joe'], TestObject['Steve']]",
+                "[TestObject['Jane'], TestObject['Steve']]",
                 test.toString()
         );
     }
