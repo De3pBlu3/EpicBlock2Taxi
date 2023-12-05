@@ -12,7 +12,6 @@ public class Edge implements DynamicArrayable<Edge> {
 
     public Edge(Node first, Node second, int weight) {
         this.start = first;
-
         this.end = second;
         this.weight = weight;
     }
