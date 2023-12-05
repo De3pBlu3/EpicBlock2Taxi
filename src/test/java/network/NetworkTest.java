@@ -107,7 +107,7 @@ public class NetworkTest {
     }
 
     @Test
-    public void FindPath() {
+    public void FindPathWithNode() {
         Network testNet = new Network();
         Node node1 = new Node("first", 0,0);
         Node node2 = new Node("second", 0,0);
@@ -133,7 +133,7 @@ public class NetworkTest {
     }
 
     @Test
-    public void testFindPath() {
+    public void testFindPathWithString() {
         Network network = new Network();
         network.addEdge("0", "2", 6);
         network.addEdge("0", "1", 2);
@@ -144,5 +144,39 @@ public class NetworkTest {
         network.addEdge("5", "6", 6);
         network.addEdge("4", "6", 2);
         assertArrayEquals(network.findPath("0", "6"), new Node[]{network.getNode("0"), network.getNode("1"), network.getNode("3"), network.getNode("4"), network.getNode("6")});
+    }
+
+    @Test
+    public void testFindPathExceptions(){
+        Network network = new Network();
+        network.addEdge("0", "2", 6);
+        network.addEdge("0", "1", 2);
+        network.addEdge("1", "3", 5);
+        network.addEdge("2", "3", 8);
+        network.addEdge("3", "4", 10);
+        network.addEdge("3", "5", 15);
+        network.addEdge("5", "6", 6);
+        network.addEdge("4", "6", 2);
+        try{
+            network.findPath("0", "7");
+            fail("Expected an IllegalArgumentException to be thrown");
+        } catch(IllegalArgumentException e){
+            assertEquals("Destination node not found in network", e.getMessage());
+        }
+        try{
+            network.findPath("7", "0");
+            fail("Expected an IllegalArgumentException to be thrown");
+        } catch(IllegalArgumentException e){
+            assertEquals("Source node not found in network", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testFindPathUnhappy(){
+        Network test_net1 = new Network();
+        test_net1.addEdge("0", "1", 1);
+
+        Node[] path = test_net1.findPath("0", "1");
+        assertArrayEquals(new Node[]{test_net1.getNode("0"), test_net1.getNode("1")}, path);
     }
 }

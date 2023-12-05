@@ -217,7 +217,7 @@ public class Network {
         }
 
         if (startNode == null) {
-            throw new NullPointerException("Start node not found in network");
+            throw new IllegalArgumentException("Source node not found in network");
         }
 
         // find destination node
@@ -229,7 +229,7 @@ public class Network {
             }
         }
         if (endNode == null) {
-            throw new NullPointerException("End node not found in network");
+            throw new IllegalArgumentException("Destination node not found in network");
         }
 
 
