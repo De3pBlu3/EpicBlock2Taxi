@@ -122,11 +122,11 @@ public class DynamicArray<T extends DynamicArrayable<T>> implements Iterable<T> 
     }
 
     /**
-     * Adds the given element at the end of the list.
+     * Appends the given element to the end of the list.
      *
      * @param element Element to be added.
      */
-    public void add(T element) {
+    public void append(T element) {
         if (this.count == array.length)
             this.doubleSize();
 
