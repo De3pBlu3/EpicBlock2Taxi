@@ -1,9 +1,9 @@
 package network;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import lists.DynamicArray;
+import lists.DynamicArrayable;
 
 /**
  * Network class! Will have edges and nodes, and will be used to keep track of the network. once the network is created, we will
@@ -41,6 +41,14 @@ public class Network {
 
     }
     private void addEdgeToEdgesArray(Edge UserEdge) {
+        // if edge already exists, check if weight is less than current, if so, change weight
+
+        if (checkEdgeExists(UserEdge)) {
+            if (UserEdge.weight < getEdge(UserEdge.start, UserEdge.end).weight) {
+                getEdge(UserEdge.start, UserEdge.end).weight = UserEdge.weight;
+            }
+            return;
+        }
         // add edge to network
         Edge[] temp_edges = new Edge[this.edges.length + 1]; // TODO create new array with more space, maybe create dynamic array
 
@@ -73,13 +81,7 @@ public class Network {
         return false;
     }
     private boolean checkNodeExists(String nodeID) {
-        // check if node exists in network
-        for (Node n : this.nodes) {
-            if (n.id.equals(nodeID)) {
-                return true;
-            }
-        }
-        return false;
+        return this.getNode(nodeID) != null;
     }
     private boolean checkEdgeExists(Edge UserEdge) {
         // check if edge exists in network
@@ -192,12 +194,16 @@ public class Network {
         // Moreover, no algorithms for this problem are known that run asymptotically faster than the best single-source algorithms in the worst case.
         //So, stick to Dijkstra's algorithm :)"""
 
-         class DijkstraNode {
+         class DijkstraNode implements DynamicArrayable<DijkstraNode> {
             Node node;
             int dist;
             DijkstraNode prev;
 
-        }
+             @Override
+             public DijkstraNode[] newArray(int length) {
+                 return new DijkstraNode[length];
+             }
+         }
 
         DijkstraNode[] dijkstraNodes = new DijkstraNode[this.nodes.length];
         for (int i = 0; i < this.nodes.length; i++) {
@@ -217,7 +223,7 @@ public class Network {
         }
 
         if (startNode == null) {
-            throw new NullPointerException("Start node not found in network");
+            throw new IllegalArgumentException("Source node not found in network");
         }
 
         // find destination node
@@ -229,7 +235,7 @@ public class Network {
             }
         }
         if (endNode == null) {
-            throw new NullPointerException("End node not found in network");
+            throw new IllegalArgumentException("Destination node not found in network");
         }
 
 
@@ -278,12 +284,20 @@ public class Network {
         }
 
 
-        List<Node> pathList = new ArrayList<>();    // TODO URGENT: make this a dynamic array
+        DynamicArray<DijkstraNode> pathList = new DynamicArray<>(new DijkstraNode());
         for (DijkstraNode dn = endNode; dn != null; dn = dn.prev) {
-            pathList.add(0, dn.node); // append node to the path
+            pathList.add(dn); // append node to the path
         }
 
-        return pathList.toArray(new Node[0]);
+        path = new Node[pathList.size()];
+
+        // reverse the path
+        for (int i = 0; i < pathList.size(); i++) {
+            path[i] = pathList.get(pathList.size() - i - 1).node;
+        }
+
+        return path;
+
     }
 
     public Node[] findPath(String nodeID1, String nodeID2) {
