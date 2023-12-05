@@ -81,13 +81,7 @@ public class Network {
         return false;
     }
     private boolean checkNodeExists(String nodeID) {
-        // check if node exists in network
-        for (Node n : this.nodes) {
-            if (n.id.equals(nodeID)) {
-                return true;
-            }
-        }
-        return false;
+        return this.getNode(nodeID) != null;
     }
     private boolean checkEdgeExists(Edge UserEdge) {
         // check if edge exists in network
