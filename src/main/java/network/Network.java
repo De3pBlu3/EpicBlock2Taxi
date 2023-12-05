@@ -15,29 +15,17 @@ import lists.DynamicArray;
  */
 
 public class Network {
-    private Node[] nodes;
-    private Edge[] edges;
+
+    private DynamicArray<Node> nodes;
+    private DynamicArray<Edge> edges;
 
     public Network() {
-        this.nodes = new Node[0]; // This could start with a size of much more than 1, but just for testing purposes this is ok
-        this.edges = new Edge[0];
+        this.nodes = new DynamicArray<Node>();
+        this.edges = new DynamicArray<Edge>();
     }
 
     private void addNodeToNodesArray(Node UserNode) {
-//         add node to network
-        Node[] temp_nodes = new Node[this.nodes.length + 1]; // TODO create new array with more space, maybe create dynamic array
-//         https://www.geeksforgeeks.org/creating-a-dynamic-array-in-java/ SOMETHING LIKE THIS
-
-        System.arraycopy(this.nodes, 0, temp_nodes, 0, this.nodes.length);
-
-//        manual copy, same as above
-//        for (int i = 0; i < this.nodes.length; i++) {
-//            temp_nodes[i] = this.nodes[i];
-//        }
-
-        temp_nodes[this.nodes.length] = UserNode;
-        this.nodes = temp_nodes;
-
+        nodes.append(UserNode);
     }
     private void addEdgeToEdgesArray(Edge UserEdge) {
         // if edge already exists, check if weight is less than current, if so, change weight
@@ -49,12 +37,7 @@ public class Network {
             return;
         }
         // add edge to network
-        Edge[] temp_edges = new Edge[this.edges.length + 1]; // TODO create new array with more space, maybe create dynamic array
-
-        System.arraycopy(this.edges, 0, temp_edges, 0, this.edges.length);
-
-        temp_edges[this.edges.length] = UserEdge;
-        this.edges = temp_edges;
+        edges.append(UserEdge);
         UserEdge.start.addEdge(UserEdge);
         UserEdge.end.addEdge(UserEdge);
     }
@@ -174,11 +157,11 @@ public class Network {
     }
 
 
-    public Node[] getNodes() {
+    public DynamicArray<Node> getNodes() {
         return nodes;
     }
 
-    public Edge[] getEdges() {
+    public DynamicArray<Edge> getEdges() {
         return edges;
     }
 
@@ -198,14 +181,17 @@ public class Network {
             int dist;
             DijkstraNode prev;
 
+            DijkstraNode(Node node, int dist) {
+                this.node = node;
+                this.dist = dist;
+                this.prev = null;
+            }
+
          }
 
-        DijkstraNode[] dijkstraNodes = new DijkstraNode[this.nodes.length];
-        for (int i = 0; i < this.nodes.length; i++) {
-            dijkstraNodes[i] = new DijkstraNode();
-            dijkstraNodes[i].node = this.nodes[i];
-            dijkstraNodes[i].dist = Integer.MAX_VALUE;
-            dijkstraNodes[i].prev = null;
+        DynamicArray<DijkstraNode> dijkstraNodes = new DynamicArray<DijkstraNode>();
+        for (int i = 0; i < this.nodes.length(); i++) {
+            dijkstraNodes.append(new DijkstraNode(this.nodes.get(i), Integer.MAX_VALUE));
         }
 
         // find start node TODO extract this to a function
@@ -236,11 +222,12 @@ public class Network {
 
         startNode.dist = 0;
 
-        Arrays.sort(dijkstraNodes, (a, b) -> a.dist - b.dist);
+        DijkstraNode[] nodesArray = dijkstraNodes.toArray();
+        Arrays.sort(nodesArray, (a, b) -> a.dist - b.dist);
+        dijkstraNodes = new DynamicArray<DijkstraNode>(nodesArray);
 
-        Node[] path = new Node[0];
-        while (dijkstraNodes.length > 0) {
-            DijkstraNode u = dijkstraNodes[0];
+        while (!dijkstraNodes.isEmpty()) {
+            DijkstraNode u = dijkstraNodes.get(0);
             for (DijkstraNode dn : dijkstraNodes) {
                 if (dn.dist < u.dist) {
                     u = dn;
@@ -249,7 +236,8 @@ public class Network {
             if (u.node == Nodeend) {
                 break;
             }
-            DijkstraNode[] temp_Q = new DijkstraNode[dijkstraNodes.length - 1];
+
+            DijkstraNode[] temp_Q = new DijkstraNode[dijkstraNodes.length() - 1];
             int temp_Q_index = 0;
             for (DijkstraNode dn : dijkstraNodes) {
                 if (dn != u) {
@@ -257,7 +245,7 @@ public class Network {
                     temp_Q_index++;
                 }
             }
-            dijkstraNodes = temp_Q;
+            dijkstraNodes = new DynamicArray<DijkstraNode>(temp_Q);
 
             for (Edge e : u.node.edges) {
                 DijkstraNode v = null;
@@ -278,20 +266,20 @@ public class Network {
             }
         }
 
+        DynamicArray<Node> path = new DynamicArray<Node>();
+        DynamicArray<DijkstraNode> pathList = new DynamicArray<DijkstraNode>();
 
-        DynamicArray<DijkstraNode> pathList = new DynamicArray<>();
         for (DijkstraNode dn = endNode; dn != null; dn = dn.prev) {
             pathList.append(dn); // append node to the path
         }
 
-        path = new Node[pathList.size()];
 
         // reverse the path
         for (int i = 0; i < pathList.size(); i++) {
-            path[i] = pathList.get(pathList.size() - i - 1).node;
+            path.append(pathList.get(pathList.size() - i - 1).node);
         }
 
-        return path;
+        return path.toArray();
 
     }
 
