@@ -8,6 +8,7 @@ import not_implemented_yet.Node;
 public class Taxi extends Entity {
 
     private int capacity;
+    private String registrationNumber;
 
     public Taxi(int capacity, int headcount, Node node) {
         super(headcount, node);
@@ -21,6 +22,10 @@ public class Taxi extends Entity {
 
     public int getCapacity() {
         return this.capacity;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
     }
 
     public void setCapacity(int capacity) {
