@@ -284,12 +284,20 @@ public class Network {
         }
 
 
-        List<Node> pathList = new ArrayList<>();    // TODO URGENT: make this a dynamic array
+        DynamicArray<DijkstraNode> pathList = new DynamicArray<>(new DijkstraNode());
         for (DijkstraNode dn = endNode; dn != null; dn = dn.prev) {
-            pathList.add(0, dn.node); // append node to the path
+            pathList.add(dn); // append node to the path
         }
 
-        return pathList.toArray(new Node[0]);
+        path = new Node[pathList.size()];
+
+        // reverse the path
+        for (int i = 0; i < pathList.size(); i++) {
+            path[i] = pathList.get(pathList.size() - i - 1).node;
+        }
+
+        return path;
+
     }
 
     public Node[] findPath(String nodeID1, String nodeID2) {
