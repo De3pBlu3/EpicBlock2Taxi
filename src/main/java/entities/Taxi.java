@@ -1,12 +1,11 @@
 package entities;
 
-import lists.DynamicArrayable;
 import not_implemented_yet.Location;
 
 /**
  * Taxi class
  */
-public class Taxi extends Entity implements DynamicArrayable<Taxi> {
+public class Taxi extends Entity {
 
     private int capacity;
     private String registrationString;
@@ -62,9 +61,4 @@ public class Taxi extends Entity implements DynamicArrayable<Taxi> {
         return "Taxi[capacity=" + this.capacity + ", " + this.getAttributeValues() + "]";
     }
 
-
-    @Override
-    public Taxi[] newArray(int length) {
-        return new Taxi[length];
-    }
 }

@@ -1,8 +1,6 @@
 package network;
 
-import lists.DynamicArrayable;
-
-public class Node extends NetworkComponent implements DynamicArrayable<Node> {
+public class Node extends NetworkComponent {
     String id;
     int x;
     int y;
@@ -40,8 +38,4 @@ public class Node extends NetworkComponent implements DynamicArrayable<Node> {
 //                '}';
     }
 
-    @Override
-    public Node[] newArray(int length) {
-        return new Node[length];
-    }
 }

@@ -4,7 +4,7 @@ import lists.Animal;
 public class Main {
     public static void main(String[] args) {
         // Random examples of using list
-        DynamicArray<Animal> list = new DynamicArray<>(new Animal());
+        DynamicArray<Animal> list = new DynamicArray<>();
 
         list.append(new Animal("Peter"));
         list.append(new Animal("Meow"));

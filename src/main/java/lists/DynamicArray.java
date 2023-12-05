@@ -1,11 +1,7 @@
 package lists;
 
-import java.lang.reflect.Array;
-
-
 // To implement enhanced for-loop capability
 import java.util.Iterator;
-
 
 /**
  * DynamicArray:
@@ -16,47 +12,36 @@ import java.util.Iterator;
  *
  * @author Darragh Luby
  * @param <T>   The type/class of the elements in the list.
- *              The given class must implement the {@code lists.DynamicArrayable} interface.
  */
 
 public class DynamicArray<T> implements Iterable<T> {
 
     private T[] array;
-    private final Class<T> type;
     private int count;
 
     // ======================== CONSTRUCTORS ========================
 
     /**
-     * Two-param constructor. Useful if you know how many elements will be
+     * Single-param constructor. Useful if you know how many elements will be
      * added to the list. This does not affect the list's ability to grow
      * in size.
-     * <p>
-     * Example:
-     * {@code lists.DynamicArray<lists.Animal> list = new lists.DynamicArray<>(new lists.Animal(), 5);}
      *
-     * @param type An instance of the type that will be held in the array.
-     * @param length Length of the initial array (the space allocated for the array
-     *               used in the lists.DynamicArray implementation).
+     * @param length Length of the initial array (the space allocated
+     *               for the array used in the implementation).
      */
-    public DynamicArray(Class<T> type, int length) {
+    @SuppressWarnings("unchecked")
+    public DynamicArray(int length) {
         if (length < 1)
             throw new IllegalArgumentException("'length' argument cannot be less than 1");
 
-        this.type = type;
-        this.array = (T[]) Array.newInstance(type, length);
+        this.array = (T[]) new Object[length];  // Warning-inducing line (irrelevant)
     }
 
     /**
-     * Single-param constructor.
-     * <p>
-     * Example:
-     * {@code lists.DynamicArray<lists.Animal> list = new lists.DynamicArray<>(new lists.Animal());}
-     *
-     * @param type </T> An instance of the type that will be held in the array.
+     * No-param constructor.
      */
-    public DynamicArray(Class<T> type) {
-        this(type, 1);
+    public DynamicArray() {
+        this(1);
     }
 
     // ======================== PUBLIC METHODS ========================
@@ -78,9 +63,10 @@ public class DynamicArray<T> implements Iterable<T> {
     /**
      * Clears all elements in the list.
      */
+    @SuppressWarnings("unchecked")
     public void clear() {
         if (this.count != 0) {
-            this.array = (T[]) Array.newInstance(type, 1);
+            this.array = (T[]) new Object[1];  // Warning-inducing line (irrelevant)
             this.count = 0;
         }
     }
@@ -354,8 +340,9 @@ public class DynamicArray<T> implements Iterable<T> {
      * Doubles the size of the allocated memory available for the
      * array that is used in the lists.DynamicArray implementation.
      */
+    @SuppressWarnings("unchecked")
     private void doubleSize() {
-        T[] newArray = (T[]) Array.newInstance(type, this.count * 2);
+        T[] newArray = (T[]) new Object[this.count * 2];  // Warning-inducing line (irrelevant)
 
         // Copy elements to new array
         System.arraycopy(array, 0, newArray, 0, this.count);

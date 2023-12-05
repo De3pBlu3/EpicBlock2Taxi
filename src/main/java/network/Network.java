@@ -3,7 +3,6 @@ package network;
 
 import java.util.Arrays;
 import lists.DynamicArray;
-import lists.DynamicArrayable;
 
 /**
  * Network class! Will have edges and nodes, and will be used to keep track of the network. once the network is created, we will
@@ -194,15 +193,11 @@ public class Network {
         // Moreover, no algorithms for this problem are known that run asymptotically faster than the best single-source algorithms in the worst case.
         //So, stick to Dijkstra's algorithm :)"""
 
-         class DijkstraNode implements DynamicArrayable<DijkstraNode> {
+         class DijkstraNode {
             Node node;
             int dist;
             DijkstraNode prev;
 
-             @Override
-             public DijkstraNode[] newArray(int length) {
-                 return new DijkstraNode[length];
-             }
          }
 
         DijkstraNode[] dijkstraNodes = new DijkstraNode[this.nodes.length];
@@ -284,7 +279,7 @@ public class Network {
         }
 
 
-        DynamicArray<DijkstraNode> pathList = new DynamicArray<DijkstraNode>(DijkstraNode.class);
+        DynamicArray<DijkstraNode> pathList = new DynamicArray<>();
         for (DijkstraNode dn = endNode; dn != null; dn = dn.prev) {
             pathList.append(dn); // append node to the path
         }

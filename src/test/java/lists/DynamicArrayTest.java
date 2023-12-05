@@ -3,10 +3,6 @@ package lists;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Ignore;
-import lists.DynamicArray;
-import lists.DynamicArrayable;
-
-import java.util.Objects;
 
 public class DynamicArrayTest {
 
@@ -17,36 +13,6 @@ public class DynamicArrayTest {
     private static final Integer test5 = 5;
 
     @Ignore
-    static class TestObject implements DynamicArrayable<TestObject> {
-
-        String name;
-
-        TestObject() {}
-
-        TestObject(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (o instanceof TestObject)
-                return o.toString().equals(this.toString());
-
-            return false;
-        }
-
-        @Override
-        public String toString() {
-            return "TestObject['" + this.name + "']";
-        }
-
-        @Override
-        public TestObject[] newArray(int length) {
-            return new TestObject[length];
-        }
-    }
-
-    @Ignore
     private static void appendItems(DynamicArray<Integer> list, int times) {
         for (int i = 0; i < times; i++) {
             list.append(i);
@@ -55,7 +21,7 @@ public class DynamicArrayTest {
 
     @Ignore
     private static DynamicArray<Integer> newList(int length) {
-        return new DynamicArray<>(Integer.class, length);
+        return new DynamicArray<>(length);
     }
 
     @Ignore

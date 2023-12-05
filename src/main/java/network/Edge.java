@@ -1,10 +1,8 @@
 package network;
 
-import lists.DynamicArrayable;
-
 import java.util.Arrays;
 
-public class Edge extends NetworkComponent implements DynamicArrayable<Edge> {
+public class Edge extends NetworkComponent {
     int weight; // length of edge / speed of edge = time to traverse edge (in ticks)
     Node start;
     Node end;
@@ -30,9 +28,5 @@ public class Edge extends NetworkComponent implements DynamicArrayable<Edge> {
                 '}';
     }
 
-    @Override
-    public Edge[] newArray(int length) {
-        return new Edge[length];
-    }
 }
 
