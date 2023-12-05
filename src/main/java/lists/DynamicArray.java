@@ -65,6 +65,9 @@ public final class DynamicArray<T> implements Iterable<T> {
     public int size() {
         return this.count;
     }
+    public int length() {
+        return this.count;
+    }
 
     /**
      * Returns whether the list is empty.
@@ -338,6 +341,15 @@ public final class DynamicArray<T> implements Iterable<T> {
     }
 
     /**
+     * Returns the list as an array.
+     *
+     * @return Array representation of the list.
+     */
+    public T[] toArray() {
+        return this.array;
+    }
+
+    /**
      * Returns a string representation of the list,
      * similar to how ArrayLists are printed:
      * [element1, element2, element3, ...]
@@ -357,6 +369,8 @@ public final class DynamicArray<T> implements Iterable<T> {
 
         return builder.append("]").toString();
     }
+
+
 
     // ======================== PRIVATE METHODS ========================
 
