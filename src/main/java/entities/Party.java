@@ -1,18 +1,18 @@
 package entities;
 
-import not_implemented_yet.Node;
+import not_implemented_yet.Location;
 
 /**
  * Party class
  */
 public class Party extends Entity {
 
-    public Party(int headcount, Node node) {
-        super(headcount, node);
+    public Party(int headcount, Location loc) {
+        super(headcount, loc);
     }
 
-    public Party(Node node) {
-        super(1, node);
+    public Party(Location loc) {
+        super(1, loc);
     }
 
     @Override
