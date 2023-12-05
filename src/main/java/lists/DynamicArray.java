@@ -14,7 +14,8 @@ import java.util.Iterator;
  * @param <T>   The type/class of the elements in the list.
  */
 
-public class DynamicArray<T> implements Iterable<T> {
+@SuppressWarnings({"unused", "UnusedReturnValue", "unchecked"})
+public final class DynamicArray<T> implements Iterable<T> {
 
     private T[] array;
     private int count;
@@ -29,7 +30,6 @@ public class DynamicArray<T> implements Iterable<T> {
      * @param length Length of the initial array (the space allocated
      *               for the array used in the implementation).
      */
-    @SuppressWarnings("unchecked")
     public DynamicArray(int length) {
         if (length < 1)
             throw new IllegalArgumentException("'length' argument cannot be less than 1");
@@ -76,7 +76,6 @@ public class DynamicArray<T> implements Iterable<T> {
     /**
      * Clears all elements in the list.
      */
-    @SuppressWarnings("unchecked")
     public void clear() {
         if (this.count != 0) {
             this.array = (T[]) new Object[1];  // Warning-inducing line (irrelevant)
@@ -365,7 +364,6 @@ public class DynamicArray<T> implements Iterable<T> {
      * Doubles the size of the allocated memory available for the
      * array that is used in the lists.DynamicArray implementation.
      */
-    @SuppressWarnings("unchecked")
     private void doubleSize() {
         T[] newArray = (T[]) new Object[this.count * 2];  // Warning-inducing line (irrelevant)
 
