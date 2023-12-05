@@ -1,9 +1,9 @@
 package network;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import lists.DynamicArray;
+import lists.DynamicArrayable;
 
 /**
  * Network class! Will have edges and nodes, and will be used to keep track of the network. once the network is created, we will
@@ -41,6 +41,14 @@ public class Network {
 
     }
     private void addEdgeToEdgesArray(Edge UserEdge) {
+        // if edge already exists, check if weight is less than current, if so, change weight
+
+        if (checkEdgeExists(UserEdge)) {
+            if (UserEdge.weight < getEdge(UserEdge.start, UserEdge.end).weight) {
+                getEdge(UserEdge.start, UserEdge.end).weight = UserEdge.weight;
+            }
+            return;
+        }
         // add edge to network
         Edge[] temp_edges = new Edge[this.edges.length + 1]; // TODO create new array with more space, maybe create dynamic array
 
@@ -192,12 +200,16 @@ public class Network {
         // Moreover, no algorithms for this problem are known that run asymptotically faster than the best single-source algorithms in the worst case.
         //So, stick to Dijkstra's algorithm :)"""
 
-         class DijkstraNode {
+         class DijkstraNode implements DynamicArrayable<DijkstraNode> {
             Node node;
             int dist;
             DijkstraNode prev;
 
-        }
+             @Override
+             public DijkstraNode[] newArray(int length) {
+                 return new DijkstraNode[length];
+             }
+         }
 
         DijkstraNode[] dijkstraNodes = new DijkstraNode[this.nodes.length];
         for (int i = 0; i < this.nodes.length; i++) {
