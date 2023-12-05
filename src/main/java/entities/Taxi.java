@@ -8,7 +8,7 @@ import not_implemented_yet.Location;
 public class Taxi extends Entity {
 
     private int capacity;
-    private String registrationNumber;
+    private String registrationString;
 
     public Taxi(int capacity, int headcount, Location loc) {
         super(headcount, loc);
@@ -24,8 +24,8 @@ public class Taxi extends Entity {
         return this.capacity;
     }
 
-    public String getRegistrationNumber() {
-        return registrationNumber;
+    public String getRegistrationString() {
+        return registrationString;
     }
 
     public void setCapacity(int capacity) {
