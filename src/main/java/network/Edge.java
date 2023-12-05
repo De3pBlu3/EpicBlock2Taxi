@@ -24,7 +24,7 @@ public class Edge extends NetworkComponent {
                 "weight = " + weight +
                 ", start = " + start +
                 ", end = " + end +
-                ", occupants = " + Arrays.toString(occupants) +
+                ", occupants = " + occupants +
                 '}';
     }
 
