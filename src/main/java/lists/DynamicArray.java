@@ -38,6 +38,19 @@ public class DynamicArray<T> implements Iterable<T> {
     }
 
     /**
+     * Single-param constructor.
+     *
+     * @param elements Array of elements (of type T) to initialise with.
+     */
+    public DynamicArray(T... elements) {
+        this(elements.length);
+
+        for (T element : elements) {
+            this.append(element);
+        }
+    }
+
+    /**
      * No-param constructor.
      */
     public DynamicArray() {
@@ -122,6 +135,18 @@ public class DynamicArray<T> implements Iterable<T> {
 
         this.array[this.count] = element;
         this.count++;
+    }
+
+    /**
+     * Appends each element in the given array to the end of the list.
+     *
+     * @param elements Array of elements to add.
+     * @see DynamicArray#append(T)
+     */
+    public void append(T... elements) {
+        for (T element : elements) {
+            this.append(element);
+        }
     }
 
     /**
