@@ -1,6 +1,6 @@
 package entities;
 
-import not_implemented_yet.Cell;
+import not_implemented_yet.Node;
 
 /**
  * Taxi class
@@ -9,19 +9,14 @@ public class Taxi extends Entity {
 
     private int capacity;
 
-    public Taxi(int capacity, int headcount, Cell cell) {
-        super(headcount, cell);
+    public Taxi(int capacity, int headcount, Node node) {
+        super(headcount, node);
         this.setCapacity(capacity);
     }
 
-    public Taxi(int capacity, Cell cell) {
-        super(cell);
+    public Taxi(int capacity, Node node) {
+        super(1, node);
         this.setCapacity(capacity);
-    }
-
-    public Taxi(Cell cell) {
-        super(cell);
-        this.capacity = 1;  // Can a taxi have 0 as their capacity?
     }
 
     public int getCapacity() {
@@ -46,13 +41,13 @@ public class Taxi extends Entity {
         this.capacity = capacity;
     }
 
-    public void goTo(Cell cell) {
-        // Goes to that cell
+    public void goTo(Node node) {
+        // Goes to that node
         // To be implemented
     }
 
     public void goTo(Party party) {
-        // Goes to party.getCell() cell
+        // Goes to party.getNode() node
         // To be implemented
     }
 
