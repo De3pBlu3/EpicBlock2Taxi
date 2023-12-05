@@ -1,14 +1,48 @@
 package dispatch;
 
+import lists.DynamicArray;
 import not_implemented_yet.Location;
+import entities.Taxi;
+import entities.Party;
 
 import java.util.List;
 
 public class Dispatch implements testing.VehicleHiringTest{
 
-    private entities.Taxi[] vehicles;
+    private DynamicArray<Taxi> allVehicles;
+    private DynamicArray<Taxi> vehiclesOnMap;
 
-    private entities.Party[] parties;
+    private DynamicArray<Party> allParties;
+    private DynamicArray<Party> partiesOnMap;
+
+
+    public Taxi getVehicleFromReg(String reg){
+        for (Taxi vehicle : allVehicles) {
+            if (vehicle.getRegistrationString().equals(reg)) {
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
+    private boolean isVehicleRegistered(String reg){
+        for (Taxi vehicle : allVehicles) {
+            if (vehicle.getRegistrationString().equals(reg)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isVehicleOnMap(String reg){
+        for (Taxi vehicle : vehiclesOnMap) {
+            if (vehicle.getRegistrationString().equals(reg)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
     /**
@@ -20,9 +54,25 @@ public class Dispatch implements testing.VehicleHiringTest{
      * @return
      */
     public boolean testAddToMap(String reg, Location loc) {
-        return false;
+        // TODO could be made more efficient? looping over twice
+        // use list.foreach()?
+        if (!isVehicleRegistered(reg) || isVehicleOnMap(reg)) {
+            return false;
+        }
+
+        loc.getCurrentNetLocation().addOccupant(getVehicleFromReg(reg));
+        vehiclesOnMap.append(getVehicleFromReg(reg));
+        return true;
     }
 
+    /**
+     * Update the location of the vehicle with the specified reg number to location loc
+     * if vehicle exists and return true. Return false if vehicle not registered or has
+     * not been added to the map.
+     * @param reg
+     * @param loc
+     * @return boolean
+     */
     public boolean testMoveVehicle(String reg, Location loc) {
         return false;
     }
@@ -34,7 +84,17 @@ public class Dispatch implements testing.VehicleHiringTest{
      * @return
      */
     public boolean testRemoveVehicle(String reg) {
-        return false;
+        if (isVehicleRegistered(reg)) {
+            isVehicleOnMap(reg);
+        }
+
+        Taxi vehicle = getVehicleFromReg(reg);
+
+        Location loc = vehicle.getLoc();
+
+        loc.getCurrentNetLocation().addOccupant(vehicle);
+        vehiclesOnMap.removeAllOccurrences(vehicle);
+        return true;
     }
 
     /**
