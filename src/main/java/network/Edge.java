@@ -8,6 +8,16 @@ public class Edge {
     Node end;
     entities.Entity[] occupants;
 
+    public Edge(Node first, Node second, int weight) {
+        this.start = first;
+
+        this.end = second;
+        this.weight = weight;
+    }
+
+    public Edge() {
+    }
+
 
 
     @Override
