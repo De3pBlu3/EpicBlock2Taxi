@@ -15,13 +15,6 @@ public class Taxi extends Entity {
         this.setCapacity(capacity);
     }
 
-
-// TODO deprecate this constructor
-    public Taxi(int capacity, Location loc) {
-        super(1, loc);
-        this.setCapacity(capacity);
-    }
-
     public Taxi(int capacity, String registrationString, int headcount, Location loc) {
         super(headcount, loc);
         this.setCapacity(capacity);
@@ -33,6 +26,10 @@ public class Taxi extends Entity {
 
     public String getRegistrationString() {
         return registrationString;
+    }
+
+    public void setRegistrationString(String reg) {
+        this.registrationString = reg;
     }
 
     public void setCapacity(int capacity) {
