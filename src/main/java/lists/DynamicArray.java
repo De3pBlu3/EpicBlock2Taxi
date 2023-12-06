@@ -175,6 +175,12 @@ public final class DynamicArray<T> implements Iterable<T> {
         this.count++;
     }
 
+    public void addIfNotPresent(T element) {
+        if (this.indexOf(element) == -1) {
+            this.append(element);
+        }
+    }
+
     /**
      * Removes the element at the specified index.
      *
