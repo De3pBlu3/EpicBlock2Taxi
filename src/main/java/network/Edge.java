@@ -17,6 +17,13 @@ public class Edge extends NetworkComponent {
     }
 
 
+    public Node getStart() {
+        return start;
+    }
+
+    public Node getEnd() {
+        return end;
+    }
 
     @Override
     public String toString() {
