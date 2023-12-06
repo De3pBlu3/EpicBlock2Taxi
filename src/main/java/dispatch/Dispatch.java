@@ -9,11 +9,15 @@ import java.util.List;
 
 public class Dispatch implements testing.VehicleHiringTest{
 
-    private DynamicArray<Taxi> allVehicles;
-    private DynamicArray<Taxi> vehiclesOnMap;
+    private DynamicArray<Taxi> allVehicles = new DynamicArray<Taxi>();
+    private DynamicArray<Taxi> vehiclesOnMap = new DynamicArray<Taxi>();
 
-    private DynamicArray<Party> allParties;
-    private DynamicArray<Party> partiesOnMap;
+    private DynamicArray<Party> allParties = new DynamicArray<Party>();
+    private DynamicArray<Party> partiesOnMap = new DynamicArray<Party>();
+
+    public void registerVehicle(Taxi vehicle){
+        allVehicles.append(vehicle);
+    }
 
 
     public Taxi getVehicleFromReg(String reg){
