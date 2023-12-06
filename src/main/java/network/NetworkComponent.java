@@ -30,7 +30,7 @@ public class NetworkComponent {
 
     }
 
-    public DynamicArray getOccupants(){
+    public DynamicArray<Entity> getOccupants(){
         return occupants;
     }
 
