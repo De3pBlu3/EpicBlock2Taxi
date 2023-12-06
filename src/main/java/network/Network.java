@@ -137,7 +137,7 @@ public class Network {
 
     }
 
-    private Edge getEdge(String nodeID1, String nodeID2) {
+    public Edge getEdge(String nodeID1, String nodeID2) {
         // get edge from network
         for (Edge e : this.edges) {
             if (e.start.id.equals(nodeID1) && e.end.id.equals(nodeID2)) {
@@ -147,7 +147,7 @@ public class Network {
         return null;
     }
 
-    private Edge getEdge(Node node1, Node node2) {
+    public Edge getEdge(Node node1, Node node2) {
         for (Edge e : this.edges) {
             if (e.start == node1 && e.end == node2) {
                 return e;
@@ -222,8 +222,14 @@ public class Network {
 
         startNode.dist = 0;
 
-        DijkstraNode[] nodesArray = dijkstraNodes.toArray();
+
+        DijkstraNode[] nodesArray = new DijkstraNode[dijkstraNodes.length()];
+
+        for (int i = 0; i < dijkstraNodes.length(); i++) {
+            nodesArray[i] = dijkstraNodes.get(i);
+        }
         Arrays.sort(nodesArray, (a, b) -> a.dist - b.dist);
+
         dijkstraNodes = new DynamicArray<DijkstraNode>(nodesArray);
 
         while (!dijkstraNodes.isEmpty()) {
@@ -279,7 +285,11 @@ public class Network {
             path.append(pathList.get(pathList.size() - i - 1).node);
         }
 
-        return path.toArray();
+        Node[] finalPath = new Node[path.size()];
+        for (int i = 0; i < path.size(); i++) {
+            finalPath[i] = path.get(i);
+        }
+        return finalPath;
 
     }
 
