@@ -2,6 +2,7 @@ package other;
 
 import java.util.Scanner;
 
+@SuppressWarnings("unused")
 public class Util {
 
     private static final String[] countyAbbreviations = {
@@ -13,7 +14,13 @@ public class Util {
 
     public enum Color {
         RED("\033[91m"),    // Indicates error
-        GREEN("\033[92m");  // Indicates success
+        GREEN("\033[92m"),  // Indicates success
+        YELLOW("\033[93m"),
+        BLUE("\033[94m"),
+        MAGENTA("\033[95m"),
+        CYAN("\033[96m"),
+        NONE("\033[0;0m");
+
 
         private final String value;
 
@@ -71,14 +78,15 @@ public class Util {
     }
 
     /**
-     * Prints an error or success message to the console.
+     * Prints a colored message to the console.
+     * Mainly intended for error/success messages.
      *
      * @param color     Color to be used in output.
      * @param message   Message to be displayed.
      * @see Color
      */
     public static void print(Color color, String message) {
-        System.out.println(color.getValue() + message + "\033[0m");
+        System.out.println(color.getValue() + message + Color.NONE.getValue());
     }
 
     /**
@@ -92,7 +100,6 @@ public class Util {
         int range = max - min + 1;
         return (int)(Math.random() * range) + min;
     }
-
 
     /**
      * Generates a random Irish car registration number
@@ -125,6 +132,19 @@ public class Util {
                 .append('-')
                 .append(sequentialNumber)
                 .toString();
+    }
+
+    /**
+     * Pauses program execution for the given number of seconds.
+     *
+     * @param secs Seconds to sleep for.
+     */
+    public static void sleep(double secs) {
+        try {
+            Thread.sleep((int) Math.round(secs * 1000));
+        } catch (InterruptedException e) {
+            // Don't sleep
+        }
     }
 
 }
