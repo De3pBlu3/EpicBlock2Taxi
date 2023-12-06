@@ -1,10 +1,13 @@
 package dispatch;
 
+import entities.Entity;
 import lists.DynamicArray;
+import network.Edge;
 import network.Location;
 import entities.Taxi;
 import entities.Party;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dispatch implements testing.VehicleHiringTest{
@@ -109,7 +112,7 @@ public class Dispatch implements testing.VehicleHiringTest{
      * @return
      */
     public Location testGetVehicleLoc(String reg) {
-        return null;
+        return getVehicleFromReg(reg).getLoc();
     }
 
     /**
@@ -120,6 +123,36 @@ public class Dispatch implements testing.VehicleHiringTest{
      * @return
      */
     public List<String> testGetVehiclesInRange(Location loc, int r) {
-        return null;
+        DynamicArray<String> regNumbers = new DynamicArray<String>();
+        Edge[] edgesFromLoc = loc.getCurrentNetLocation().getEdgesInRange(r);
+
+        DynamicArray<Entity> taxisInNode = loc.getCurrentNetLocation().getOccupants();
+
+
+        for (Entity e : taxisInNode) {
+            try {
+                regNumbers.addIfNotPresent(((Taxi) e).getRegistrationString());
+            } catch (ClassCastException ex) {
+                // TODO throw error?
+            }
+        }
+
+        for (Edge e : edgesFromLoc) {
+            for (Taxi vehicle : vehiclesOnMap) {
+                if (vehicle.getLoc().getCurrentNetLocation().equals(e.getEnd()) || vehicle.getLoc().getCurrentNetLocation().equals(e.getStart())) {
+                    regNumbers.addIfNotPresent(vehicle.getRegistrationString());
+                }
+            }
+        }
+
+
+
+        List<String> regNumsList = new ArrayList<String>(regNumbers.length());
+        for (int i = 0; i < regNumbers.length(); i++) {
+            regNumsList.add(regNumbers.get(i));
+        }
+        return regNumsList;
     }
+
+
 }
