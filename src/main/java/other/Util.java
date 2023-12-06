@@ -4,6 +4,13 @@ import java.util.Scanner;
 
 public class Util {
 
+    private static final String[] countyAbbreviations = {
+            "C", "CE", "CN", "CW", "D", "DL", "G", "KE",
+            "KK", "KY", "L", "LD", "LH", "LM", "LS", "MH",
+            "MN", "MO", "OY", "RN", "SO", "T", "W", "WH",
+            "WX", "WW"
+    };
+
     public enum Color {
         RED("\033[91m"),    // Indicates error
         GREEN("\033[92m");  // Indicates success
@@ -63,7 +70,6 @@ public class Util {
         }
     }
 
-
     /**
      * Prints an error or success message to the console.
      *
@@ -75,5 +81,50 @@ public class Util {
         System.out.println(color.getValue() + message + "\033[0m");
     }
 
+    /**
+     * Generates a random integer between a specific range
+     * where both min and max are inclusive in said range.
+     *
+     * @param min Minimum value
+     * @param max Maximum value
+     */
+    public static int randInt(int min, int max) {
+        int range = max - min + 1;
+        return (int)(Math.random() * range) + min;
+    }
+
+
+    /**
+     * Generates a random Irish car registration number
+     * between the years of 2000 to 2023.
+     *
+     * @return Registration number.
+     */
+    public static String randomRegistrationString() {
+        StringBuilder registrationString = new StringBuilder();
+
+        int year = randInt(0, 23);
+
+        if (year > 12) {
+            year = year*10 + randInt(1, 2);
+        }
+
+        int randomIndex = randInt(0, 26);
+        String county = countyAbbreviations[randomIndex];
+
+        StringBuilder sequentialNumber = new StringBuilder();
+        int iterations = randInt(3, 6);
+        for (int i = 0; i < iterations; i++) {
+            sequentialNumber.append(randInt(0, 9));
+        }
+
+        return registrationString
+                .append(year)
+                .append('-')
+                .append(county)
+                .append('-')
+                .append(sequentialNumber)
+                .toString();
+    }
 
 }
