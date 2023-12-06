@@ -1,10 +1,9 @@
 package dispatch;
 
-import entities.Party;
 import entities.Taxi;
 import lists.DynamicArray;
 import network.Network;
-import not_implemented_yet.Location;
+import network.Location;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

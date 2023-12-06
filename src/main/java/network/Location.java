@@ -1,13 +1,10 @@
-package not_implemented_yet;
-import network.NetworkComponent;
+package network;
 
-// Added this to get rid of those annoying
-// "cannot resolve symbol..." errors
 public class Location {
+
     private float x;
     private float y;
-    private NetworkComponent currentNetLocation;
-
+    private final NetworkComponent currentNetLocation;
 
     public Location(NetworkComponent currentNetLocation) {
         this.currentNetLocation = currentNetLocation;

@@ -1,7 +1,7 @@
 package dispatch;
 
 import lists.DynamicArray;
-import not_implemented_yet.Location;
+import network.Location;
 import entities.Taxi;
 import entities.Party;
 

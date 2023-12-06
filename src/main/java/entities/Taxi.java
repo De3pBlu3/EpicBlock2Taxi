@@ -1,6 +1,6 @@
 package entities;
 
-import not_implemented_yet.Location;
+import network.Location;
 
 /**
  * Taxi class
