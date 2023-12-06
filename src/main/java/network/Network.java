@@ -298,4 +298,51 @@ public class Network {
     }
 
 
+    public Edge[] getEdgesAsArray(){
+        Edge[] edgesArray = new Edge[this.edges.length()];
+        for (int i = 0; i < this.edges.length(); i++) {
+            edgesArray[i] = this.edges.get(i);
+
+        }
+        return edgesArray;
+    }
+
+
+    /**
+     * Returns all edges within a certain range of a node.
+     * If the weightLimit is 0, then nothing is returned.
+     * @param Rootnode the node to start from
+     * @param weightLimit how far down the network to go
+     * @return an array of edges within range
+     */
+    public Edge[] getEdgesInRange(Node Rootnode, int weightLimit) {
+        // get all components within range of node
+        DynamicArray<Edge> componentsInRange = new DynamicArray<>();
+
+        // starting from node, iterate through all nodes in network
+        // if node is within range, add to componentsInRange
+        // recursively call this function on all nodes in componentsInRang
+        for (Edge e: Rootnode.edges) {
+            if (e.weight <= weightLimit) {
+                componentsInRange.addIfNotPresent(e);
+                getComponentsInRangeHelper(e.end, weightLimit-e.weight, componentsInRange);
+            }
+        }
+
+        Edge[] componentsInRangeArray = new Edge[componentsInRange.length()];
+        for (int i = 0; i < componentsInRange.length(); i++) {
+            componentsInRangeArray[i] = componentsInRange.get(i);
+        }
+        return componentsInRangeArray;
+    }
+    private void getComponentsInRangeHelper(Node Rootnode, int weightLimit, DynamicArray<Edge> componentsInRange) {
+        for (Edge e: Rootnode.edges) {
+            if (e.weight <= weightLimit) {
+                componentsInRange.addIfNotPresent(e);
+                getComponentsInRangeHelper(e.end, weightLimit-e.weight, componentsInRange);
+            }
+        }
+    }
+
+
 }
