@@ -61,6 +61,7 @@ public class Dispatch implements testing.VehicleHiringTest{
         // TODO could be made more efficient? looping over twice
         // use list.foreach()?
         if (!isVehicleRegistered(reg) || isVehicleOnMap(reg)) {
+            // TODO throw error?
             return false;
         }
 
