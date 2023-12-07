@@ -44,7 +44,7 @@ public final class CSVReader {
             br.close();
 
         } catch (IOException e) {
-            System.out.println("File could not be read");
+            Util.print(Util.Color.RED,"File could not be read");
         }
 
         return locations;
