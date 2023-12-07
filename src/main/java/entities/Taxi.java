@@ -20,6 +20,7 @@ public class Taxi extends Entity {
         this.setCapacity(capacity);
         this.registrationString = registrationString;
     }
+
     public int getCapacity() {
         return this.capacity;
     }

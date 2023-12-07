@@ -38,6 +38,7 @@ public final class CSVReader {
                 int weight = Integer.parseInt(row[2]);
 
                 network.addEdge(start, end, weight);
+                network.addEdge(end, start, weight);
 
             }
             br.close();

@@ -1,6 +1,7 @@
 package entities;
 
 import network.Location;
+import network.Node;
 
 /**
  * Entity abstract class
@@ -9,6 +10,7 @@ public abstract class Entity {
 
     private int headcount;
     private Location loc;
+    private Node node;
 
     public Entity(int headcount, Location loc) {
         this.setHeadcount(headcount);
@@ -24,11 +26,19 @@ public abstract class Entity {
         this.loc = loc;
     }
 
+    public Node getNode() {
+        return this.node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
+    }
+
     public int getHeadcount() {
         return this.headcount;
     }
 
-    protected void setHeadcount(int headcount) {
+    public void setHeadcount(int headcount) {
         if (headcount < 1)
             throw new IllegalArgumentException(
                     this.getClass().getSimpleName() // So it works for all inheriting classes
