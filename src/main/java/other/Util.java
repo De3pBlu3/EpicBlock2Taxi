@@ -5,6 +5,8 @@ import java.util.Scanner;
 @SuppressWarnings("unused")
 public class Util {
 
+    private static final Scanner scanner = new Scanner(System.in);
+
     private static final String[] countyAbbreviations = {
             "C", "CE", "CN", "CW", "D", "DL", "G", "KE",
             "KK", "KY", "L", "LD", "LH", "LM", "LS", "MH",
@@ -59,7 +61,6 @@ public class Util {
      * @see Util#generateInputErrorMessage(String)
      */
     public static String getInput(String prompt) {
-        Scanner scanner = new Scanner(System.in);
         String input;
         String errorMessage;
 
@@ -70,10 +71,44 @@ public class Util {
             errorMessage = generateInputErrorMessage(input);
 
             if (errorMessage.isEmpty()) {
-                scanner.close();
                 return input;
             }
             print(Color.RED, errorMessage);
+        }
+    }
+
+    /**
+     * Repeatedly asks the user for an integer input within
+     * the specified range (inclusive), until a valid input is
+     * given.
+     *
+     * @param prompt Prompt to be displayed to the user.
+     * @param min Minimum number in the range.
+     * @param max Maximum number in the range.
+     * @param errMsg Error message to display on invalid integer.
+     * @return Integer input.
+     */
+    public static int getIntInput(String prompt, int min, int max, String errMsg) {
+
+        String input;
+        int number;
+
+        while (true) {
+            input = Util.getInput(prompt);
+
+            try {
+                number = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                Util.print(Util.Color.RED, "Please enter a number");
+                continue;
+            }
+
+            if (number < min || number > max) {
+                Util.print(Util.Color.RED, errMsg);
+                continue;
+            }
+
+            return number;
         }
     }
 
@@ -116,7 +151,7 @@ public class Util {
             year = year*10 + randInt(1, 2);
         }
 
-        int randomIndex = randInt(0, 26);
+        int randomIndex = randInt(0, 25);
         String county = countyAbbreviations[randomIndex];
 
         StringBuilder sequentialNumber = new StringBuilder();
@@ -145,6 +180,13 @@ public class Util {
         } catch (InterruptedException e) {
             // Don't sleep
         }
+    }
+
+    /**
+     * Closes the scanner.
+     */
+    public static void closeScanner() {
+        scanner.close();
     }
 
 }
