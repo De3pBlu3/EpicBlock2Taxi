@@ -15,7 +15,7 @@ public final class Introduction {
     }
 
     public static void showDescription() {
-        System.out.println("A taxi-hiring application.");
+        System.out.println("A taxi-hiring application.\n");
     }
 
 }
