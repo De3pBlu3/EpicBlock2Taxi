@@ -24,9 +24,7 @@ public class NetworkComponent {
                 return;
             }
         }
-
         occupants.append(occupant);
-
     }
 
     public void removeOccupant(Entity occupant) {
