@@ -34,7 +34,7 @@ public class Main {
 
         // Display menu
         System.out.println("LOCATIONS");
-        System.out.println("━".repeat(30));
+        System.out.println("=".repeat(25));
         locationNames.forEach(consumer);
         System.out.println();
 
