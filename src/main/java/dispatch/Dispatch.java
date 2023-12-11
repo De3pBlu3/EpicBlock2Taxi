@@ -49,7 +49,7 @@ public class Dispatch implements testing.VehicleHiringTest{
     }
 
     private void MoveVehicleOneStep(Taxi vehicle, Location loc){
-        Location oldLoc = vehicle.getLoc();
+        Location oldLoc = vehicle.getLocation();
 
         // if vehicle is already at location, do nothing
         if (oldLoc.getCurrentNetLocation().equals(loc.getCurrentNetLocation())){
@@ -64,7 +64,7 @@ public class Dispatch implements testing.VehicleHiringTest{
 
         oldLoc.getCurrentNetLocation().removeOccupant(vehicle);
         loc.getCurrentNetLocation().addOccupant(vehicle);
-        vehicle.setLoc(loc);
+        vehicle.setLocation(loc);
     }
 
 
