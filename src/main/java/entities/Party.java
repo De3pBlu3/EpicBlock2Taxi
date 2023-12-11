@@ -7,8 +7,11 @@ import network.Location;
  */
 public class Party extends Entity {
 
-    public Party(int headcount, Location loc) {
+    public String username;
+
+    public Party(int headcount, Location loc, String username) {
         super(headcount, loc);
+        this.username = username;
     }
 
     public Party(Location loc) {

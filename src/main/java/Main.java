@@ -101,7 +101,7 @@ public class Main {
         // Create mister party
         Node partyNode = network.getNode(currentLocation);
         Location userLoc = new Location(partyNode);
-        Party party = new Party(partyCount + 1, userLoc);
+        Party party = new Party(partyCount + 1, userLoc, "username1");
         party.setNode(partyNode);
         partyNode.addOccupant(party);
 

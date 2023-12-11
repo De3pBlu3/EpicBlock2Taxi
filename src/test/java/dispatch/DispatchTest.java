@@ -173,7 +173,6 @@ public class DispatchTest {
 
 
 
-        System.out.println(dispatch.testGetVehiclesInRange(Nodeloc1, 0));
         List<String> taxisInRange = new ArrayList<String>();
         taxisInRange.add(taxi1.getRegistrationString());
 
