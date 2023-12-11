@@ -1,5 +1,6 @@
 package entities;
 
+import network.Edge;
 import network.Location;
 
 /**
@@ -50,6 +51,32 @@ public class Taxi extends Entity {
 
         this.capacity = capacity;
     }
+
+    public void MoveVehicleOneStep(Taxi vehicle, Location loc){
+        Location oldLoc = vehicle.getLoc();
+
+        // if vehicle is already at location, do nothing
+        if (oldLoc.getCurrentNetLocation().equals(loc.getCurrentNetLocation())){
+            return;
+        }
+        // if vehicle is at edge, do not move
+        if (oldLoc.getCurrentNetLocation().getClass() == Edge.class){
+            return;
+        }
+
+        // is there an edge between the two locations?
+
+        oldLoc.getCurrentNetLocation().removeOccupant(vehicle);
+        loc.getCurrentNetLocation().addOccupant(vehicle);
+        vehicle.setLoc(loc);
+    }
+
+
+    public void pickUp(Party party) {
+        // Picks up party
+        // To be implemented
+    }
+
 
     public void goTo(Location loc) {
         // Goes to that node
