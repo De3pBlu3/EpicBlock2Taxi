@@ -11,6 +11,7 @@ public class Taxi extends Entity {
     private int capacity;
     private String registrationString;
 
+    // TODO: add registrationString, needs to not have location as an attribute till it is registered/added to map
     public Taxi(int capacity, int headcount, Location loc) {
         super(headcount, loc);
         this.setCapacity(capacity);
