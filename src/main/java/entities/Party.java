@@ -5,6 +5,7 @@ import network.Location;
 /**
  * Party class
  */
+@SuppressWarnings("unused")
 public final class Party extends Entity {
 
     public Party(int headcount, Location loc) {

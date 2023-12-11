@@ -5,7 +5,7 @@ import network.Location;
 /**
  * Taxi class
  */
-public class Taxi extends Vehicle {
+public sealed class Taxi extends Vehicle permits ElectricTaxi, LimoTaxi, SportsTaxi {
 
     public Taxi(int size, String registrationNumber, int headcount, Location loc) {
         super(size, registrationNumber, headcount, loc);

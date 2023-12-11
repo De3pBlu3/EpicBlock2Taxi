@@ -6,7 +6,8 @@ import network.Node;
 /**
  * Entity abstract class
  */
-public abstract class Entity {
+@SuppressWarnings("SameParameterValue")
+public abstract sealed class Entity permits Vehicle, Party {
 
     private int headcount;
     private Location location;

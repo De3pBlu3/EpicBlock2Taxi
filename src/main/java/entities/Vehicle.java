@@ -2,11 +2,10 @@ package entities;
 
 import network.Location;
 
-import java.util.Objects;
-
 import static other.Util.randomRegistrationString;
 
-abstract public class Vehicle extends Entity {
+@SuppressWarnings("unused")
+abstract public sealed class Vehicle extends Entity permits Taxi {
 
     private int capacity;
     private int size;
