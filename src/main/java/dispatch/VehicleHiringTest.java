@@ -1,7 +1,6 @@
-package testing;
+package dispatch;
 
 import lists.DynamicArray;
-import dispatch.Dispatch;
 import network.Location;
 
 public sealed interface VehicleHiringTest permits Dispatch {
@@ -35,7 +34,6 @@ public sealed interface VehicleHiringTest permits Dispatch {
      * exists on the map.
      *
      * @param reg Registration number of the vehicle.
-     *
      * @return {@code false} if vehicle is not registered or is not on the map;
      * {@code true} otherwise.
      */

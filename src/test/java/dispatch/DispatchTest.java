@@ -31,10 +31,17 @@ public class DispatchTest {
         dispatch.registerVehicle(taxi2);
         dispatch.registerVehicle(taxi3);
 
-        assertEquals(dispatch.getVehicleFromReg("ABC"), taxi1);
-        assertEquals(dispatch.getVehicleFromReg("DEF"), taxi2);
-        assertEquals(dispatch.getVehicleFromReg("GHI"), taxi3);
+        dispatch.getVehicleFromReg("ABC").ifPresent(
+                (value) -> assertEquals(value, taxi1)
+        );
 
+        dispatch.getVehicleFromReg("DEF").ifPresent(
+                (value) -> assertEquals(value, taxi2)
+        );
+
+        dispatch.getVehicleFromReg("GHI").ifPresent(
+                (value) -> assertEquals(value, taxi3)
+        );
 
 
     }

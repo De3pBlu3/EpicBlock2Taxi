@@ -109,9 +109,12 @@ public class Main {
         DynamicArray<Taxi> appropriateTaxis = new DynamicArray<>();
 
         for (String taxiReg : taxiRegistrationNumbersInRange) {
-            Taxi taxi = dispatch.getVehicleFromReg(taxiReg);
-            if (taxi.getCapacity() >= partyCount)
-                appropriateTaxis.append(taxi);
+            dispatch.getVehicleFromReg(taxiReg).ifPresent(
+                    (v) -> {
+                        if (v.getCapacity() >= partyCount)
+                            appropriateTaxis.append((Taxi) v);
+                    }
+            );
         }
 
         if (appropriateTaxis.isEmpty()) {

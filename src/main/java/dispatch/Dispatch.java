@@ -1,51 +1,38 @@
 package dispatch;
 
-import entities.Entity;
+import entities.*;
 import lists.DynamicArray;
 import network.Edge;
 import network.Location;
-import entities.Taxi;
-import entities.Party;
+import network.NetworkComponent;
+
+import java.util.Optional;
 
 
-public class Dispatch implements testing.VehicleHiringTest{
+public final class Dispatch implements VehicleHiringTest {
 
-    private DynamicArray<Taxi> allVehicles = new DynamicArray<Taxi>();
-    private DynamicArray<Taxi> vehiclesOnMap = new DynamicArray<Taxi>();
+    private final DynamicArray<Vehicle> allVehicles = new DynamicArray<>();
+    private final DynamicArray<Vehicle> vehiclesOnMap = new DynamicArray<>();
 
-    private DynamicArray<Party> allParties = new DynamicArray<Party>();
-    private DynamicArray<Party> partiesOnMap = new DynamicArray<Party>();
+    private final DynamicArray<Party> allParties = new DynamicArray<>();
+    private final DynamicArray<Party> partiesOnMap = new DynamicArray<>();
 
-    public void registerVehicle(Taxi vehicle){
-        allVehicles.append(vehicle);
+    public void registerVehicle(Vehicle vehicle) {
+        allVehicles.addIfNotPresent(vehicle);
     }
 
-
-    public Taxi getVehicleFromReg(String reg){
-        for (Taxi vehicle : allVehicles) {
-            if (vehicle.getRegistrationNumber().equals(reg)) {
-                return vehicle;
-            }
-        }
-        return null;
+    public Optional<Vehicle> getVehicleFromReg(String reg){
+        return this.allVehicles.getFirstMatch(
+                (v) -> v.getRegistrationNumber().equals(reg)
+        );
     }
 
-    private boolean isVehicleRegistered(String reg){
-        for (Taxi vehicle : allVehicles) {
-            if (vehicle.getRegistrationNumber().equals(reg)) {
-                return true;
-            }
-        }
-        return false;
+    private boolean isVehicleRegistered(Vehicle vehicle) {
+        return this.allVehicles.contains(vehicle);
     }
 
-    private boolean isVehicleOnMap(String reg){
-        for (Taxi vehicle : vehiclesOnMap) {
-            if (vehicle.getRegistrationNumber().equals(reg)) {
-                return true;
-            }
-        }
-        return false;
+    private boolean isVehicleOnMap(Vehicle vehicle) {
+        return this.vehiclesOnMap.contains(vehicle);
     }
 
     private void MoveVehicleOneStep(Taxi vehicle, Location loc){
@@ -67,108 +54,98 @@ public class Dispatch implements testing.VehicleHiringTest{
         vehicle.setLocation(loc);
     }
 
+    // ======================== MANDATORY TESTING METHODS ========================
 
-
-    /**
-     * Inserts the vehicle with registration number reg to the map at location loc
-     * if it has not been already added to map. It should return false if the vehicle
-     * is not registered or is already on map.
-     * @param reg
-     * @param loc
-     * @return
-     */
+    @Override
     public boolean testAddToMap(String reg, Location loc) {
-        // TODO could be made more efficient? looping over twice
-        // use list.foreach()?
-        if (!isVehicleRegistered(reg) || isVehicleOnMap(reg)) {
-            // TODO throw error?
-            return false;
-        }
 
-        loc.getCurrentNetLocation().addOccupant(getVehicleFromReg(reg));
-        vehiclesOnMap.append(getVehicleFromReg(reg));
-        return true;
+        Vehicle vehicle = this.getVehicleFromReg(reg).orElse(null);
+
+        if (vehicle != null)  // If registered
+            if (this.vehiclesOnMap.addIfNotPresent(vehicle)) {  // If vehicle not on map (could add)
+                loc.getCurrentNetLocation().addOccupant(vehicle);  // Add to map
+                return true;
+            }
+
+        return false;
     }
 
-    /**
-     * Update the location of the vehicle with the specified reg number to location loc
-     * if vehicle exists and return true. Return false if vehicle not registered or has
-     * not been added to the map.
-     * @param reg
-     * @param loc
-     * @return boolean
-     */
-    public boolean testMoveVehicle(String reg, Location loc) {return false;}
+    @Override
+    public boolean testMoveVehicle(String reg, Location loc) {
 
+        Vehicle vehicle = this.getVehicleFromReg(reg).orElse(null);
 
+        if (vehicle != null) {  // If registered
 
-    /**
-     *  Remove the vehicle with the specified reg number from the map if it is registered
-     *  and return true. If vehicle is not registered or is not on map the method returns false.
-     * @param reg
-     * @return
-     */
+            int index = this.vehiclesOnMap.indexOf(vehicle);
+
+            if (index != -1)  // If on map
+                // TODO: Update current vehicle location to new location
+                return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public boolean testRemoveVehicle(String reg) {
-        if (isVehicleRegistered(reg)) {
-            isVehicleOnMap(reg);
-        }
 
-        Taxi vehicle = getVehicleFromReg(reg);
+        Vehicle vehicle = this.getVehicleFromReg(reg).orElse(null);
 
-        Location loc = vehicle.getLocation();
+        if (vehicle != null)  // If registered
+            if (this.vehiclesOnMap.removeIfPresent(vehicle)) {  // If on map (could remove)
+                vehicle.getLocation().getCurrentNetLocation().removeOccupant(vehicle);
+                return true;
+            }
 
-        loc.getCurrentNetLocation().addOccupant(vehicle);
-        vehiclesOnMap.removeAllOccurrences(vehicle);
-        return true;
+        return false;
     }
 
-    /**
-     * Return the location of vehicle specified by the reg number if it is registered and added
-     * to the map, null otherwise.
-     * @param reg
-     * @return
-     */
+    @Override
     public Location testGetVehicleLoc(String reg) {
-        return getVehicleFromReg(reg).getLocation();
+
+        Vehicle vehicle = this.getVehicleFromReg(reg).orElse(null);
+
+        if (vehicle != null)  // If registered
+            if (this.isVehicleOnMap(vehicle))  // If on map
+                return vehicle.getLocation();
+
+        return null;
     }
 
-    /**
-     * Return a list of all vehicles registration numbers located within a square of side 2*r
-     * centered at location loc (inclusive of the boundaries).
-     * @param loc
-     * @param r
-     * @return
-     */
+    @Override
     public DynamicArray<String> testGetVehiclesInRange(Location loc, int r) {
-        DynamicArray<String> regNumbers = new DynamicArray<String>();
+
+        DynamicArray<String> regNumbers = new DynamicArray<>();
         Edge[] edgesFromLoc = loc.getCurrentNetLocation().getEdgesInRange(r);
 
-        DynamicArray<Entity> taxisInNode = loc.getCurrentNetLocation().getOccupants();
+        DynamicArray<Entity> entitiesInNode = loc.getCurrentNetLocation().getOccupants();
 
-
-        for (Entity e : taxisInNode) {
+        for (Entity e : entitiesInNode) {
             try {
-                regNumbers.addIfNotPresent(((Taxi) e).getRegistrationNumber());
-            } catch (ClassCastException ex) {
-                // TODO throw error?
-            }
+                regNumbers.addIfNotPresent(((Vehicle) e).getRegistrationNumber());
+            } catch (ClassCastException ignored) {}
         }
 
         for (Edge e : edgesFromLoc) {
-            for (Taxi vehicle : vehiclesOnMap) {
+            for (Vehicle vehicle : this.vehiclesOnMap) {
                 if (vehicle.getLocation().getCurrentNetLocation().equals(e.getEnd()) || vehicle.getLocation().getCurrentNetLocation().equals(e.getStart())) {
                     regNumbers.addIfNotPresent(vehicle.getRegistrationNumber());
                 }
             }
         }
 
-
-        DynamicArray<String> regNumsList = new DynamicArray<>(regNumbers.length());
-        for (int i = 0; i < regNumbers.length(); i++) {
-            regNumsList.append(regNumbers.get(i));
-        }
-        return regNumsList;
+        return regNumbers;
     }
 
+    public static void main(String[] args) {
+        Dispatch dispatch = new Dispatch();
+
+        Taxi taxi = new Taxi(1, 1, new Location(new NetworkComponent()));
+
+        System.out.println(dispatch.testAddToMap(taxi.getRegistrationNumber(), new Location(new NetworkComponent())));
+
+        System.out.println();
+    }
 
 }
