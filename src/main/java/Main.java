@@ -5,7 +5,6 @@ import network.*;
 import other.*;
 import entities.Taxi;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class Main {
@@ -106,7 +105,7 @@ public class Main {
         System.out.println("\nLocating nearest taxis for you...\n");
 
         // Find taxis
-        List<String> taxiRegistrationNumbersInRange = dispatch.testGetVehiclesInRange(userLoc, 20);
+        DynamicArray<String> taxiRegistrationNumbersInRange = dispatch.testGetVehiclesInRange(userLoc, 20);
         DynamicArray<Taxi> appropriateTaxis = new DynamicArray<>();
 
         for (String taxiReg : taxiRegistrationNumbersInRange) {

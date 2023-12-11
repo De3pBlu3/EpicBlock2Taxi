@@ -1,6 +1,8 @@
 package testing;
 
 import java.util.List;
+
+import lists.DynamicArray;
 import network.Location;
 
 public interface VehicleHiringTest {
@@ -25,6 +27,6 @@ public interface VehicleHiringTest {
 
     // Return a list of all vehicles registration numbers located within a square of side 2*r
     // centered at location loc (inclusive of the boundaries).
-    public abstract List<String> testGetVehiclesInRange(Location loc, int r);
+    public abstract DynamicArray<String> testGetVehiclesInRange(Location loc, int r);
 
 }

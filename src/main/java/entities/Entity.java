@@ -9,21 +9,20 @@ import network.Node;
 public abstract class Entity {
 
     private int headcount;
-    private Location loc;
+    private Location location;
     private Node node;
 
-    public Entity(int headcount, Location loc) {
+    public Entity(int headcount, Location location) {
         this.setHeadcount(headcount);
-        this.loc = loc;
+        this.location = location;
     }
 
-    public Location getLoc() {
-        return this.loc;
+    public Location getLocation() {
+        return this.location;
     }
 
-    public void setLoc(Location loc) {
-        // Some logic maybe
-        this.loc = loc;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Node getNode() {
@@ -39,20 +38,33 @@ public abstract class Entity {
     }
 
     public void setHeadcount(int headcount) {
-        if (headcount < 1)
-            throw new IllegalArgumentException(
-                    this.getClass().getSimpleName() // So it works for all inheriting classes
-                    + " headcount cannot be less than 1"
-            );
-
+        throwErrorIfLessThanOne(headcount, "headcount");
         this.headcount = headcount;
     }
 
     public abstract String toString();
 
     // For simplifying toString() implementations
-    protected String getAttributeValues() {
-        return "headcount=" + this.headcount + ", node=" + this.loc;
+    String getAttributeValues() {
+        return "headcount=" + this.headcount + ", location=" + this.location + ", node=" + this.node;
+    }
+
+    void throwErrorIfLessThanOne(int arg, String argName) {
+        if (arg < 1)
+            throw new IllegalArgumentException(
+                    this.getClass().getSimpleName()
+                    + ' ' + argName + " cannot be less than 1"
+            );
+    }
+
+    void throwErrorIfLessThan(int arg1, String arg1Name, int arg2, String arg2Name) {
+        if (arg1 < arg2)
+            throw new IllegalArgumentException(
+                    this.getClass().getSimpleName()
+                    + ' ' + arg1Name + " (" + arg1
+                    + ") cannot be less than "
+                    + arg2Name + " (" + arg2 + ')'
+            );
     }
 
 }
