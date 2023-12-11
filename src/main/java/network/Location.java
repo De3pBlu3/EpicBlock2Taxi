@@ -1,5 +1,6 @@
 package network;
 
+@SuppressWarnings("unused")
 public class Location {
 
     private float x;

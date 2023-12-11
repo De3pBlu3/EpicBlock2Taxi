@@ -1,7 +1,10 @@
 package network;
 
 import lists.DynamicArray;
+
+@SuppressWarnings("unused")
 public class Node extends NetworkComponent {
+
     String id;
     int x;
     int y;

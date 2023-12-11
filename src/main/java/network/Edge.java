@@ -1,7 +1,7 @@
 package network;
 
-import java.util.Arrays;
 
+@SuppressWarnings("unused")
 public class Edge extends NetworkComponent {
     int weight; // length of edge / speed of edge = time to traverse edge (in ticks)
     Node start;

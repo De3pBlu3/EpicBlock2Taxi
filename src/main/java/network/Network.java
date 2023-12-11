@@ -1,27 +1,27 @@
 package network;
 
+import lists.DynamicArray;
 
 import java.util.Arrays;
-import lists.DynamicArray;
 
 /**
  * Network class! Will have edges and nodes, and will be used to keep track of the network. once the network is created, we will
  * find the central node and call that the "root" node. Though it will be cool to add an entity based on x,y or address?
- *
+ * <p>
  * """If some edges connect nodes not yet in the graph, the nodes are added automatically.
  * There are no errors when adding nodes or edges that already exist""" - from networkx documentation
  * we will do the same thing, and just add the node or edge to the network if it doesn't exist.
- *
  */
 
+@SuppressWarnings({"BooleanMethodIsAlwaysInverted", "unused"})
 public class Network {
 
-    private DynamicArray<Node> nodes;
-    private DynamicArray<Edge> edges;
+    private final DynamicArray<Node> nodes;
+    private final DynamicArray<Edge> edges;
 
     public Network() {
-        this.nodes = new DynamicArray<Node>();
-        this.edges = new DynamicArray<Edge>();
+        this.nodes = new DynamicArray<>();
+        this.edges = new DynamicArray<>();
     }
 
     private void addNodeToNodesArray(Node UserNode) {
@@ -161,19 +161,19 @@ public class Network {
         return edges;
     }
 
-    public Node[] findPath(Node Nodestart, Node Nodeend) {
+    public Node[] findPath(Node nodeStart, Node nodeEnd) {
         // find path from start to end
-        // A* would be cool, but would require a direct line of distance to target node geometrically
+        // A* would be cool, but would require a direct line of distance to target node geometrically,
         // so we will use Dijkstra's algorithm
         //https://stackoverflow.com/a/10053969
         //"""From Introduction to Algorithms (CLRS) second edition, page 581 :
-        //Find a shortest path from u to v for a given vertices u and v.
+        //Find the shortest path from u to v for a given vertices u and v.
         // If we solve the single-source problem with source vertex u, we solve this problem also.
         // Moreover, no algorithms for this problem are known that run asymptotically faster than the best single-source algorithms in the worst case.
         //So, stick to Dijkstra's algorithm :)"""
 
          class DijkstraNode {
-            Node node;
+            final Node node;
             int dist;
             DijkstraNode prev;
 
@@ -185,7 +185,7 @@ public class Network {
 
          }
 
-        DynamicArray<DijkstraNode> dijkstraNodes = new DynamicArray<DijkstraNode>();
+        DynamicArray<DijkstraNode> dijkstraNodes = new DynamicArray<>();
         for (int i = 0; i < this.nodes.length(); i++) {
             dijkstraNodes.append(new DijkstraNode(this.nodes.get(i), Integer.MAX_VALUE));
         }
@@ -193,7 +193,7 @@ public class Network {
         // find start node TODO extract this to a function
         DijkstraNode startNode = null;
         for (DijkstraNode dn : dijkstraNodes) {
-            if (dn.node == Nodestart) {
+            if (dn.node == nodeStart) {
                 startNode = dn;
                 break;
             }
@@ -206,7 +206,7 @@ public class Network {
         // find destination node
         DijkstraNode endNode = null;
         for (DijkstraNode dn : dijkstraNodes) {
-            if (dn.node == Nodeend) {
+            if (dn.node == nodeEnd) {
                 endNode = dn;
                 break;
             }
@@ -226,7 +226,7 @@ public class Network {
         }
         Arrays.sort(nodesArray, (a, b) -> a.dist - b.dist);
 
-        dijkstraNodes = new DynamicArray<DijkstraNode>(nodesArray);
+        dijkstraNodes = new DynamicArray<>(nodesArray);
 
         while (!dijkstraNodes.isEmpty()) {
             DijkstraNode u = dijkstraNodes.get(0);
@@ -235,7 +235,7 @@ public class Network {
                     u = dn;
                 }
             }
-            if (u.node == Nodeend) {
+            if (u.node == nodeEnd) {
                 break;
             }
 
@@ -247,7 +247,7 @@ public class Network {
                     temp_Q_index++;
                 }
             }
-            dijkstraNodes = new DynamicArray<DijkstraNode>(temp_Q);
+            dijkstraNodes = new DynamicArray<>(temp_Q);
 
             for (Edge e : u.node.edges) {
                 DijkstraNode v = null;
@@ -268,8 +268,8 @@ public class Network {
             }
         }
 
-        DynamicArray<Node> path = new DynamicArray<Node>();
-        DynamicArray<DijkstraNode> pathList = new DynamicArray<DijkstraNode>();
+        DynamicArray<Node> path = new DynamicArray<>();
+        DynamicArray<DijkstraNode> pathList = new DynamicArray<>();
 
         for (DijkstraNode dn = endNode; dn != null; dn = dn.prev) {
             pathList.append(dn); // append node to the path
@@ -307,18 +307,18 @@ public class Network {
     /**
      * Returns all edges within a certain range of a node.
      * If the weightLimit is 0, then nothing is returned.
-     * @param Rootnode the node to start from
+     * @param rootNode the node to start from
      * @param weightLimit how far down the network to go
      * @return an array of edges within range
      */
-    public Edge[] getEdgesInRange(Node Rootnode, int weightLimit) {
+    public Edge[] getEdgesInRange(Node rootNode, int weightLimit) {
         // get all components within range of node
         DynamicArray<Edge> componentsInRange = new DynamicArray<>();
 
         // starting from node, iterate through all nodes in network
         // if node is within range, add to componentsInRange
         // recursively call this function on all nodes in componentsInRang
-        for (Edge e: Rootnode.edges) {
+        for (Edge e: rootNode.edges) {
             if (e.weight <= weightLimit) {
                 componentsInRange.addIfNotPresent(e);
                 getComponentsInRangeHelper(e.end, weightLimit-e.weight, componentsInRange);

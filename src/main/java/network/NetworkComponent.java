@@ -4,7 +4,8 @@ import entities.Entity;
 import lists.DynamicArray;
 
 public class NetworkComponent {
-    DynamicArray<Entity> occupants = new DynamicArray<Entity>();
+
+    DynamicArray<Entity> occupants = new DynamicArray<>();
 
     /**
      * Returns all edges within a certain range of this node.
@@ -24,6 +25,7 @@ public class NetworkComponent {
                 return;
             }
         }
+
         occupants.append(occupant);
     }
 
@@ -36,12 +38,10 @@ public class NetworkComponent {
         }
 
         occupants.removeAllOccurrences(occupant);
-
     }
 
     public DynamicArray<Entity> getOccupants(){
         return occupants;
     }
-
 
 }
