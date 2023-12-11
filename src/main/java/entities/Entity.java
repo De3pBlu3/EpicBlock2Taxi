@@ -44,6 +44,8 @@ public abstract class Entity {
 
     public abstract String toString();
 
+    public abstract boolean equals(Object o);
+
     // For simplifying toString() implementations
     String getAttributeValues() {
         return "headcount=" + this.headcount + ", location=" + this.location + ", node=" + this.node;

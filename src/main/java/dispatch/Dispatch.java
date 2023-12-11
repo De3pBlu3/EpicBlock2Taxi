@@ -7,8 +7,6 @@ import network.Location;
 import entities.Taxi;
 import entities.Party;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Dispatch implements testing.VehicleHiringTest{
 
@@ -25,7 +23,7 @@ public class Dispatch implements testing.VehicleHiringTest{
 
     public Taxi getVehicleFromReg(String reg){
         for (Taxi vehicle : allVehicles) {
-            if (vehicle.getRegistrationString().equals(reg)) {
+            if (vehicle.getRegistrationNumber().equals(reg)) {
                 return vehicle;
             }
         }
@@ -34,7 +32,7 @@ public class Dispatch implements testing.VehicleHiringTest{
 
     private boolean isVehicleRegistered(String reg){
         for (Taxi vehicle : allVehicles) {
-            if (vehicle.getRegistrationString().equals(reg)) {
+            if (vehicle.getRegistrationNumber().equals(reg)) {
                 return true;
             }
         }
@@ -43,7 +41,7 @@ public class Dispatch implements testing.VehicleHiringTest{
 
     private boolean isVehicleOnMap(String reg){
         for (Taxi vehicle : vehiclesOnMap) {
-            if (vehicle.getRegistrationString().equals(reg)) {
+            if (vehicle.getRegistrationNumber().equals(reg)) {
                 return true;
             }
         }
@@ -98,7 +96,7 @@ public class Dispatch implements testing.VehicleHiringTest{
 
         Taxi vehicle = getVehicleFromReg(reg);
 
-        Location loc = vehicle.getLoc();
+        Location loc = vehicle.getLocation();
 
         loc.getCurrentNetLocation().addOccupant(vehicle);
         vehiclesOnMap.removeAllOccurrences(vehicle);
@@ -112,7 +110,7 @@ public class Dispatch implements testing.VehicleHiringTest{
      * @return
      */
     public Location testGetVehicleLoc(String reg) {
-        return getVehicleFromReg(reg).getLoc();
+        return getVehicleFromReg(reg).getLocation();
     }
 
     /**
@@ -122,7 +120,7 @@ public class Dispatch implements testing.VehicleHiringTest{
      * @param r
      * @return
      */
-    public List<String> testGetVehiclesInRange(Location loc, int r) {
+    public DynamicArray<String> testGetVehiclesInRange(Location loc, int r) {
         DynamicArray<String> regNumbers = new DynamicArray<String>();
         Edge[] edgesFromLoc = loc.getCurrentNetLocation().getEdgesInRange(r);
 
@@ -131,7 +129,7 @@ public class Dispatch implements testing.VehicleHiringTest{
 
         for (Entity e : taxisInNode) {
             try {
-                regNumbers.addIfNotPresent(((Taxi) e).getRegistrationString());
+                regNumbers.addIfNotPresent(((Taxi) e).getRegistrationNumber());
             } catch (ClassCastException ex) {
                 // TODO throw error?
             }
@@ -139,17 +137,16 @@ public class Dispatch implements testing.VehicleHiringTest{
 
         for (Edge e : edgesFromLoc) {
             for (Taxi vehicle : vehiclesOnMap) {
-                if (vehicle.getLoc().getCurrentNetLocation().equals(e.getEnd()) || vehicle.getLoc().getCurrentNetLocation().equals(e.getStart())) {
-                    regNumbers.addIfNotPresent(vehicle.getRegistrationString());
+                if (vehicle.getLocation().getCurrentNetLocation().equals(e.getEnd()) || vehicle.getLocation().getCurrentNetLocation().equals(e.getStart())) {
+                    regNumbers.addIfNotPresent(vehicle.getRegistrationNumber());
                 }
             }
         }
 
 
-
-        List<String> regNumsList = new ArrayList<String>(regNumbers.length());
+        DynamicArray<String> regNumsList = new DynamicArray<>(regNumbers.length());
         for (int i = 0; i < regNumbers.length(); i++) {
-            regNumsList.add(regNumbers.get(i));
+            regNumsList.append(regNumbers.get(i));
         }
         return regNumsList;
     }

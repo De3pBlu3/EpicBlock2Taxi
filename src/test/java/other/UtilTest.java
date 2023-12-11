@@ -68,7 +68,7 @@ public class UtilTest {
         print(Color.RED, "This is an error message");
 
         assertEquals(
-                 "\033[91mThis is an error message\033[0m",
+                 "\033[91mThis is an error message\033[0;0m",
                 TestPrintStream.content
         );
     }
@@ -79,7 +79,7 @@ public class UtilTest {
         print(Color.GREEN, "This is a success message");
 
         assertEquals(
-                "\033[92mThis is a success message\033[0m",
+                "\033[92mThis is a success message\033[0;0m",
                 TestPrintStream.content
         );
     }

@@ -16,8 +16,8 @@ public class Taxi extends Vehicle {
     }
 
     @Override
-    public String toString() {
-        return "Taxi[" + this.getAttributeValues() + ']';
+    public final String toString() {
+        return this.getClass().getSimpleName() + '[' + this.getAttributeValues() + ']';
     }
 
 }

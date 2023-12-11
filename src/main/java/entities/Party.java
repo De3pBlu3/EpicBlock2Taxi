@@ -5,7 +5,7 @@ import network.Location;
 /**
  * Party class
  */
-public class Party extends Entity {
+public final class Party extends Entity {
 
     public Party(int headcount, Location loc) {
         super(headcount, loc);
@@ -18,6 +18,15 @@ public class Party extends Entity {
     @Override
     public String toString() {
         return "Party[" + this.getAttributeValues() + "]";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Party party) {
+            return (party.getHeadcount() == getHeadcount() && party.getLocation() == this.getLocation());
+        }
+
+        return false;
     }
 
 }

@@ -10,7 +10,7 @@ public class EntityTest {
     public void Taxi_TestToString() {
         Taxi taxi = new Taxi(1, "", 1, null);
         assertEquals(
-                "Taxi[capacity=1, headcount=1, node=null]",
+                "Taxi[size=1, capacity=5, registrationNumber=, headcount=1, location=null, node=null]",
                 taxi.toString()
         );
     }
@@ -19,7 +19,7 @@ public class EntityTest {
     public void Party_TestToString() {
         Party party = new Party(1, null);
         assertEquals(
-                "Party[headcount=1, node=null]",
+                "Party[headcount=1, location=null, node=null]",
                 party.toString()
         );
     }
@@ -48,7 +48,7 @@ public class EntityTest {
     @Test(expected = IllegalArgumentException.class)
     public void Taxi_TestCapacityLessThanHeadcount() throws IllegalArgumentException {
         // Same as testing if headcount greater than capacity
-        Taxi taxi = new Taxi(1, "",2, null);
+        Taxi taxi = new Taxi(1, "",10, null);
     }
 
 }
