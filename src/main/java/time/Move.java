@@ -13,10 +13,6 @@ public class Move extends Event{
         this.destination = destination;
     }
 
-    @Override
-    public void execute() {
-        target.setLocation(destination);
-    }
 
 
 
