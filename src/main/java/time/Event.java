@@ -1,3 +1,5 @@
+// Make explicit that this class is abstract and cannot be instantiated directly
+
 package time;
 
 public class Event {

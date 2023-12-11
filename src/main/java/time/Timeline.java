@@ -1,20 +1,29 @@
 package time;
 
 public class Timeline {
+    // TODO throw exceptions
     private Tick currentTick;
+    private int tickLength;
+    private Tick rootTick;
 
     public Timeline() {
+        tickLength = 0;
     }
     public Timeline(Tick currentTick) {
         this.currentTick = currentTick;
+        this.rootTick = currentTick;
+        tickLength = 1;
     }
 
     public Tick getCurrentTick() {
         return currentTick;
     }
 
-    public void setCurrentTick(Tick currentTick) {
-        this.currentTick = currentTick;
+    public void setCurrentTick(int currentTickNumber) {
+        this.currentTick = this.rootTick;
+        for (int i = 0; i < currentTickNumber; i++) {
+            nextTick();
+        }
     }
 
     public Tick nextTick() {
@@ -27,10 +36,31 @@ public class Timeline {
         return this.currentTick;
     }
 
+    public void appendTick() {
+        if (this.currentTick == null) {
+            this.currentTick = new Tick(0);
+            this.rootTick = this.currentTick;
+            return;
+        }
+        while (this.currentTick.nextTick() != null) {
+            this.currentTick = this.currentTick.nextTick();
+        }
+        this.tickLength++;
+        Tick newTick = new Tick(this.tickLength);
+        this.currentTick = this.currentTick.nextTick(newTick);
+    }
+
     @Override
     public String toString() {
-        return "Timeline{" +
-                "currentTick=" + currentTick +
-                '}';
+        StringBuilder str = new StringBuilder();
+        for (Tick tick = this.rootTick; tick != null; tick = tick.nextTick()) {
+            str.append(tick);
+            tick.printEvents();
+        }
+        if (str.isEmpty()) {
+            return "Timeline is empty";
+        }
+
+        return str.toString();
     }
 }
