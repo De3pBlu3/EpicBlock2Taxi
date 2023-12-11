@@ -48,6 +48,25 @@ public class Dispatch implements testing.VehicleHiringTest{
         return false;
     }
 
+    private void MoveVehicleOneStep(Taxi vehicle, Location loc){
+        Location oldLoc = vehicle.getLoc();
+
+        // if vehicle is already at location, do nothing
+        if (oldLoc.getCurrentNetLocation().equals(loc.getCurrentNetLocation())){
+            return;
+        }
+        // if vehicle is at edge, do not move
+        if (oldLoc.getCurrentNetLocation().getClass() == Edge.class){
+            return;
+        }
+
+        // is there an edge between the two locations?
+
+        oldLoc.getCurrentNetLocation().removeOccupant(vehicle);
+        loc.getCurrentNetLocation().addOccupant(vehicle);
+        vehicle.setLoc(loc);
+    }
+
 
 
     /**
@@ -79,9 +98,9 @@ public class Dispatch implements testing.VehicleHiringTest{
      * @param loc
      * @return boolean
      */
-    public boolean testMoveVehicle(String reg, Location loc) {
-        return false;
-    }
+    public boolean testMoveVehicle(String reg, Location loc) {return false;}
+
+
 
     /**
      *  Remove the vehicle with the specified reg number from the map if it is registered
