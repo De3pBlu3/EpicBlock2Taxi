@@ -1,14 +1,18 @@
 package time;
 
 public class Event {
-    private final Tick tick;
+    private final Tick parentTick;
 
     public Event(Tick tick) {
-        this.tick = tick;
+        this.parentTick = tick;
     }
 
-    public Tick getTick() {
-        return tick;
+    public Tick getParentTick() {
+        return parentTick;
+    }
+
+
+    public void execute() {
     }
 
 }

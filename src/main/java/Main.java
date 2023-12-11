@@ -32,6 +32,8 @@ public class Main {
             System.out.println("│ " + label + ") " + str);
         };
 
+        System.out.println(network.getEdges());
+
         // Display menu
         System.out.println("LOCATIONS");
         System.out.println("=".repeat(25));

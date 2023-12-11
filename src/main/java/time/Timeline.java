@@ -4,7 +4,9 @@ public class Timeline {
     private Tick currentTick;
 
     public Timeline() {
-        this.currentTick = new Tick(0, this);
+    }
+    public Timeline(Tick currentTick) {
+        this.currentTick = currentTick;
     }
 
     public Tick getCurrentTick() {
