@@ -320,7 +320,7 @@ public final class DynamicArray<T> implements Iterable<T> {
     /**
      * Returns the current DynamicArray as a regular array.
      * THIS SOMETIMES WORKS?? (i.e. it works for the tests) BUT dijkstraNodes.toArray() DOES NOT WORK ?? what???
-     * IF it works for thes tests, it works for me :)
+     * IF it works for these tests, it works for me :)
      */
     public T[] toArray() {
         T[] newArray = (T[]) new Object[this.count];  // Warning-inducing line (irrelevant)
