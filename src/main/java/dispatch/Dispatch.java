@@ -4,7 +4,6 @@ import entities.*;
 import lists.DynamicArray;
 import network.Edge;
 import network.Location;
-import network.NetworkComponent;
 
 import java.util.Optional;
 
@@ -136,16 +135,6 @@ public final class Dispatch implements VehicleHiringTest {
         }
 
         return regNumbers;
-    }
-
-    public static void main(String[] args) {
-        Dispatch dispatch = new Dispatch();
-
-        Taxi taxi = new Taxi(1, 1, new Location(new NetworkComponent()));
-
-        System.out.println(dispatch.testAddToMap(taxi.getRegistrationNumber(), new Location(new NetworkComponent())));
-
-        System.out.println();
     }
 
 }
