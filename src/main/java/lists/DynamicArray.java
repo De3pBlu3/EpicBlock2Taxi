@@ -2,6 +2,8 @@ package lists;
 
 // To implement enhanced for-loop capability
 import java.util.Iterator;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * DynamicArray:
@@ -175,10 +177,20 @@ public final class DynamicArray<T> implements Iterable<T> {
         this.count++;
     }
 
-    public void addIfNotPresent(T element) {
-        if (this.indexOf(element) == -1) {
+    public boolean addIfNotPresent(T element) {
+        if (!this.contains(element)) {
             this.append(element);
+            return true;
         }
+        return false;
+    }
+
+    public boolean removeIfPresent(T element) {
+        if (!this.contains(element))
+            return false;
+
+        this.removeAllOccurrences(element);
+        return true;
     }
 
     /**
@@ -318,6 +330,23 @@ public final class DynamicArray<T> implements Iterable<T> {
     }
 
     /**
+     * Returns {@code true} if the specified element is in the list;
+     * {@code false} otherwise.
+     *
+     * @param element Element to find.
+     */
+    public boolean contains(T element) {
+        return this.indexOf(element) != -1;
+    }
+
+    /**
+     * Synonymous with {@link DynamicArray#contains}
+     */
+    public boolean has(T element) {
+        return this.contains(element);
+    }
+
+    /**
      * Returns the current DynamicArray as a regular array.
      * THIS SOMETIMES WORKS?? (i.e. it works for the tests) BUT dijkstraNodes.toArray() DOES NOT WORK ?? what???
      * IF it works for these tests, it works for me :)
@@ -328,6 +357,37 @@ public final class DynamicArray<T> implements Iterable<T> {
         System.arraycopy(array, 0, newArray, 0, this.count);
         return newArray;}
 
+    /**
+     * Tests a predicate on each element in the list and
+     * returns whether a match is found.
+     *
+     * @param predicate Predicate to be tested.
+     * @return {@code true} if at least one match is found
+     * (i.e. if one element tested on the predicate returns {@code true});
+     * {@code false} otherwise.
+     */
+    public boolean hasMatch(Predicate<T> predicate) {
+        for (T element : this) {
+            if (predicate.test(element))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Tests a predicate on each element in the list and returns the
+     * first element that matches said predicate.
+     *
+     * @param predicate Predicate to be tested/
+     * @return First element that matches the predicate.
+     */
+    public Optional<T> getFirstMatch(Predicate<T> predicate) {
+        for (T element : this) {
+            if (predicate.test(element))
+                return Optional.of(element);
+        }
+        return Optional.empty();
+    }
 
     // ======================== OVERRIDDEN METHODS ========================
 
