@@ -20,6 +20,13 @@ public class Timeline {
     }
 
     public void setCurrentTick(int currentTickNumber) {
+        if (currentTickNumber > this.tickLength) {
+            throw new IllegalArgumentException("Tick number is greater than the length of the timeline");
+        }
+        if (currentTickNumber == -1){
+            getLastTick();
+
+        }
         this.currentTick = this.rootTick;
         for (int i = 0; i < currentTickNumber; i++) {
             nextTick();
