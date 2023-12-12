@@ -14,7 +14,7 @@ public class Move extends Event{
 
     @Override
     public void execute() {
-        target.MoveVehicleOneStep(target, destination);
+        target.MoveVehicleOneStep(destination);
     }
 
 
