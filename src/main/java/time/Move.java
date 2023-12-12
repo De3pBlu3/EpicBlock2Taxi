@@ -1,18 +1,21 @@
 package time;
-
-import entities.Entity;
+import entities.Taxi;
 import network.Location;
 public class Move extends Event{
 
-    Entity target;
+    Taxi target; // parties are static and do not move UNLESS they are in a taxi
     Location destination;
 
-    public Move(Tick tick, Entity target, Location destination) {
+    public Move(Tick tick, Taxi target, Location destination) {
         super(tick);
         this.target = target;
         this.destination = destination;
     }
 
+    @Override
+    public void execute() {
+        target.MoveVehicleOneStep(target, destination);
+    }
 
 
 

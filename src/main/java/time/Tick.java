@@ -17,28 +17,37 @@ public class Tick {
         events.append(event);
     }
 
-
+    public void printEvents() {
+        System.out.println(events);
+    }
 
     public int getTickNumber() {
         return tickNumber;
     }
 
     public Tick nextTick() {
+        return this.nextTick;
+    }
+    public Tick nextTick(Tick nextTickAdd) {
         if (this.nextTick == null) {
-            this.nextTick = new Tick(this.tickNumber + 1);
-            this.nextTick.prevTick = this;
+            this.nextTick = nextTickAdd;
+            nextTickAdd.prevTick = this;
         }
-            return this.nextTick;
+        return this.nextTick;
     }
 
+
+    // TODO same as nextTick but for previous
     public Tick previousTick() {
-        if (this.prevTick == null) {
-            this.prevTick = new Tick(this.tickNumber - 1);
-            this.prevTick.nextTick = this;
-        }
         return this.prevTick;
     }
 
+
+    public void executeEvents() {
+        for (Event event : events) {
+            event.execute();
+        }
+    }
 
 
     @Override

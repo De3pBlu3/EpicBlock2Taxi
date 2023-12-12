@@ -16,6 +16,9 @@ public class Edge extends NetworkComponent {
     public Edge() {
     }
 
+    public int getWeight() {
+        return weight;
+    }
 
     public Node getStart() {
         return start;
