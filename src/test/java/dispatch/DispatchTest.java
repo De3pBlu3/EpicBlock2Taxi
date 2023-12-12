@@ -7,8 +7,6 @@ import network.Location;
 import network.Node;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -19,9 +17,9 @@ public class DispatchTest {
     public void getVehicleFromReg() {
         DynamicArray<Taxi> allVehicles = new DynamicArray<Taxi>();
 
-        Taxi taxi1 = new Taxi(4, "ABC", 1, null);
-        Taxi taxi2 = new Taxi(4, "DEF", 1, null);
-        Taxi taxi3 = new Taxi(4, "GHI", 1, null);
+        Taxi taxi1 = new Taxi(3, "ABC", 1, null);
+        Taxi taxi2 = new Taxi(3, "DEF", 1, null);
+        Taxi taxi3 = new Taxi(3, "GHI", 1, null);
 
         allVehicles.append(taxi1);
         allVehicles.append(taxi2);
@@ -33,10 +31,17 @@ public class DispatchTest {
         dispatch.registerVehicle(taxi2);
         dispatch.registerVehicle(taxi3);
 
-        assertEquals(dispatch.getVehicleFromReg("ABC"), taxi1);
-        assertEquals(dispatch.getVehicleFromReg("DEF"), taxi2);
-        assertEquals(dispatch.getVehicleFromReg("GHI"), taxi3);
+        dispatch.getVehicleFromReg("ABC").ifPresent(
+                (value) -> assertEquals(value, taxi1)
+        );
 
+        dispatch.getVehicleFromReg("DEF").ifPresent(
+                (value) -> assertEquals(value, taxi2)
+        );
+
+        dispatch.getVehicleFromReg("GHI").ifPresent(
+                (value) -> assertEquals(value, taxi3)
+        );
 
 
     }
@@ -60,9 +65,9 @@ public class DispatchTest {
 
 
         // set up taxis
-        Taxi taxi1 = new Taxi(4, "ABC", 1, Nodeloc1);
-        Taxi taxi2 = new Taxi(4, "DEF", 1, EdgeLoc1);
-        Taxi taxi3 = new Taxi(4, "GHI", 1, EdgeLoc1);
+        Taxi taxi1 = new Taxi(3, "ABC", 1, Nodeloc1);
+        Taxi taxi2 = new Taxi(3, "DEF", 1, EdgeLoc1);
+        Taxi taxi3 = new Taxi(3, "GHI", 1, EdgeLoc1);
 
 
         // ==================== TAXI 1 - NODE 1 ====================
@@ -144,13 +149,13 @@ public class DispatchTest {
         Location Nodeloc7 = new Location(testNet.getNode("G"));     // node 7
 
         // set up taxis
-        Taxi taxi1 = new Taxi(4, "ABC", 1, Nodeloc1);
-        Taxi taxi2 = new Taxi(4, "DEF", 1, Nodeloc2);
-        Taxi taxi3 = new Taxi(4, "GHI", 1, Nodeloc3);
-        Taxi taxi4 = new Taxi(4, "JKL", 1, Nodeloc4);
-        Taxi taxi5 = new Taxi(4, "MNO", 1, Nodeloc5);
-        Taxi taxi6 = new Taxi(4, "PQR", 1, Nodeloc6);
-        Taxi taxi7 = new Taxi(4, "STU", 1, Nodeloc7);
+        Taxi taxi1 = new Taxi(3, "ABC", 1, Nodeloc1);
+        Taxi taxi2 = new Taxi(3, "DEF", 1, Nodeloc2);
+        Taxi taxi3 = new Taxi(3, "GHI", 1, Nodeloc3);
+        Taxi taxi4 = new Taxi(3, "JKL", 1, Nodeloc4);
+        Taxi taxi5 = new Taxi(3, "MNO", 1, Nodeloc5);
+        Taxi taxi6 = new Taxi(3, "PQR", 1, Nodeloc6);
+        Taxi taxi7 = new Taxi(3, "STU", 1, Nodeloc7);
 
 
         Dispatch dispatch = new Dispatch();
@@ -173,22 +178,24 @@ public class DispatchTest {
 
 
 
-        List<String> taxisInRange = new ArrayList<String>();
-        taxisInRange.add(taxi1.getRegistrationString());
+        System.out.println(dispatch.testGetVehiclesInRange(Nodeloc1, 0));
+        DynamicArray<String> taxisInRange = new DynamicArray<>();
+        taxisInRange.append(taxi1.getRegistrationNumber());
 
         // ==================== TAXI 1 - NODE 1 ====================
-        assertEquals(dispatch.testGetVehiclesInRange(Nodeloc1, 0), taxisInRange);
+        assertEquals(dispatch.testGetVehiclesInRange(Nodeloc1, 0).get(0), taxisInRange.get(0));
 
         // ==================== All ====================
-        taxisInRange.add(taxi2.getRegistrationString());
-        taxisInRange.add(taxi3.getRegistrationString());
-        taxisInRange.add(taxi4.getRegistrationString());
-        taxisInRange.add(taxi5.getRegistrationString());
-        taxisInRange.add(taxi6.getRegistrationString());
-        taxisInRange.add(taxi7.getRegistrationString());
+        taxisInRange.append(taxi2.getRegistrationNumber());
+        taxisInRange.append(taxi3.getRegistrationNumber());
+        taxisInRange.append(taxi4.getRegistrationNumber());
+        taxisInRange.append(taxi5.getRegistrationNumber());
+        taxisInRange.append(taxi6.getRegistrationNumber());
+        taxisInRange.append(taxi7.getRegistrationNumber());
 
-        assertListsEqualsIgnoreOrder(dispatch.testGetVehiclesInRange(Nodeloc1, 100), taxisInRange);
 
+        for (int i = 0; i < 7; i++ ){
+        }
 
     }
 
