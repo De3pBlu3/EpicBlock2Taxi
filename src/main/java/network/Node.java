@@ -69,6 +69,15 @@ public class Node extends NetworkComponent {
         }
     }
 
+    public Edge getEdge(Node node) {
+        for (Edge e: this.edges) {
+            if (e.end.equals(node)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Node {" +
