@@ -28,7 +28,7 @@ public class Scheduler {
     }
 
     public void scheduleMove(Taxi taxi, Node destination) {
-        Node[] x =  network.findPath( (Node) taxi.getLoc().getCurrentNetLocation(), destination);
+        Node[] x =  network.findPath( (Node) taxi.getLocation().getCurrentNetLocation(), destination);
         System.out.println(Arrays.toString(x));
         for (int i = 0; i < x.length; i++) {
             try {

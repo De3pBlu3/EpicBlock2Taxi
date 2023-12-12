@@ -26,7 +26,7 @@ public class TimelineMain {
 
         Dispatch dispatch = new Dispatch();
         dispatch.registerVehicle(taxi);
-        dispatch.testAddToMap("ABC123", taxi.getLoc());
+        dispatch.testAddToMap("ABC123", taxi.getLocation());
 
         Timeline timeline = new Timeline();
 
