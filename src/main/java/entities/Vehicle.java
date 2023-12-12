@@ -1,5 +1,6 @@
 package entities;
 
+import network.Edge;
 import network.Location;
 
 import static other.Util.randomRegistrationString;
@@ -73,6 +74,25 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
             return vehicle.getRegistrationNumber().equals(this.registrationNumber);
 
         return false;
+    }
+
+    public void MoveVehicleOneStep(Location loc){
+        Location oldLoc = this.getLocation();
+
+        // if vehicle is already at location, do nothing
+        if (oldLoc.getCurrentNetLocation().equals(loc.getCurrentNetLocation())){
+            return;
+        }
+        // if vehicle is at edge, do not move
+        if (oldLoc.getCurrentNetLocation().getClass() == Edge.class){
+            return;
+        }
+
+        // is there an edge between the two locations?
+
+        oldLoc.getCurrentNetLocation().removeOccupant(this);
+        loc.getCurrentNetLocation().addOccupant(this);
+        this.setLocation(loc);
     }
 
 }
