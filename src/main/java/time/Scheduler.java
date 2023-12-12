@@ -25,4 +25,22 @@ public class Scheduler {
         this.network = network;
         this.dispatch = dispatch;
 
+    }
+
+    public void scheduleMove(Taxi taxi, Node destination) {
+        Node[] x =  network.findPath( (Node) taxi.getLoc().getCurrentNetLocation(), destination);
+        System.out.println(Arrays.toString(x));
+        for (int i = 0; i < x.length; i++) {
+            try {
+                System.out.println(i + ": " + x[i] + " to " + x[i+1] + " has weight: " +  x[i].getEdge(x[i+1]).getWeight());
+                timeline.extendTicks(x[i].getEdge(x[i+1]).getWeight());
+                timeline.getCurrentTick().addEvent(new Move(timeline.getCurrentTick(), taxi, new Location(x[i+1])));
+            }
+            catch (ArrayIndexOutOfBoundsException e) {
+                // do nothing, we're at the end of the path
+            }
+        }
+        System.out.println("");
+
+    }
 }
