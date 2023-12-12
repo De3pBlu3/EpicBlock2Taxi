@@ -2,6 +2,7 @@ import dispatch.Dispatch;
 import entities.Taxi;
 import network.Location;
 import network.Network;
+import time.Scheduler;
 import time.Timeline;
 
 public class TimelineMain {
@@ -27,27 +28,19 @@ public class TimelineMain {
         dispatch.registerVehicle(taxi);
         dispatch.testAddToMap("ABC123", taxi.getLoc());
 
-
-
         Timeline timeline = new Timeline();
-        timeline.appendTick();
-        timeline.appendTick();
-        timeline.appendTick();
-        timeline.setCurrentTick(0);
-        timeline.getCurrentTick().addEvent(new time.Move(timeline.getCurrentTick(), taxi, location2));
-        timeline.nextTick();
-        timeline.getCurrentTick().addEvent(new time.Move(timeline.getCurrentTick(), taxi, location3));
-        timeline.nextTick();
-        timeline.getCurrentTick().addEvent(new time.Move(timeline.getCurrentTick(), taxi, location4));
-        System.out.println(timeline);
 
-        timeline.setCurrentTick(0);
 
-        for (int i = 0; i < 3; i++) {
-            timeline.getCurrentTick().executeEvents();
+        Scheduler scheduler = new Scheduler(timeline, network, dispatch);
+
+        timeline.appendTick();
+        scheduler.scheduleMove(taxi, network.getNode("D"));
+        timeline.setCurrentTick(0);
+        for (int i = 0; i < 12; i++) {
             timeline.nextTick();
-            System.out.println(taxi.getLoc().getCurrentNetLocation());
-
+//            timeline.getCurrentTick().executeEvents();
+            timeline.getCurrentTick().printEvents();
         }
+
     }
 }
