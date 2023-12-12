@@ -50,6 +50,25 @@ public class Timeline {
         this.currentTick = this.currentTick.nextTick(newTick);
     }
 
+    public void extendTicks(int ticks) {
+        for (int i = 0; i < ticks; i++) {
+            appendTick();
+        }
+    }
+
+    private Tick getLastTick() {
+        Tick lastTick = this.rootTick;
+        while (lastTick.nextTick() != null) {
+            lastTick = lastTick.nextTick();
+        }
+        return lastTick;
+    }
+
+    public int getLength() {
+        return this.tickLength;
+    }
+
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
