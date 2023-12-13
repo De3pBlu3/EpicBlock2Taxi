@@ -21,7 +21,7 @@ public class TimelineMain {
         Location location4 = new Location(network.getNode("D"));
 
 
-        Taxi taxi = new Taxi(4, "ABC123",  1, location1);
+        Taxi taxi = new Taxi(3, "ABC123",  1, location1);
 
 
         Dispatch dispatch = new Dispatch();
