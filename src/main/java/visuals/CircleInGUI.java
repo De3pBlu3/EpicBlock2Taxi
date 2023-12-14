@@ -2,19 +2,30 @@ package visuals;
 
 import java.awt.Graphics;
 import javax.swing.JFrame;
+import network.Network;
 
 public class CircleInGUI extends JFrame{
 
-    public CircleInGUI()
+    public CircleInGUI(Network network)
     {
 
-        super("Circle In GUI");
+//
+//        super("Circle In GUI");
+//
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//        setSize(400,400);
+//
+//        setVisible(true);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // visualise the given network
+        // draw a circle for each node
+        // draw a line between each node
+        // draw the name of each node in the circle
+        // draw the distance between each node
+        // draw the time between each node
 
-        setSize(400,400);
 
-        setVisible(true);
     }
 
     public void paint(Graphics gh)
@@ -31,7 +42,8 @@ public class CircleInGUI extends JFrame{
 
     public static void main(String[]args)
     {
-        CircleInGUI  obj = new CircleInGUI();
+        Network network = new Network();
+        CircleInGUI  obj = new CircleInGUI(network);
     }
 }
 

@@ -19,6 +19,8 @@ public class Network {
     private final DynamicArray<Node> nodes;
     private final DynamicArray<Edge> edges;
 
+    private Node centralNode;
+
     public Network() {
         this.nodes = new DynamicArray<>();
         this.edges = new DynamicArray<>();
@@ -162,6 +164,7 @@ public class Network {
     }
 
     public Node[] findPath(Node nodeStart, Node nodeEnd) {
+        // TODO “I love order. It's my dream. A world where all would be silent and still, and each thing in its last place, under the last dust.”
         // find path from start to end
         // A* would be cool, but would require a direct line of distance to target node geometrically,
         // so we will use Dijkstra's algorithm
@@ -229,6 +232,8 @@ public class Network {
         dijkstraNodes = new DynamicArray<>(nodesArray);
 
         while (!dijkstraNodes.isEmpty()) {
+
+            // get node with smallest distance from start node until we reach the end node or there are no more nodes
             DijkstraNode u = dijkstraNodes.get(0);
             for (DijkstraNode dn : dijkstraNodes) {
                 if (dn.dist < u.dist) {
@@ -239,6 +244,8 @@ public class Network {
                 break;
             }
 
+
+            // remove u from Q
             DijkstraNode[] temp_Q = new DijkstraNode[dijkstraNodes.length() - 1];
             int temp_Q_index = 0;
             for (DijkstraNode dn : dijkstraNodes) {
@@ -249,6 +256,8 @@ public class Network {
             }
             dijkstraNodes = new DynamicArray<>(temp_Q);
 
+
+            // find each neighbour of u
             for (Edge e : u.node.edges) {
                 DijkstraNode v = null;
                 for (DijkstraNode dn : dijkstraNodes) {
@@ -257,10 +266,12 @@ public class Network {
                         break;
                     }
                 }
-                int alt = u.dist + e.weight;
                 if (v == null) {
                     continue;
                 }
+
+
+                int alt = u.dist + e.weight;
                 if (alt < v.dist) {
                     v.dist = alt;
                     v.prev = u;
@@ -338,6 +349,31 @@ public class Network {
                 getComponentsInRangeHelper(e.end, weightLimit-e.weight, componentsInRange);
             }
         }
+    }
+
+    public Node getCentralNode() {
+        return centralNode;
+    }
+
+    public void calculateCentralNode() {
+        // betweenness centrality
+        // https://en.wikipedia.org/wiki/Betweenness_centrality
+            // An approximate, probabilistic estimation of betweenness centralities can be obtained much faster by sampling paths using a bidirectional breadth-first search.[8]
+            // do we want to do this by weight or by amount of nodes? 
+        // https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm
+        // omg is V^3 time complexity christ
+
+        // Johnson's algorithm
+        // First, a new node q is added to the graph, connected by zero-weight edges to each of the other nodes.
+        // Second, the Bellman–Ford algorithm is used, starting from the new vertex q, to find for each vertex v the minimum weight h(v) of a
+        // path from q to v. If this step detects a negative cycle, the algorithm is terminated.
+        // Next the edges of the original graph are reweighted using the values computed by the Bellman–Ford algorithm: an edge from u to v,
+        // having length w ( u , v ) {\displaystyle w(u,v)}, is given the new length w(u,v) + h(u) − h(v).
+        // Finally, q is removed, and Dijkstra's algorithm is used to find the shortest paths from each node s to every other vertex
+        // in the reweighted graph. The distance in the original graph is then computed for each distance D(u , v),
+
+
+        //
     }
 
 
