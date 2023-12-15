@@ -9,10 +9,14 @@ import network.Location;
 public final class Party extends Entity {
 
     public String username;
+    public Location destination;
+    public Taxi assignedTaxi;
+    public boolean assigned = false;
 
-    public Party(int headcount, Location loc, String username) {
+    public Party(int headcount, Location loc, String username, Location destination) {
         super(headcount, loc);
         this.username = username;
+        this.destination = destination;
     }
 
     public Party(Location loc) {
@@ -33,4 +37,7 @@ public final class Party extends Entity {
         return false;
     }
 
+    public void setAssigned(boolean b) {
+        this.assigned = b;
+    }
 }
