@@ -20,6 +20,11 @@ public final class Dispatch implements VehicleHiringTest {
         allVehicles.addIfNotPresent(vehicle);
     }
 
+    public void registerParty(Party party) {
+        allParties.addIfNotPresent(party);
+    }
+
+
     public Optional<Vehicle> getVehicleFromReg(String reg){
         return this.allVehicles.getFirstMatch(
                 (v) -> v.getRegistrationNumber().equals(reg)
@@ -34,23 +39,30 @@ public final class Dispatch implements VehicleHiringTest {
         return this.vehiclesOnMap.contains(vehicle);
     }
 
-    private void MoveVehicleOneStep(Taxi vehicle, Location loc){
-        Location oldLoc = vehicle.getLocation();
+    public DynamicArray<Vehicle> getAllVehicles() {
+        return allVehicles;
+    }
 
-        // if vehicle is already at location, do nothing
-        if (oldLoc.getCurrentNetLocation().equals(loc.getCurrentNetLocation())){
-            return;
+    public DynamicArray<Vehicle> getVehiclesOnMap() {
+        return vehiclesOnMap;
+    }
+
+    public void pickUpParty(Vehicle taxi,Party party) {}
+    public void dropOffParty(Vehicle taxi,Party party) {}
+
+    public void findNearestApplicableTaxi(Party party) {
+        DynamicArray<String> vehiclesInRange = testGetVehiclesInRange(party.getLocation(), 5);
+        for (String reg : vehiclesInRange) {
+            Vehicle vehicle = this.getVehicleFromReg(reg).orElse(null);
+            if (vehicle != null) {
+                if (vehicle.getCapacity() >= party.getHeadcount()) {
+                    if (vehicle.getParty() == null) {
+                        party.setAssigned(true);
+                        break;
+                    }
+                }
+            }
         }
-        // if vehicle is at edge, do not move
-        if (oldLoc.getCurrentNetLocation().getClass() == Edge.class){
-            return;
-        }
-
-        // is there an edge between the two locations?
-
-        oldLoc.getCurrentNetLocation().removeOccupant(vehicle);
-        loc.getCurrentNetLocation().addOccupant(vehicle);
-        vehicle.setLocation(loc);
     }
 
     // ======================== MANDATORY TESTING METHODS ========================
@@ -136,5 +148,10 @@ public final class Dispatch implements VehicleHiringTest {
 
         return regNumbers;
     }
+
+    public Party[] getAllParties() {
+        return allParties.toArray();
+    }
+
 
 }
