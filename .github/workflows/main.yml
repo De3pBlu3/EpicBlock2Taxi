@@ -30,7 +30,7 @@ jobs:
           context: ./
           file: ./dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/EpicBlock2Taxi:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/epicblock2taxi:latest
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
