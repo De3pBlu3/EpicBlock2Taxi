@@ -8,6 +8,7 @@ import static other.Util.randomRegistrationString;
 @SuppressWarnings("unused")
 abstract public sealed class Vehicle extends Entity permits Taxi {
 
+    private Party occupyingParty;
     private int capacity;
     private int size;
     private final String registrationNumber;
@@ -93,6 +94,13 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         oldLoc.getCurrentNetLocation().removeOccupant(this);
         loc.getCurrentNetLocation().addOccupant(this);
         this.setLocation(loc);
+    }
+
+    public void setParty(Party party) {
+        this.occupyingParty = party;
+    }
+    public Party getParty() {
+        return this.occupyingParty;
     }
 
 }
