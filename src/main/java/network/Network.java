@@ -314,6 +314,14 @@ public class Network {
         return edgesArray;
     }
 
+    private Node[] getNodesAsArray() {
+        Node[] nodesArray = new Node[this.nodes.length()];
+        for (int i = 0; i < this.nodes.length(); i++) {
+            nodesArray[i] = this.nodes.get(i);
+        }
+        return nodesArray;
+    }
+
 
     /**
      * Returns all edges within a certain range of a node.
@@ -355,25 +363,70 @@ public class Network {
         return centralNode;
     }
 
-    public void calculateCentralNode() {
-        // betweenness centrality
-        // https://en.wikipedia.org/wiki/Betweenness_centrality
-            // An approximate, probabilistic estimation of betweenness centralities can be obtained much faster by sampling paths using a bidirectional breadth-first search.[8]
-            // do we want to do this by weight or by amount of nodes? 
-        // https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm
-        // omg is V^3 time complexity christ
+    private int findElementinArray(Node[] array, Node element) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-        // Johnson's algorithm
-        // First, a new node q is added to the graph, connected by zero-weight edges to each of the other nodes.
-        // Second, the Bellman–Ford algorithm is used, starting from the new vertex q, to find for each vertex v the minimum weight h(v) of a
-        // path from q to v. If this step detects a negative cycle, the algorithm is terminated.
-        // Next the edges of the original graph are reweighted using the values computed by the Bellman–Ford algorithm: an edge from u to v,
-        // having length w ( u , v ) {\displaystyle w(u,v)}, is given the new length w(u,v) + h(u) − h(v).
-        // Finally, q is removed, and Dijkstra's algorithm is used to find the shortest paths from each node s to every other vertex
-        // in the reweighted graph. The distance in the original graph is then computed for each distance D(u , v),
+    static class bellmanfordReturn {
+        int[] distance;
+        Node[] predecessor;
 
+        bellmanfordReturn(int[] distance, Node[] predecessor) {
+            this.distance = distance;
+            this.predecessor = predecessor;
+        }
+    }
 
-        //
+    private bellmanfordReturn bellmanFord(Node[] nodes, Edge[] edges, Node source) {
+
+        // This implementation takes in a graph, represented as
+        // lists of vertices (represented as integers [0..n-1]) and edges,
+        // and fills two arrays (distance and predecessor) holding
+        // the shortest path from the source to each vertex
+
+        // for each vertex v in vertices:
+        int[] distance = new int[nodes.length];
+        Node[] predecessor = new Node[nodes.length];
+
+        int sourceIndex = 0;
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i] == source) {
+                sourceIndex = i;
+                break;
+            }
+        }
+
+        // Step 1: initialize graph
+        for (int v = 0; v < nodes.length; v++) {
+            // Initialize the distance to all vertices to infinity
+            distance[v] = Integer.MAX_VALUE;
+            // And having a null predecessor
+            predecessor[v] = null;
+        }
+
+        // The distance from the source to itself is, of course, zero
+        distance[sourceIndex] = 0;
+
+        // Step 2: relax edges repeatedly
+        for (int i = 0; i < nodes.length - 1; i++) {
+            for (Edge e : edges) { // for each edge (u, v) with weight w in edges
+                int u = findElementinArray(nodes, e.start);
+                int v = findElementinArray(nodes, e.end);
+                int w = e.weight;
+
+                if (distance[u] + w < distance[v]) {
+                    distance[v] = distance[u] + w;
+                    predecessor[v] = nodes[u];
+                }
+            }
+        }
+
+        return new bellmanfordReturn(distance, predecessor);
     }
 
 

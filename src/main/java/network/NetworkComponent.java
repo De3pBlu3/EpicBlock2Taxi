@@ -27,6 +27,7 @@ public class NetworkComponent {
         }
 
         occupants.append(occupant);
+        occupant.setLocation(new Location(this));
     }
 
     public void removeOccupant(Entity occupant) {

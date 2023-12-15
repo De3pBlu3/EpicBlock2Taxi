@@ -10,7 +10,7 @@ public class EntityTest {
     public void Taxi_TestToString() {
         Taxi taxi = new Taxi(1, "", 1, null);
         assertEquals(
-                "Taxi[size=1, capacity=5, registrationNumber=, headcount=1, location=null, node=null]",
+                "Taxi[size=1, capacity=5, registrationNumber=, headcount=1, location=null]",
                 taxi.toString()
         );
     }
@@ -19,7 +19,7 @@ public class EntityTest {
     public void Party_TestToString() {
         Party party = new Party(1, null, "d");
         assertEquals(
-                "Party[headcount=1, location=null, node=null]",
+                "Party[headcount=1, location=null]",
                 party.toString()
         );
     }

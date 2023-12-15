@@ -1,6 +1,7 @@
 package entities;
 
 import network.Location;
+import network.NetworkComponent;
 import network.Node;
 
 /**
@@ -11,7 +12,6 @@ public abstract sealed class Entity permits Vehicle, Party {
 
     private int headcount;
     private Location location;
-    private Node node;
 
     public Entity(int headcount, Location location) {
         this.setHeadcount(headcount);
@@ -26,12 +26,8 @@ public abstract sealed class Entity permits Vehicle, Party {
         this.location = location;
     }
 
-    public Node getNode() {
-        return this.node;
-    }
-
-    public void setNode(Node node) {
-        this.node = node;
+    public NetworkComponent getNetwork() {
+        return this.location.getCurrentNetLocation();
     }
 
     public int getHeadcount() {
@@ -49,7 +45,7 @@ public abstract sealed class Entity permits Vehicle, Party {
 
     // For simplifying toString() implementations
     String getAttributeValues() {
-        return "headcount=" + this.headcount + ", location=" + this.location + ", node=" + this.node;
+        return "headcount=" + this.headcount + ", location=" + this.location;
     }
 
     void throwErrorIfLessThanOne(int arg, String argName) {
