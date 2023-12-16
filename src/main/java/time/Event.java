@@ -7,6 +7,7 @@ public class Event {
 
     public Event(Tick tick) {
         this.parentTick = tick;
+        tick.addEvent(this);
     }
 
     public Tick getParentTick() {
