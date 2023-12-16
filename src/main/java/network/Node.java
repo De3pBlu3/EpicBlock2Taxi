@@ -64,6 +64,9 @@ public class Node extends NetworkComponent {
     }
 
     private void getComponentsInRangeHelper(Node node, int weightLimit, DynamicArray<Edge> componentsInRange) {
+        if (weightLimit <= 0) {
+            return;
+        }
         for (Edge e: node.edges) {
             if (e.weight <= weightLimit) {
                 componentsInRange.addIfNotPresent(e);
