@@ -112,7 +112,7 @@ public class simulationMain {
 //            System.out.flush();
 
             System.out.printf(
-                    "%-15s\t%-35s\t%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t%n%s%n",
+                    "%-15s%-35s%-15s%-15s%-15s%-15s%-15s%n%s%n",
                     "Registration", "Location", "Count", "Capacity", "Occupied", "Party", "Destination",
                     "=".repeat(125)
             );
