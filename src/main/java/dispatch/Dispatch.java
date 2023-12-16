@@ -70,7 +70,24 @@ public final class Dispatch implements VehicleHiringTest {
         }
         else throw new IllegalArgumentException("Taxi is not at the same location as the party");
     }
-    public void dropOffParty(Vehicle taxi,Party party) {}
+    public void dropOffParty(Vehicle taxi,Party party) {
+        if (taxi.getLocation().getCurrentNetLocation().equals(party.getDestination().getCurrentNetLocation())) {
+            taxi.setParty(null);
+            // remove party from map
+            party.getLocation().getCurrentNetLocation().removeOccupant(party);
+            party.setNode(null);
+            party.setLocation(null);
+            party.setAssigned(false);
+            // remove party from list
+            this.allParties.removeIfPresent(party);
+            this.partiesOnMap.removeIfPresent(party);
+
+        }
+        else throw new IllegalArgumentException("Taxi is not at the same location as the party");
+
+
+
+    }
 
 
     public Taxi findNearestApplicableTaxi(Party party) {
