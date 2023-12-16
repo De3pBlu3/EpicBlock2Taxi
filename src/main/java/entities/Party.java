@@ -40,4 +40,8 @@ public final class Party extends Entity {
     public void setAssigned(boolean b) {
         this.assigned = b;
     }
+
+    public Location getDestination() {
+        return this.destination;
+    }
 }
