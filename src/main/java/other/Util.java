@@ -147,9 +147,8 @@ public class Util {
 
         int year = randInt(0, 23);
 
-        if (year > 12) {
+        if (year > 12)
             year = year*10 + randInt(1, 2);
-        }
 
         int randomIndex = randInt(0, 25);
         String county = countyAbbreviations[randomIndex];
@@ -161,7 +160,7 @@ public class Util {
         }
 
         return registrationString
-                .append(year)
+                .append(String.format("%02d", year))
                 .append('-')
                 .append(county)
                 .append('-')
