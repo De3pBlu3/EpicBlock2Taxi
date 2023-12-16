@@ -1,4 +1,23 @@
 package time;
 
-public class Dropoff {
+import dispatch.Dispatch;
+import entities.Party;
+import entities.Taxi;
+
+public class Dropoff extends Event {
+    private final Taxi taxi;
+    private final Party party;
+    private final Dispatch dispatch;
+
+    public Dropoff(Tick tick, Taxi taxi, Party party, Dispatch dispatch) {
+        super(tick);
+        this.taxi = taxi;
+        this.party = party;
+        this.dispatch = dispatch;
+    }
+
+    @Override
+    public void execute() {
+        dispatch.dropOffParty(taxi, party);
+    }
 }
