@@ -81,35 +81,47 @@ public class simulationMain {
         for (int i = 0; i < timeline.getLength(); i++){
             timeline.setCurrentTick(i);
             timeline.getCurrentTick().executeEvents();
+//
+////             PRINT OUT ALL VEHICLES TODO make this observer pattern
+//            Object[][] table = new String[dispatch.getAllVehicles().length()][];
+//            for (int x = 0; x < dispatch.getAllVehicles().length(); x++) {
+//                table[x] = new String[]{
+//                        dispatch.getAllVehicles().get(x).getRegistrationNumber(),
+//                        dispatch.getAllVehicles().get(x).getLocation().getCurrentNetLocation().toString(),
+//                        dispatch.getAllVehicles().get(x).getCount() + "",
+//                        dispatch.getAllVehicles().get(x).getCapacity() + "",
+//                        dispatch.getAllVehicles().get(x).getParty() == null ? "False": "True",
+//                        // if assigned, print party username, else print "none"
+//                        dispatch.getAllVehicles().get(x).getParty() == null ? "none" :
+//                                dispatch.getAllVehicles().get(x).getParty().getUsername(),
+//
+//                        dispatch.getAllVehicles().get(x).getParty() == null ? "none" :
+//                                dispatch.getAllVehicles().get(x).getDestination().getCurrentNetLocation().toString()
+//                };
+//            }
+//
+//            // print header
+//            System.out.format("%-15s\t%-35s\t%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t%n", "Registration", "Location", "Headcount", "Capacity", "Occupied", "Party", "Destination");
+//            for (final Object[] row : table) {
+//            // left justify all columns
+//                System.out.format("%-15s\t%-35s\t%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t%n", row);
+//            }
+//
+//
+//            System.out.println("==================================");
+//            System.out.flush();
 
-//             PRINT OUT ALL VEHICLES TODO make this observer pattern
-            Object[][] table = new String[dispatch.getAllVehicles().length()][];
-            for (int x = 0; x < dispatch.getAllVehicles().length(); x++) {
-                table[x] = new String[]{
-                        dispatch.getAllVehicles().get(x).getRegistrationNumber(),
-                        dispatch.getAllVehicles().get(x).getLocation().getCurrentNetLocation().toString(),
-                        dispatch.getAllVehicles().get(x).getCount() + "",
-                        dispatch.getAllVehicles().get(x).getCapacity() + "",
-                        dispatch.getAllVehicles().get(x).getParty() == null ? "False": "True",
-                        // if assigned, print party username, else print "none"
-                        dispatch.getAllVehicles().get(x).getParty() == null ? "none" :
-                                dispatch.getAllVehicles().get(x).getParty().getUsername(),
+            System.out.printf(
+                    "%-15s\t%-35s\t%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t%n%s%n",
+                    "Registration", "Location", "Count", "Capacity", "Occupied", "Party", "Destination",
+                    "=".repeat(125)
+            );
 
-                        dispatch.getAllVehicles().get(x).getParty() == null ? "none" :
-                                dispatch.getAllVehicles().get(x).getDestination().getCurrentNetLocation().toString()
-                };
-            }
+            dispatch.getAllVehicles().forEach(
+                    (vehicle) -> System.out.println(vehicle.asTableRow())
+            );
 
-            // print header
-            System.out.format("%-15s\t%-35s\t%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t%n", "Registration", "Location", "Headcount", "Capacity", "Occupied", "Party", "Destination");
-            for (final Object[] row : table) {
-            // left justify all columns
-                System.out.format("%-15s\t%-35s\t%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t%n", row);
-            }
-
-
-            System.out.println("==================================");
-            System.out.flush();
+            System.out.println();
 
         }
 
