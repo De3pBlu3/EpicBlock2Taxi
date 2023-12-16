@@ -25,6 +25,10 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         this.registrationNumber = registrationNumber;
     }
 
+    public Boolean isOccupied() {
+        return this.occupyingParty != null;
+    }
+
     public int getSize() {
         return this.size;
     }
