@@ -17,7 +17,7 @@ public class EntityTest {
 
     @Test
     public void Party_TestToString() {
-        Party party = new Party(1, null, "d");
+        Party party = new Party(1, null, "d", null);
         assertEquals(
                 "Party[headcount=1, location=null, node=null]",
                 party.toString()
@@ -31,7 +31,7 @@ public class EntityTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void Party_TestHeadcountLessThan1() {
-        Party taxi = new Party(0, null, "d");
+        Party taxi = new Party(0, null, "d", null);
     }
 
     @Test
