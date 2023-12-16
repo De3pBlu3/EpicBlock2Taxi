@@ -7,6 +7,7 @@ import dispatch.Dispatch;
 import network.Node;
 import other.CSVReader;
 import other.Util;
+import time.PartyRequestTaxi;
 import time.Timeline;
 import time.Scheduler;
 
@@ -18,8 +19,8 @@ public class simulationMain {
     static Scheduler scheduler = new Scheduler(timeline, network, dispatch);
 
     public static void init() {
-        int amountoftaxis = 10;
-        int amountofparties = 10;
+        int amountoftaxis = 5;
+        int amountofparties = 5;
 
         DynamicArray<String> locationNames = CSVReader.processData(
                 "src/main/csv/network_data.csv",
@@ -37,6 +38,7 @@ public class simulationMain {
             taxi.setNode(node);  // For later use in main
             node.addOccupant(taxi);  // Add taxi to map!
             dispatch.registerVehicle(taxi);  // Add them to mister dispatch list thanks dispatch guy what a great guy
+            dispatch.testAddToMap(taxi.getRegistrationNumber(), taxi.getLocation());  // Add them to the map thanks dispatch guy what a great guy
         }
 
         for (int i = 0; i < amountofparties; i++) {
@@ -58,24 +60,30 @@ public class simulationMain {
     }
 
     public static void main(String[] args) {
+
         init();
 
-        // find parties
+        timeline.extendTicks(150);
+        System.out.println("Timeline length: " + timeline.getLength());
+
+        // randomly over 100 ticks add parties to map
         for (Party party : dispatch.getAllParties()) {
-            scheduler.scheduleParty(party);
+            timeline.setCurrentTick(Util.randInt(0, 150));
+            new PartyRequestTaxi(timeline.getCurrentTick(), party, dispatch);
+
         }
 
 
+
+        // LOOP THROUGH ALL TICKS
         timeline.appendTick();
         timeline.setCurrentTick(0);
         for (int i = 0; i < timeline.getLength(); i++) {
-            System.out.println("Tick: " + i);
             timeline.getCurrentTick().executeEvents();
             timeline.getCurrentTick().printEvents();
-            timeline.nextTick();
+
+            timeline.setCurrentTick(i);
         }
-
-
     }
 
 }
