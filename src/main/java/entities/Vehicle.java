@@ -8,6 +8,7 @@ import static other.Util.randomRegistrationString;
 @SuppressWarnings("unused")
 abstract public sealed class Vehicle extends Entity permits Taxi {
 
+    private Party occupyingParty;
     private int capacity;
     private int size;
     private final String registrationNumber;
@@ -22,6 +23,10 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         super(headcount, loc);
         this.setSize(size);
         this.registrationNumber = registrationNumber;
+    }
+
+    public Boolean isOccupied() {
+        return this.occupyingParty != null;
     }
 
     public int getSize() {
@@ -95,4 +100,17 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         this.setLocation(loc);
     }
 
+    public void setParty(Party party) {
+        this.occupyingParty = party;
+    }
+    public Party getParty() {
+        return this.occupyingParty;
+    }
+
+    public Location getDestination() {
+        if (this.occupyingParty == null) {
+            return null;
+        }
+        return this.occupyingParty.getDestination();
+    }
 }

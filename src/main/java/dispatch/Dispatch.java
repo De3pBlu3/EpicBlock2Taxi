@@ -4,6 +4,8 @@ import entities.*;
 import lists.DynamicArray;
 import network.Edge;
 import network.Location;
+import network.Node;
+import time.Scheduler;
 
 import java.util.Optional;
 
@@ -16,16 +18,9 @@ public final class Dispatch implements VehicleHiringTest {
     private final DynamicArray<Party> allParties = new DynamicArray<>();
     private final DynamicArray<Party> partiesOnMap = new DynamicArray<>();
 
-    public void registerVehicle(Vehicle vehicle) {
-        allVehicles.addIfNotPresent(vehicle);
-    }
 
-    public Optional<Vehicle> getVehicleFromReg(String reg){
-        return this.allVehicles.getFirstMatch(
-                (v) -> v.getRegistrationNumber().equals(reg)
-        );
-    }
 
+    // ======================== PRIVATE METHODS ========================
     private boolean isVehicleRegistered(Vehicle vehicle) {
         return this.allVehicles.contains(vehicle);
     }
@@ -34,24 +29,100 @@ public final class Dispatch implements VehicleHiringTest {
         return this.vehiclesOnMap.contains(vehicle);
     }
 
-    private void MoveVehicleOneStep(Taxi vehicle, Location loc){
-        Location oldLoc = vehicle.getLocation();
-
-        // if vehicle is already at location, do nothing
-        if (oldLoc.getCurrentNetLocation().equals(loc.getCurrentNetLocation())){
-            return;
-        }
-        // if vehicle is at edge, do not move
-        if (oldLoc.getCurrentNetLocation().getClass() == Edge.class){
-            return;
-        }
-
-        // is there an edge between the two locations?
-
-        oldLoc.getCurrentNetLocation().removeOccupant(vehicle);
-        loc.getCurrentNetLocation().addOccupant(vehicle);
-        vehicle.setLocation(loc);
+    // ======================== GETTERS ========================
+    public DynamicArray<Vehicle> getAllVehicles() {
+        return allVehicles;
     }
+
+    public DynamicArray<Vehicle> getVehiclesOnMap() {
+        return vehiclesOnMap;
+    }
+
+    public Party[] getAllParties() {
+        Party[] parties = new Party[allParties.size()];
+        for (int i = 0; i < allParties.size(); i++) {
+            parties[i] = allParties.get(i);
+        }
+        return parties;
+    }
+
+    // ======================== ADD METHODS ========================
+    public void registerVehicle(Vehicle vehicle) {
+        allVehicles.addIfNotPresent(vehicle);
+    }
+
+    public void registerParty(Party party) {
+        allParties.addIfNotPresent(party);
+    }
+
+    // ======================== PUBLIC METHODS ========================
+    public Optional<Vehicle> getVehicleFromReg(String reg){
+        return this.allVehicles.getFirstMatch(
+                (v) -> v.getRegistrationNumber().equals(reg)
+        );
+    }
+
+    public void pickUpParty(Vehicle taxi,Party party) {
+        if (taxi.getLocation().getCurrentNetLocation().equals(party.getLocation().getCurrentNetLocation())) {
+            taxi.setParty(party);
+            party.setAssigned(true);
+
+        }
+        else throw new IllegalArgumentException("Taxi is not at the same location as the party");
+    }
+    public void dropOffParty(Vehicle taxi,Party party) {
+        if (taxi.getLocation().getCurrentNetLocation().equals(party.getDestination().getCurrentNetLocation())) {
+            taxi.setParty(null);
+            // remove party from map
+            party.getLocation().getCurrentNetLocation().removeOccupant(party);
+            party.setNode(null);
+            party.setLocation(null);
+            party.setAssigned(false);
+            // remove party from list
+            this.allParties.removeIfPresent(party);
+            this.partiesOnMap.removeIfPresent(party);
+
+        }
+        else throw new IllegalArgumentException("Taxi is not at the same location as the party");
+
+
+
+    }
+
+
+    public Taxi findNearestApplicableTaxi(Party party) {
+        int range = 5;
+        int maxRange = 100; // Set a maximum range to prevent infinite loop
+
+        while (range <= maxRange) {
+            DynamicArray<String> vehiclesInRange = testGetVehiclesInRange(party.getLocation(), range);
+            for (String reg : vehiclesInRange) {
+                Vehicle vehicle = this.getVehicleFromReg(reg).orElse(null);
+                if (vehicle != null && !vehicle.isOccupied()) {
+                    if (vehicle.getCapacity() >= party.getHeadcount()) {
+                        if (vehicle.getParty() == null) {
+                            party.setAssigned(true);
+                            return (Taxi) vehicle;
+                        }
+                    }
+                }
+            }
+            range++; // Increase the range if no suitable taxi is found
+        }
+        return null;
+    }
+
+
+    public void handlePartyRequest(Party party) {
+        Taxi taxi = findNearestApplicableTaxi(party);
+        if (taxi != null) {
+            Scheduler.scheduleJourney(taxi, party, (Node) party.destination.getCurrentNetLocation());
+        }
+        else {throw new IllegalArgumentException("No taxi found");}
+    }
+
+
+
 
     // ======================== MANDATORY TESTING METHODS ========================
 
@@ -79,7 +150,7 @@ public final class Dispatch implements VehicleHiringTest {
             int index = this.vehiclesOnMap.indexOf(vehicle);
 
             if (index != -1)  // If on map
-                // TODO: Update current vehicle location to new location
+
                 return true;
         }
 
@@ -136,5 +207,7 @@ public final class Dispatch implements VehicleHiringTest {
 
         return regNumbers;
     }
+
+
 
 }

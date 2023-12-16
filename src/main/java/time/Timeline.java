@@ -47,6 +47,7 @@ public class Timeline {
         if (this.currentTick == null) {
             this.currentTick = new Tick(0);
             this.rootTick = this.currentTick;
+            this.tickLength++;
             return;
         }
         while (this.currentTick.nextTick() != null) {
