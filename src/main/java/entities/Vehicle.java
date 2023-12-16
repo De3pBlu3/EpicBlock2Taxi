@@ -107,4 +107,10 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         return this.occupyingParty;
     }
 
+    public Location getDestination() {
+        if (this.occupyingParty == null) {
+            return null;
+        }
+        return this.occupyingParty.getDestination();
+    }
 }
