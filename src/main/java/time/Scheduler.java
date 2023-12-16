@@ -1,6 +1,7 @@
 
 package time;
 
+import entities.Party;
 import network.Network;
 import dispatch.Dispatch;
 import entities.Taxi;
@@ -16,31 +17,54 @@ public class Scheduler {
     // tick 5: create move event for taxi to node 2
     // tick 7: taxi arrives at node 2
 
-    Timeline timeline;
-    Network network;
-    Dispatch dispatch;
+    static Timeline timeline;
+    static Network network;
+    static Dispatch dispatch;
 
     public Scheduler(Timeline timeline, Network network, Dispatch dispatch) {
-        this.timeline = timeline;
-        this.network = network;
-        this.dispatch = dispatch;
+        Scheduler.timeline = timeline;
+        Scheduler.network = network;
+        Scheduler.dispatch = dispatch;
 
     }
 
-    public void scheduleMove(Taxi taxi, Node destination) {
+    private static void scheduleMove(Taxi taxi, Node destination) {
         Node[] x =  network.findPath( (Node) taxi.getLocation().getCurrentNetLocation(), destination);
-        System.out.println(Arrays.toString(x));
+//        System.out.println(Arrays.toString(x));
+        int originalTick = timeline.getCurrentTick().getTickNumber();
         for (int i = 0; i < x.length; i++) {
             try {
-                System.out.println(i + ": " + x[i] + " to " + x[i+1] + " has weight: " +  x[i].getEdge(x[i+1]).getWeight());
+//                System.out.println(i + ": " + x[i] + " to " + x[i+1] + " has weight: " +  x[i].getEdge(x[i+1]).getWeight());
                 timeline.extendTicks(x[i].getEdge(x[i+1]).getWeight());
-                timeline.getCurrentTick().addEvent(new Move(timeline.getCurrentTick(), taxi, new Location(x[i+1])));
+                new Move(timeline.getCurrentTick(), taxi, new Location(x[i+1]));
             }
             catch (ArrayIndexOutOfBoundsException e) {
                 // do nothing, we're at the end of the path
             }
         }
-        System.out.println("");
+//        timeline.setCurrentTick(originalTick);
+//        System.out.println("");
 
     }
+
+    public static void scheduleJourney(Taxi taxi, Party party, Node destination) {
+        int originalTick = timeline.getCurrentTick().getTickNumber();
+        // trip to party
+        Node partyLocation = party.getNode();
+        scheduleMove(taxi, partyLocation);
+        // pick up
+        new Pickup(timeline.getCurrentTick(), taxi, party, dispatch);
+        timeline.extendTicks(1);
+//        timeline.nextTick();
+        // trip to destination
+        scheduleMove(taxi, destination);
+        // drop off
+       new Dropoff(timeline.getCurrentTick(), taxi, party, dispatch);
+        timeline.extendTicks(1);
+//        timeline.nextTick();
+        timeline.setCurrentTick(originalTick);
+
+
+    }
+
 }
