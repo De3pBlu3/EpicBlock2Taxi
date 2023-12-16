@@ -21,4 +21,12 @@ public class Location {
         return new float[] {this.x, this.y};
     }
 
+    @Override
+    public String toString() {
+        if (this.currentNetLocation instanceof Node node) {
+            return node.toString();
+        }
+        return currentNetLocation.getClass().getSimpleName();
+    }
+
 }

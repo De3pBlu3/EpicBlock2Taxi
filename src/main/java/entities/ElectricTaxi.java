@@ -4,8 +4,8 @@ import network.Location;
 
 public final class ElectricTaxi extends Taxi {
 
-    public ElectricTaxi(int size, int headcount, Location loc) {
-        super(size, headcount, loc);
+    public ElectricTaxi( Location loc) {
+        super(2, loc);
     }
 
 }

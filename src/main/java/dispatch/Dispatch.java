@@ -99,7 +99,7 @@ public final class Dispatch implements VehicleHiringTest {
             for (String reg : vehiclesInRange) {
                 Vehicle vehicle = this.getVehicleFromReg(reg).orElse(null);
                 if (vehicle != null && !vehicle.isOccupied()) {
-                    if (vehicle.getCapacity() >= party.getHeadcount()) {
+                    if (vehicle.getCapacity() >= party.getCount()) {
                         if (vehicle.getParty() == null) {
                             party.setAssigned(true);
                             return (Taxi) vehicle;
@@ -116,7 +116,7 @@ public final class Dispatch implements VehicleHiringTest {
     public void handlePartyRequest(Party party) {
         Taxi taxi = findNearestApplicableTaxi(party);
         if (taxi != null) {
-            Scheduler.scheduleJourney(taxi, party, (Node) party.destination.getCurrentNetLocation());
+            Scheduler.scheduleJourney(taxi, party, (Node) party.getDestination().getCurrentNetLocation());
         }
         else {throw new IllegalArgumentException("No taxi found");}
     }

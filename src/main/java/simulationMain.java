@@ -34,7 +34,7 @@ public class simulationMain {
             Node node = network.getNode(locationNames.get(Util.randInt(0, locationNames.size() - 1)));
             Location loc = new Location(node);
 
-            Taxi taxi = new Taxi(randomSize, 1, loc);
+            Taxi taxi = new Taxi(randomSize, loc);
             taxi.setNode(node);  // For later use in main
             node.addOccupant(taxi);  // Add taxi to map!
             dispatch.registerVehicle(taxi);  // Add them to mister dispatch list thanks dispatch guy what a great guy
@@ -88,12 +88,12 @@ public class simulationMain {
                 table[x] = new String[]{
                         dispatch.getAllVehicles().get(x).getRegistrationNumber(),
                         dispatch.getAllVehicles().get(x).getLocation().getCurrentNetLocation().toString(),
-                        dispatch.getAllVehicles().get(x).getHeadcount() + "",
+                        dispatch.getAllVehicles().get(x).getCount() + "",
                         dispatch.getAllVehicles().get(x).getCapacity() + "",
                         dispatch.getAllVehicles().get(x).getParty() == null ? "False": "True",
                         // if assigned, print party username, else print "none"
                         dispatch.getAllVehicles().get(x).getParty() == null ? "none" :
-                                dispatch.getAllVehicles().get(x).getParty().username,
+                                dispatch.getAllVehicles().get(x).getParty().getUsername(),
 
                         dispatch.getAllVehicles().get(x).getParty() == null ? "none" :
                                 dispatch.getAllVehicles().get(x).getDestination().getCurrentNetLocation().toString()
