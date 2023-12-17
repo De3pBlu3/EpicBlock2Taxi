@@ -2,6 +2,7 @@ package lists;
 
 // To implement enhanced for-loop capability
 import java.util.Iterator;
+
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -67,6 +68,7 @@ public final class DynamicArray<T> implements Iterable<T> {
     public int size() {
         return this.count;
     }
+
     public int length() {
         return this.count;
     }
@@ -126,6 +128,12 @@ public final class DynamicArray<T> implements Iterable<T> {
             throw new ArrayIndexOutOfBoundsException("Cannot invoke getLast() on empty list");
 
         return this.array[count - 1];
+    }
+
+    public void set(int index, T element) {
+        this.outOfBoundsCheck(index);
+
+        this.array[index] = element;
     }
 
     /**
@@ -465,7 +473,7 @@ public final class DynamicArray<T> implements Iterable<T> {
      * @throws ArrayIndexOutOfBoundsException if index out of bounds.
      */
     private void outOfBoundsCheck(int index) {
-        if (index >= this.count)
+        if (index >= this.count || index < 0)
             throw new ArrayIndexOutOfBoundsException("Index " + index + " out of bounds for length " + this.size());
     }
 
