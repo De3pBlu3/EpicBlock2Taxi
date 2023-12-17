@@ -82,8 +82,6 @@ public class Node extends NetworkComponent {
     public String toString() {
         return "Node[id='"
                 + this.id
-                + "', occupants = "
-                + this.occupants
                 + ']';
     }
 

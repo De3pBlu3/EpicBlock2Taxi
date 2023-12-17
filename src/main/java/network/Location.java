@@ -23,10 +23,7 @@ public class Location {
 
     @Override
     public String toString() {
-        if (this.currentNetLocation instanceof Node node) {
-            return node.toString();
-        }
-        return currentNetLocation.getClass().getSimpleName();
+        return currentNetLocation.toString();
     }
 
 }
