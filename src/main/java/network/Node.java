@@ -80,9 +80,7 @@ public class Node extends NetworkComponent {
 
     @Override
     public String toString() {
-        return "Node[id='"
-                + this.id
-                + ']';
+        return "Node[id='" + this.id + ']';
     }
 
     @Override

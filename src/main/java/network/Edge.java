@@ -41,7 +41,6 @@ public class Edge extends NetworkComponent {
                 + ", weight = " + this.weight
                 + ", start = " + this.start
                 + ", end = " + this.end
-                + ", occupants = " + this.occupants
                 + ']';
     }
 
