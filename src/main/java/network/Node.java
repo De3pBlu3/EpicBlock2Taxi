@@ -9,6 +9,24 @@ public class Node extends NetworkComponent {
     int y;
     Edge[] edges;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
     public void addEdge(Edge UserEdge){
         if (this.edges == null) {
             this.edges = new Edge[1];

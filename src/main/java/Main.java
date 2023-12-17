@@ -5,7 +5,6 @@
 //import other.*;
 //import entities.Taxi;
 //
-//import java.util.List;
 //import java.util.function.Consumer;
 //
 //public class Main {
@@ -84,6 +83,7 @@
 //            Node node = network.getNode(locationNames.get(Util.randInt(0, locationNames.size() - 1)));
 //            Location loc = new Location(node);
 //
+
 //            Taxi taxi = new Taxi(randomCapacity, reg, 1, loc);
 //            taxi.setNode(node);  // For later use in main
 //            node.addOccupant(taxi);  // Add taxi to map!
@@ -108,13 +108,16 @@
 //        System.out.println("\nLocating nearest taxis for you...\n");
 //
 //        // Find taxis
-//        List<String> taxiRegistrationNumbersInRange = dispatch.testGetVehiclesInRange(userLoc, 20);
+//        DynamicArray<String> taxiRegistrationNumbersInRange = dispatch.testGetVehiclesInRange(userLoc, 20);
 //        DynamicArray<Taxi> appropriateTaxis = new DynamicArray<>();
 //
 //        for (String taxiReg : taxiRegistrationNumbersInRange) {
-//            Taxi taxi = dispatch.getVehicleFromReg(taxiReg);
-//            if (taxi.getCapacity() >= partyCount)
-//                appropriateTaxis.append(taxi);
+//            dispatch.getVehicleFromReg(taxiReg).ifPresent(
+//                    (v) -> {
+//                        if (v.getCapacity() >= partyCount)
+//                            appropriateTaxis.append((Taxi) v);
+//                    }
+//            );
 //        }
 //
 //        if (appropriateTaxis.isEmpty()) {

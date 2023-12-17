@@ -62,6 +62,18 @@ public final class Dispatch implements VehicleHiringTest {
         );
     }
 
+    public Vehicle[] getVehiclesOnMap() {
+        Vehicle[] vehiclesOnMapArray = new Vehicle[this.vehiclesOnMap.length()];
+        for (int i = 0; i < this.vehiclesOnMap.length(); i++) {
+            vehiclesOnMapArray[i] = this.vehiclesOnMap.get(i);
+        }
+        return vehiclesOnMapArray;
+    }
+
+    private boolean isVehicleRegistered(Vehicle vehicle) {
+        return this.allVehicles.contains(vehicle);
+    }
+      
     public void pickUpParty(Vehicle taxi,Party party) {
         if (taxi.getLocation().getCurrentNetLocation().equals(party.getLocation().getCurrentNetLocation())) {
             taxi.setParty(party);
@@ -70,6 +82,7 @@ public final class Dispatch implements VehicleHiringTest {
         }
         else throw new IllegalArgumentException("Taxi is not at the same location as the party");
     }
+      
     public void dropOffParty(Vehicle taxi,Party party) {
         if (taxi.getLocation().getCurrentNetLocation().equals(party.getDestination().getCurrentNetLocation())) {
             taxi.setParty(null);

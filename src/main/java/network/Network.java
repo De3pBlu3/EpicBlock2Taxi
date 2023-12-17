@@ -19,6 +19,8 @@ public class Network {
     private final DynamicArray<Node> nodes;
     private final DynamicArray<Edge> edges;
 
+    private Node centralNode;
+
     public Network() {
         this.nodes = new DynamicArray<>();
         this.edges = new DynamicArray<>();
@@ -162,6 +164,7 @@ public class Network {
     }
 
     public Node[] findPath(Node nodeStart, Node nodeEnd) {
+        // TODO “I love order. It's my dream. A world where all would be silent and still, and each thing in its last place, under the last dust.”
         // find path from start to end
         // A* would be cool, but would require a direct line of distance to target node geometrically,
         // so we will use Dijkstra's algorithm
@@ -229,6 +232,8 @@ public class Network {
         dijkstraNodes = new DynamicArray<>(nodesArray);
 
         while (!dijkstraNodes.isEmpty()) {
+
+            // get node with smallest distance from start node until we reach the end node or there are no more nodes
             DijkstraNode u = dijkstraNodes.get(0);
             for (DijkstraNode dn : dijkstraNodes) {
                 if (dn.dist < u.dist) {
@@ -239,6 +244,8 @@ public class Network {
                 break;
             }
 
+
+            // remove u from Q
             DijkstraNode[] temp_Q = new DijkstraNode[dijkstraNodes.length() - 1];
             int temp_Q_index = 0;
             for (DijkstraNode dn : dijkstraNodes) {
@@ -249,6 +256,8 @@ public class Network {
             }
             dijkstraNodes = new DynamicArray<>(temp_Q);
 
+
+            // find each neighbour of u
             for (Edge e : u.node.edges) {
                 DijkstraNode v = null;
                 for (DijkstraNode dn : dijkstraNodes) {
@@ -257,10 +266,12 @@ public class Network {
                         break;
                     }
                 }
-                int alt = u.dist + e.weight;
                 if (v == null) {
                     continue;
                 }
+
+
+                int alt = u.dist + e.weight;
                 if (alt < v.dist) {
                     v.dist = alt;
                     v.prev = u;
@@ -303,6 +314,14 @@ public class Network {
         return edgesArray;
     }
 
+    public Node[] getNodesAsArray() {
+        Node[] nodesArray = new Node[this.nodes.length()];
+        for (int i = 0; i < this.nodes.length(); i++) {
+            nodesArray[i] = this.nodes.get(i);
+        }
+        return nodesArray;
+    }
+
 
     /**
      * Returns all edges within a certain range of a node.
@@ -338,6 +357,76 @@ public class Network {
                 getComponentsInRangeHelper(e.end, weightLimit-e.weight, componentsInRange);
             }
         }
+    }
+
+    public Node getCentralNode() {
+        return centralNode;
+    }
+
+    private int findElementinArray(Node[] array, Node element) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    static class bellmanfordReturn {
+        int[] distance;
+        Node[] predecessor;
+
+        bellmanfordReturn(int[] distance, Node[] predecessor) {
+            this.distance = distance;
+            this.predecessor = predecessor;
+        }
+    }
+
+    private bellmanfordReturn bellmanFord(Node[] nodes, Edge[] edges, Node source) {
+
+        // This implementation takes in a graph, represented as
+        // lists of vertices (represented as integers [0..n-1]) and edges,
+        // and fills two arrays (distance and predecessor) holding
+        // the shortest path from the source to each vertex
+
+        // for each vertex v in vertices:
+        int[] distance = new int[nodes.length];
+        Node[] predecessor = new Node[nodes.length];
+
+        int sourceIndex = 0;
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i] == source) {
+                sourceIndex = i;
+                break;
+            }
+        }
+
+        // Step 1: initialize graph
+        for (int v = 0; v < nodes.length; v++) {
+            // Initialize the distance to all vertices to infinity
+            distance[v] = Integer.MAX_VALUE;
+            // And having a null predecessor
+            predecessor[v] = null;
+        }
+
+        // The distance from the source to itself is, of course, zero
+        distance[sourceIndex] = 0;
+
+        // Step 2: relax edges repeatedly
+        for (int i = 0; i < nodes.length - 1; i++) {
+            for (Edge e : edges) { // for each edge (u, v) with weight w in edges
+                int u = findElementinArray(nodes, e.start);
+                int v = findElementinArray(nodes, e.end);
+                int w = e.weight;
+
+                if (distance[u] + w < distance[v]) {
+                    distance[v] = distance[u] + w;
+                    predecessor[v] = nodes[u];
+                }
+            }
+        }
+
+        return new bellmanfordReturn(distance, predecessor);
     }
 
 
