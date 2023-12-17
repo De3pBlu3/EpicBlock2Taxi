@@ -5,7 +5,6 @@ import lists.DynamicArray;
 @SuppressWarnings("unused")
 public class Node extends NetworkComponent {
 
-    String id;
     int x;
     int y;
     Edge[] edges;
@@ -23,14 +22,9 @@ public class Node extends NetworkComponent {
     }
 
     public Node(String id, float x, float y) {
+        super(id);
         this.x = (int) x;   // TODO: to float or not to float?
         this.y = (int) y;
-
-        this.id = id;
-    }
-
-    public static boolean equals(Node n, Node userNode) {   // added for redundancy
-        return n.id.equals(userNode.id);
     }
 
     /**
@@ -86,11 +80,24 @@ public class Node extends NetworkComponent {
 
     @Override
     public String toString() {
-        return "Node {" +
-                "id='" + id + '\'' + "}";
-//                ", (x=" + x +
-//                ", y=" + y +  ")" +
-//                '}';
+        return "Node[id='"
+                + this.id
+                + "', occupants = "
+                + this.occupants
+                + ']';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Node node) {
+            return node.id.equals(this.id);
+        }
+
+        return false;
+    }
+//
+//    public static boolean equals(Node n, Node userNode) {   // added for redundancy
+//        return n.id.equals(userNode.id);
+//    }
 
 }
