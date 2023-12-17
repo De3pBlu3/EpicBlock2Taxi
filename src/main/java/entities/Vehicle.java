@@ -12,17 +12,20 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
     private int capacity;
     private final String registrationNumber;
     private Party occupyingParty;
-
-    public Vehicle(int size, Location loc) {
-        super(loc);
-        this.setSize(size);
-        this.registrationNumber = randomRegistrationString();
-    }
+    private final Driver driver;
 
     public Vehicle(int size, String registrationNumber, Location loc) {
         super(loc);
         this.setSize(size);
         this.registrationNumber = registrationNumber;
+        this.driver = new Driver();
+    }
+
+    public Vehicle(int size, Location loc) {
+        super(loc);
+        this.setSize(size);
+        this.registrationNumber = randomRegistrationString();
+        this.driver = new Driver();
     }
 
     public int getSize() {
@@ -79,6 +82,14 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         return this.occupyingParty.getCount() + 1;
     }
 
+    public double getRating() {
+        return this.driver.getRating();
+    }
+
+    public void rate(double rating) {
+        this.driver.rate(rating);
+    }
+
     public void MoveVehicleOneStep(Location loc){
         Location oldLoc = this.getLocation();
 
@@ -117,15 +128,6 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
 
         return row.toString();
     }
-
-//    @Override
-//    String getAttributeValues() {
-//        return "size=" + this.size
-//                + ", capacity=" + this.capacity
-//                + ", registrationNumber=" + this.registrationNumber
-//                + ", occupyingParty=" + this.occupyingParty
-//                + ", " + super.getAttributeValues();
-//    }
 
     @Override
     public String toString() {
