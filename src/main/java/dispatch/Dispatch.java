@@ -72,6 +72,7 @@ public final class Dispatch implements VehicleHiringTest {
 
     private boolean isVehicleRegistered(Vehicle vehicle) {
         return this.allVehicles.contains(vehicle);
+    }
       
     public void pickUpParty(Vehicle taxi,Party party) {
         if (taxi.getLocation().getCurrentNetLocation().equals(party.getLocation().getCurrentNetLocation())) {
