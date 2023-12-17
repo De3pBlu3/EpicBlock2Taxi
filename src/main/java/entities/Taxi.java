@@ -9,20 +9,12 @@ import static other.Util.randomRegistrationString;
  */
 public sealed class Taxi extends Vehicle permits ElectricTaxi, LimoTaxi, SportsTaxi {
 
-    public Taxi(int size, String registrationNumber, int headcount, Location loc) {
-        super(size, registrationNumber, headcount, loc);
+    public Taxi(int size, String registrationNumber, Location loc) {
+        super(size, registrationNumber, loc);
     }
 
-    public Taxi(int size, int headcount, Location loc) {
-        super(size, randomRegistrationString(), headcount, loc);
-    }
-
-
-
-
-    @Override
-    public final String toString() {
-        return this.getClass().getSimpleName() + '[' + this.getAttributeValues() + ']';
+    public Taxi(int size, Location loc) {
+        super(size, randomRegistrationString(), loc);
     }
 
 }

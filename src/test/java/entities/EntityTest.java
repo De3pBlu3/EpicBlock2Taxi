@@ -50,5 +50,4 @@ public class EntityTest {
         // Same as testing if headcount greater than capacity
         Taxi taxi = new Taxi(1, "",10, null);
     }
-
 }

@@ -44,6 +44,9 @@ public class Tick {
 
 
     public void executeEvents() {
+        if (events.isEmpty()) {
+            return;
+        }
         for (Event event : events) {
             event.execute();
         }

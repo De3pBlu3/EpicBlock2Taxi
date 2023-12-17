@@ -3,13 +3,34 @@ package network;
 import entities.Entity;
 import lists.DynamicArray;
 
-public class NetworkComponent {
+import static other.Util.randInt;
+
+public abstract class NetworkComponent {
+
+    final String id;
 
     DynamicArray<Entity> occupants = new DynamicArray<>();
+
+    public NetworkComponent(String id) {
+        this.id = id;
+    }
+
+    public NetworkComponent() {
+        this.id = String.valueOf(randInt(1, Integer.MAX_VALUE));
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public DynamicArray<Entity> getOccupants(){
+        return occupants;
+    }
 
     /**
      * Returns all edges within a certain range of this node.
      * If the weightLimit is 0, then nothing is returned.
+     *
      * @param weightLimit how far down the network to go
      * @return an array of edges within range
      */
@@ -41,8 +62,8 @@ public class NetworkComponent {
         occupants.removeAllOccurrences(occupant);
     }
 
-    public DynamicArray<Entity> getOccupants(){
-        return occupants;
-    }
+    abstract public String toString();
+
+    abstract public boolean equals(Object o);
 
 }

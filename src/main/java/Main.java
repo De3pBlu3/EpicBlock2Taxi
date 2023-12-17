@@ -75,13 +75,16 @@
 //
 //        // Add 30 taxis to the map 'randomly'
 //        for (int i = 0; i < 30; i++) {
-//            int randomSize = Util.randInt(1, 3);
+//            int randomCapacity = Util.randInt(2, 5);
+//
+//            String reg = Util.randomRegistrationString();
 //
 //            // Sorry this is kinda awkward; I'm just putting them at random locations for now
 //            Node node = network.getNode(locationNames.get(Util.randInt(0, locationNames.size() - 1)));
 //            Location loc = new Location(node);
 //
-//            Taxi taxi = new Taxi(randomSize, 1, loc);
+
+//            Taxi taxi = new Taxi(randomCapacity, reg, 1, loc);
 //            taxi.setNode(node);  // For later use in main
 //            node.addOccupant(taxi);  // Add taxi to map!
 //            dispatch.registerVehicle(taxi);  // Add them to mister dispatch list thanks dispatch guy what a great guy

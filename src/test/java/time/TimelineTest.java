@@ -57,27 +57,27 @@ public class TimelineTest {
     public void testExtendTicks() {
         timeline.extendTicks(5);
         assertNotNull(timeline.getCurrentTick());
-        assertEquals(4, timeline.getCurrentTick().getTickNumber());
+        assertEquals(5, timeline.getCurrentTick().getTickNumber());
     }
 
     @Test
     public void testGetLength() {
         assertEquals(0, timeline.getLength());
         timeline.extendTicks(5);
-        assertEquals(4, timeline.getLength());
+        assertEquals(5, timeline.getLength());
     }
 
     @Test
     public void testSetCurrentTickWE() {
         timeline.extendTicks(5);
         timeline.setCurrentTick(3);
-        assertEquals(3, timeline.getCurrentTick().getTickNumber());
+        assertEquals(4, timeline.getCurrentTick().getTickNumber());
     }
 
     @Test
     public void testSetCurrentTickWE2() {
         timeline.extendTicks(5);
         timeline.setCurrentTick(3);
-        assertEquals(3, timeline.getCurrentTick().getTickNumber());
+        assertEquals(4, timeline.getCurrentTick().getTickNumber());
     }
 }

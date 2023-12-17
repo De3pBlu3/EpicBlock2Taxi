@@ -21,4 +21,9 @@ public class Location {
         return new float[] {this.x, this.y};
     }
 
+    @Override
+    public String toString() {
+        return currentNetLocation.toString();
+    }
+
 }

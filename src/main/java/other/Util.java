@@ -1,5 +1,8 @@
 package other;
 
+import entities.Driver;
+import lists.DynamicArray;
+
 import java.util.Scanner;
 
 @SuppressWarnings("unused")
@@ -13,6 +16,30 @@ public class Util {
             "MN", "MO", "OY", "RN", "SO", "T", "W", "WH",
             "WX", "WW"
     };
+
+    private static final DynamicArray<String> FIRST_NAMES = new DynamicArray<>(
+            "Darragh", "Joseph", "Josephine", "Jack",
+            "Steven", "Jimmy", "Howard", "Robert", "Tom",
+            "Timothy", "Ned", "Mike", "Mohammed", "Alexandra",
+            "Mary", "Benjamin", "Xavier", "Jean", "Mia", "Conor",
+            "Ruan", "Aaron", "Kelly", "Michelle", "Oisín", "Ciarán",
+            "Kieran", "Yasmin", "Jasmine", "Peter", "Nelly", "Pete",
+            "Dennis", "Alex", "John", "Joe", "Steve", "Michael",
+            "Eoin", "Eoghan", "Maura", "Maurine", "Rory", "Mike", "Ashley"
+    );
+
+    public static final DynamicArray<String> LAST_NAMES = new DynamicArray<>(
+            "Stevenson", "O' Hara", "Peterson", "Smith",
+            "Smyth", "Wright", "Lennon", "Hamilton", "La Fayette", "Pryde",
+            "Renold", "Layman", "Reno", "Clevenger", "Payton", "Ashby",
+            "Boatwright", "Castleberry", "Meowman", "Barkman", "Milton",
+            "Kravitz", "Latimer", "Hamilton", "McKinley", "Chase", "Cason",
+            "Stegall", "Yelnats", "Leif", "Nicomedius", "Lexington", "Buford",
+            "Macpherson", "Reed", "Lynch", "O' Neill", "Barrett", "Peterson",
+            "Renolds", "Vo", "Lopez", "Teagan", "Dodson", "Meowmeowman"
+    );
+
+    public static final DynamicArray<String> GENERATED_NAMES = new DynamicArray<>();
 
     public enum Color {
         RED("\033[91m"),    // Indicates error
@@ -137,6 +164,22 @@ public class Util {
     }
 
     /**
+     * Generates a random full name.
+     */
+    public static String randomName() {
+
+        while (true) {
+            String first = FIRST_NAMES.get(randInt(0, FIRST_NAMES.length() - 1));
+            String last = LAST_NAMES.get(randInt(0, LAST_NAMES.length() - 1));
+
+            String name = first + " " + last;
+
+            if (!GENERATED_NAMES.addIfNotPresent(name))
+                return name;
+        }
+    }
+
+    /**
      * Generates a random Irish car registration number
      * between the years of 2000 to 2023.
      *
@@ -147,9 +190,8 @@ public class Util {
 
         int year = randInt(0, 23);
 
-        if (year > 12) {
+        if (year > 12)
             year = year*10 + randInt(1, 2);
-        }
 
         int randomIndex = randInt(0, 25);
         String county = countyAbbreviations[randomIndex];
@@ -161,7 +203,7 @@ public class Util {
         }
 
         return registrationString
-                .append(year)
+                .append(String.format("%02d", year))
                 .append('-')
                 .append(county)
                 .append('-')

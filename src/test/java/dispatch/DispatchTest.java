@@ -17,9 +17,9 @@ public class DispatchTest {
     public void getVehicleFromReg() {
         DynamicArray<Taxi> allVehicles = new DynamicArray<Taxi>();
 
-        Taxi taxi1 = new Taxi(3, "ABC", 1, null);
-        Taxi taxi2 = new Taxi(3, "DEF", 1, null);
-        Taxi taxi3 = new Taxi(3, "GHI", 1, null);
+        Taxi taxi1 = new Taxi(1, "ABC", null);
+        Taxi taxi2 = new Taxi(1, "DEF", null);
+        Taxi taxi3 = new Taxi(1, "GHI", null);
 
         allVehicles.append(taxi1);
         allVehicles.append(taxi2);
@@ -65,9 +65,9 @@ public class DispatchTest {
 
 
         // set up taxis
-        Taxi taxi1 = new Taxi(3, "ABC", 1, Nodeloc1);
-        Taxi taxi2 = new Taxi(3, "DEF", 1, EdgeLoc1);
-        Taxi taxi3 = new Taxi(3, "GHI", 1, EdgeLoc1);
+        Taxi taxi1 = new Taxi(1, "ABC", Nodeloc1);
+        Taxi taxi2 = new Taxi(1, "DEF", EdgeLoc1);
+        Taxi taxi3 = new Taxi(1, "GHI", EdgeLoc1);
 
 
         // ==================== TAXI 1 - NODE 1 ====================
@@ -149,13 +149,13 @@ public class DispatchTest {
         Location Nodeloc7 = new Location(testNet.getNode("G"));     // node 7
 
         // set up taxis
-        Taxi taxi1 = new Taxi(3, "ABC", 1, Nodeloc1);
-        Taxi taxi2 = new Taxi(3, "DEF", 1, Nodeloc2);
-        Taxi taxi3 = new Taxi(3, "GHI", 1, Nodeloc3);
-        Taxi taxi4 = new Taxi(3, "JKL", 1, Nodeloc4);
-        Taxi taxi5 = new Taxi(3, "MNO", 1, Nodeloc5);
-        Taxi taxi6 = new Taxi(3, "PQR", 1, Nodeloc6);
-        Taxi taxi7 = new Taxi(3, "STU", 1, Nodeloc7);
+        Taxi taxi1 = new Taxi(1, "ABC", Nodeloc1);
+        Taxi taxi2 = new Taxi(1, "DEF", Nodeloc2);
+        Taxi taxi3 = new Taxi(1, "GHI", Nodeloc3);
+        Taxi taxi4 = new Taxi(1, "JKL", Nodeloc4);
+        Taxi taxi5 = new Taxi(1, "MNO", Nodeloc5);
+        Taxi taxi6 = new Taxi(1, "PQR", Nodeloc6);
+        Taxi taxi7 = new Taxi(1, "STU",  Nodeloc7);
 
 
         Dispatch dispatch = new Dispatch();
