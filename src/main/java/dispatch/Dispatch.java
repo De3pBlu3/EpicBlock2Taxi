@@ -26,6 +26,14 @@ public final class Dispatch implements VehicleHiringTest {
         );
     }
 
+    public Vehicle[] getVehiclesOnMap() {
+        Vehicle[] vehiclesOnMapArray = new Vehicle[this.vehiclesOnMap.length()];
+        for (int i = 0; i < this.vehiclesOnMap.length(); i++) {
+            vehiclesOnMapArray[i] = this.vehiclesOnMap.get(i);
+        }
+        return vehiclesOnMapArray;
+    }
+
     private boolean isVehicleRegistered(Vehicle vehicle) {
         return this.allVehicles.contains(vehicle);
     }
