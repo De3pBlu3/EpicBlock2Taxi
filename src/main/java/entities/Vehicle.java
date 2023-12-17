@@ -82,6 +82,10 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         return this.occupyingParty.getCount() + 1;
     }
 
+    public Driver getDriver() {
+        return this.driver;
+    }
+
     public double getRating() {
         return this.driver.getRating();
     }
