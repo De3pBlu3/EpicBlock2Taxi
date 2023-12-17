@@ -50,7 +50,7 @@ public class simulationMain {
             while (destLoc == partyLoc) {
                 destLoc = new Location(network.getNode(locationNames.get(Util.randInt(0, locationNames.size() - 1))));
             }
-            Party party = new Party(partyCount + 1, partyLoc, "username"+ i, destLoc);
+            Party party = new Party(partyCount + 1, "username"+ i, partyLoc, destLoc);
             dispatch.registerParty(party);
 
             party.setNode(Partynode);
@@ -114,7 +114,7 @@ public class simulationMain {
             System.out.printf(
                     "%-15s%-35s%-15s%-15s%-15s%-15s%-15s%n%s%n",
                     "Registration", "Location", "Count", "Capacity", "Occupied", "Party", "Destination",
-                    "=".repeat(125)
+                    "=".repeat(145)
             );
 
             dispatch.getAllVehicles().forEach(

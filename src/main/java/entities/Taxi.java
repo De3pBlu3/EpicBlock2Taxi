@@ -17,9 +17,4 @@ public sealed class Taxi extends Vehicle permits ElectricTaxi, LimoTaxi, SportsT
         super(size, randomRegistrationString(), loc);
     }
 
-    @Override
-    public final String toString() {
-        return this.getClass().getSimpleName() + '[' + this.getAttributeValues() + ']';
-    }
-
 }

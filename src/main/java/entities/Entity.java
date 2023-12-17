@@ -4,9 +4,10 @@ import network.Location;
 import network.Node;
 
 /**
- * Entity abstract class
+ * Entity abstract class.
+ * <p>
+ * Used to represent an entity that can be placed on the map.
  */
-@SuppressWarnings("SameParameterValue")
 public abstract sealed class Entity permits Vehicle, Party {
 
     private Location location;
@@ -37,11 +38,6 @@ public abstract sealed class Entity permits Vehicle, Party {
     public abstract boolean equals(Object o);
 
     // ================== METHODS FOR INNER USE ==================
-
-    // For simplifying toString() implementations
-    String getAttributeValues() {
-        return "location=" + this.location + ", node=" + this.node;
-    }
 
     void throwErrorIfLessThanOne(int arg, String argName) {
         if (arg < 1)

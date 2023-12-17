@@ -118,13 +118,18 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         return row.toString();
     }
 
+//    @Override
+//    String getAttributeValues() {
+//        return "size=" + this.size
+//                + ", capacity=" + this.capacity
+//                + ", registrationNumber=" + this.registrationNumber
+//                + ", occupyingParty=" + this.occupyingParty
+//                + ", " + super.getAttributeValues();
+//    }
+
     @Override
-    String getAttributeValues() {
-        return "size=" + this.size
-                + ", capacity=" + this.capacity
-                + ", registrationNumber=" + this.registrationNumber
-                + ", occupyingParty=" + this.occupyingParty
-                + ", " + super.getAttributeValues();
+    public String toString() {
+        return this.getClass().getSimpleName() + "['" + this.registrationNumber + "']";
     }
 
     // Two vehicles will be considered equal if their registration numbers are the same

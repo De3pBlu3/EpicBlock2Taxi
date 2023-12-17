@@ -14,7 +14,7 @@ public final class Party extends Entity {
     private Taxi assignedTaxi;
     private boolean assigned = false;
 
-    public Party(int count, Location loc, String username, Location destination) {
+    public Party(int count, String username, Location loc, Location destination) {
         super(loc);
         this.username = username;
         this.count = count;
@@ -24,6 +24,7 @@ public final class Party extends Entity {
     public Party(String username, Location loc, Location destination) {
         super(loc);
         this.username = username;
+        this.count = 1;
         this.destination = destination;
     }
 
@@ -66,7 +67,7 @@ public final class Party extends Entity {
 
     @Override
     public String toString() {
-        return "Party[" + this.getAttributeValues() + "]";
+        return "Party['" + this.username + "', " + this.count + ']';
     }
 
     @Override

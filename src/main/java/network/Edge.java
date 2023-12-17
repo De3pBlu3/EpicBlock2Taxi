@@ -37,10 +37,10 @@ public class Edge extends NetworkComponent {
 
     @Override
     public String toString() {
-        return "Edge[id=" + this.id
-                + ", weight = " + this.weight
-                + ", start = " + this.start
-                + ", end = " + this.end
+        return "Edge[id='" + this.id
+                + "', weight=" + this.weight
+                + ", start=" + this.start
+                + ", end=" + this.end
                 + ']';
     }
 
