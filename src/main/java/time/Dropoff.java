@@ -18,6 +18,10 @@ public class Dropoff extends Event {
 
     @Override
     public void execute() {
+        try {
         dispatch.dropOffParty(taxi, party);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
