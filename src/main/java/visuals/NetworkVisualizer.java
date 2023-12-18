@@ -36,6 +36,7 @@ class NetworkVisualization extends JPanel {
         this.dispatch = dispatch;
         this.setBackground(DARK_GRAY);
         this.setFont(this.font);
+        this.setBorder(BorderFactory.createEmptyBorder());
         this.update();
     }
 
@@ -137,22 +138,22 @@ public class NetworkVisualizer extends JFrame {
 
     public NetworkVisualizer(Network network, Dispatch dispatch) {
 
-        this.setSize(600, 450);
+        this.setSize(700, 450);
         this.setTitle("Network Visualization");
         this.setIconImage(new ImageIcon("src/main/png/map_icon.png").getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
         // Beginning co-ordinates for first node
-        int x = 50;
+        int x = 100;
         int y = 50;
 
         for (Node node: network.getNodesAsArray()) {
 
             // reset after every 5 nodes
-            if (x == 650) {
+            if (x == 700) {
                 y += 100;  // Move y co-ord to new row
-                x = 50;    // Reset x co-ord to beginning of new row
+                x = 100;    // Reset x co-ord to beginning of new row
             }
 
             node.setX(x);
