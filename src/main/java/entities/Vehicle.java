@@ -4,6 +4,8 @@ import network.Edge;
 import network.Location;
 import network.Node;
 
+import java.util.Arrays;
+
 import static other.Util.randomRegistrationString;
 
 @SuppressWarnings("unused")
@@ -42,6 +44,10 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
             this.currentPathIndex++;
         }
         else {
+            System.out.println(this.currentPathIndex);
+            System.out.println(this.currentPath.length);
+            System.out.println(this.currentPath[this.currentPathIndex]);
+            System.out.println(Arrays.toString(this.currentPath));
             throw new IllegalArgumentException("Vehicle is at end of path");
         }
     	return this.currentPath[this.currentPathIndex];

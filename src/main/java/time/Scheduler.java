@@ -39,8 +39,6 @@ public class Scheduler {
                 // do nothing, we're at the end of the path
             }
         }
-
-        taxi.setCurrentPath(x);
     }
 
     public static void scheduleJourney(Taxi taxi, Party party, Node destination) {
@@ -48,12 +46,14 @@ public class Scheduler {
 
         // trip to party
         Node partyLocation = party.getNode();
+        new PathDeclare(timeline.getCurrentTick(), taxi, partyLocation, network.findPath((Node) taxi.getLocation().getCurrentNetLocation(), partyLocation));
         scheduleMove(taxi, partyLocation);
 
         // pick up
         new Pickup(timeline.getCurrentTick(), taxi, party, dispatch);
         timeline.extendTicks(1);
 
+        new PathDeclare(timeline.getCurrentTick(), taxi, destination, network.findPath((Node) taxi.getLocation().getCurrentNetLocation(), destination));
         // trip to destination
         scheduleMove(taxi, destination);
 

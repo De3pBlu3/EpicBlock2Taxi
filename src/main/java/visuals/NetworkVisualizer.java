@@ -3,7 +3,7 @@ package visuals;
 import dispatch.Dispatch;
 import entities.Entity;
 import entities.Taxi;
-import entities.Vehicle;
+import entities.Party;
 import lists.DynamicArray;
 import network.Edge;
 import network.Location;
@@ -22,6 +22,7 @@ class NetworkVisualization extends JPanel {
     private final String SPORTS_TAXI_PATH = "src/main/png/sports_taxi.png";
     private final String ELECTRIC_TAXI_PATH = "src/main/png/electric_taxi.png";
     private final String LIMO_TAXI_PATH = "src/main/png/limo_taxi.png";
+    private final String USER_PATH = "src/main/png/user.png";
 
     private Node[] nodes;
     private Edge[] edges;
@@ -64,23 +65,14 @@ class NetworkVisualization extends JPanel {
             DynamicArray<Entity> x = node.getOccupants();
             for (int i = 0; i < x.length(); i++) {
                 if (x.get(i) instanceof Taxi) {
-//                    if (((Taxi) x.get(i)).isOccupied()) {
-//                        int x2 = ((Taxi) x.get(i)).getNextNode().getX() + 5;
-//                        int y2 = ((Taxi) x.get(i)).getNextNode().getY() + 5;
-//                        int x1 = node.getX() + 5;
-//                        int y1 = node.getY() + 5;
-//                        // mid point
-//                        int x3 = (x1 + x2) / 2;
-//                        int y3 = (y1 + y2) / 2;
-//
-//                        g.drawImage(new ImageIcon("src/main/java/taxi.png").getImage(), x3, y3+(i*15), 20, 20, null);
-//                    }
-//
-//                    else {
-                        int x1 = node.getX() + 5;
-                        int y1 = node.getY() + 5;
-                        g.drawImage(new ImageIcon(TAXI_PATH).getImage(), x1, y1+(i*15), 20, 20, null);
-//                    }
+                    int x1 = node.getX() + 5;
+                    int y1 = node.getY() + 5;
+                    g.drawImage(new ImageIcon("TAXI_PATH").getImage(), x1, y1+(i*15), 20, 20, null);
+                }
+                if (x.get(i) instanceof Party) {
+                    int x1 = node.getX() + 5;
+                    int y1 = node.getY() + 5;
+                    g.drawImage(new ImageIcon("USER_PATH").getImage(), x1, y1+(i*15), 20, 20, null);
                 }
             }
 
