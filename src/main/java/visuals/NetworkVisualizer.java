@@ -59,7 +59,7 @@ class NetworkVisualization extends JPanel {
         // Draw nodes
         for (Node node : nodes) {
             g.setColor(Color.BLUE);
-            g.fillOval(node.getX() - 5, node.getY() - 5, 25, 25);
+            g.fillOval(node.getX() - 13, node.getY() - 13, 26, 26);
             g.setColor(Color.WHITE);
             g.drawString(node.getId(), node.getX() - 20, node.getY()-10);
 
