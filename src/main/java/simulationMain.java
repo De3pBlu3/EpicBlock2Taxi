@@ -104,6 +104,7 @@ public class simulationMain {
 
         }
 
+        System.out.println("Simulation finished!");
 
     }
 
