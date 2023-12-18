@@ -2,9 +2,6 @@ package visuals;
 
 import dispatch.Dispatch;
 import entities.Entity;
-import entities.Taxi;
-import entities.Party;
-import lists.DynamicArray;
 import network.Edge;
 import network.Network;
 import network.Node;
@@ -12,8 +9,22 @@ import network.Node;
 import javax.swing.*;
 import java.awt.*;
 
-
+@SuppressWarnings("FieldCanBeLocal")
 class NetworkVisualization extends JPanel {
+
+    private static final Color LIGHT_GRAY = new Color(200, 200, 200);
+    private static final Color LIGHTER_GRAY = new Color(211, 211, 211);
+    private static final Color DARK_GRAY = new Color(76, 78, 82);
+
+    private final int nodeRadius = 13;
+    private final int nodeDiameter = nodeRadius * 2;
+    private final int nodeBorderWidth = 4;
+    private final int outerNodeCircleOffset = -this.nodeRadius;
+    private final int innerNodeCircleOffset = -this.nodeRadius + (this.nodeBorderWidth / 2);
+    private final int innerNodeCircleDiameter = this.nodeDiameter - this.nodeBorderWidth;
+    private final int labelYOffset = -this.nodeRadius - 5;
+
+    private final Font font = new Font("Helvetica", Font.BOLD, 10);
 
     private Node[] nodes;
     private Edge[] edges;
@@ -23,13 +34,14 @@ class NetworkVisualization extends JPanel {
     NetworkVisualization(Network network, Dispatch dispatch) {
         this.network = network;
         this.dispatch = dispatch;
-        update();
+        this.setBackground(DARK_GRAY);
+        this.setFont(this.font);
+        this.update();
     }
 
     public void update() {
-        updateNet();
-        repaint();
-        setBackground(Color.DARK_GRAY);
+        this.updateNet();
+        this.repaint();
     }
 
     private void updateNet() {
@@ -37,47 +49,85 @@ class NetworkVisualization extends JPanel {
         this.edges = network.getEdgesAsArray();
     }
 
+    private void drawLabelledNode(Graphics g, Node node) {
+
+        String label = node.getId();
+        FontMetrics fm = g.getFontMetrics();
+        int halfLabelLength = fm.stringWidth(label) / 2;
+
+        // Outer circle (border)
+        g.setColor(LIGHT_GRAY);
+        g.fillOval(
+                node.getX() + this.outerNodeCircleOffset,
+                node.getY() + this.outerNodeCircleOffset,
+                this.nodeDiameter,
+                this.nodeDiameter
+        );
+
+        // Inner circle
+        g.setColor(DARK_GRAY);
+        g.fillOval(
+                node.getX() + this.innerNodeCircleOffset,
+                node.getY() + this.innerNodeCircleOffset,
+                this.innerNodeCircleDiameter,
+                this.innerNodeCircleDiameter
+        );
+
+        g.setColor(Color.WHITE);
+
+        g.drawString(
+                node.getId(),
+                node.getX() - halfLabelLength,
+                node.getY() +  this.labelYOffset
+        );
+
+    }
+
+    private void drawNodeOccupants(Graphics g, Node node) {
+
+        int index = 0;
+
+        for (Entity occupant : node.getOccupants()) {
+
+            Image image = occupant.getImage();
+            int width = occupant.getImageWidth();
+            int height = occupant.getImageHeight();
+
+            int x1 = node.getX() + 5;
+            int y1 = node.getY() + 5 + (index++ * 15);
+
+            g.drawImage(image, x1, y1, width, height, null);
+        }
+    }
+
+    private void drawEdgeConnection(Graphics g, Edge edge) {
+        int x1 = edge.getStart().getX();
+        int y1 = edge.getStart().getY();
+
+        int x2 = edge.getEnd().getX();
+        int y2 = edge.getEnd().getY();
+
+        g.drawLine(x1, y1, x2, y2);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
+
         // Clear the screen
         g.clearRect(0, 0, 10000, 10000);
         super.paintComponent(g);
 
         // Draw edges
-        g.setColor(new Color(211, 211, 211, 60));
+        g.setColor(LIGHTER_GRAY);
+
         for (Edge edge : edges) {
-
-            int x1 = edge.getStart().getX();
-            int y1 = edge.getStart().getY();
-
-            int x2 = edge.getEnd().getX();
-            int y2 = edge.getEnd().getY();
-
-            g.drawLine(x1, y1, x2, y2);
+            this.drawEdgeConnection(g, edge);
         }
 
         // Draw nodes
         for (Node node : nodes) {
-            g.setColor(Color.BLUE);
-            g.fillOval(node.getX() - 13, node.getY() - 13, 26, 26);
-            g.setColor(Color.WHITE);
-            g.drawString(node.getId(), node.getX() - 20, node.getY()-10);
-
-            DynamicArray<Entity> occupants = node.getOccupants();
-            int index = 0;
-
-            for (Entity entity : occupants) {
-
-                Image image = entity.getImage();
-                int width = entity.getImageWidth();
-                int height = entity.getImageHeight();
-
-                int x1 = node.getX() + 5;
-                int y1 = node.getY() + 5 + (index++ * 15);
-
-                g.drawImage(image, x1, y1, width, height, null);
-            }
-
+            this.drawLabelledNode(g, node);
+            this.drawNodeOccupants(g, node);
         }
     }
 }
@@ -86,32 +136,34 @@ class NetworkVisualization extends JPanel {
 public class NetworkVisualizer extends JFrame {
 
     public NetworkVisualizer(Network network, Dispatch dispatch) {
-        setTitle("Network Visualization");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 450);
-        setLocationRelativeTo(null);
 
-        // set x,y coordinates for each node
+        this.setSize(600, 450);
+        this.setTitle("Network Visualization");
+        this.setIconImage(new ImageIcon("src/main/png/map_icon.png").getImage());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+
+        // Beginning co-ordinates for first node
         int x = 50;
         int y = 50;
 
         for (Node node: network.getNodesAsArray()) {
 
-            // reset after every 10 nodes
+            // reset after every 5 nodes
             if (x == 650) {
-                x = 50;
-                y += 100;
+                y += 100;  // Move y co-ord to new row
+                x = 50;    // Reset x co-ord to beginning of new row
             }
+
             node.setX(x);
             node.setY(y);
             x += 150;
         }
 
         NetworkVisualization networkVisualization = new NetworkVisualization(network, dispatch);
-        add(networkVisualization);
 
-        setIconImage(new ImageIcon("src/main/png/map_icon.png").getImage());
-        setVisible(true);
+        this.add(networkVisualization);
+        this.setVisible(true);
     }
 
 }

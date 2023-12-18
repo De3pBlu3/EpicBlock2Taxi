@@ -78,7 +78,7 @@ public final class Party extends Entity {
 
     @Override
     public int getImageHeight() {
-        return 23;
+        return 21;
     }
 
     @Override
