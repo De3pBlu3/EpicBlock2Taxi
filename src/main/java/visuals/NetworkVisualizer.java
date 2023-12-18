@@ -18,6 +18,11 @@ import java.awt.*;
 
 class NetworkVisualization extends JPanel {
 
+    private final String TAXI_PATH = "src/main/png/taxi.png";
+    private final String SPORTS_TAXI_PATH = "src/main/png/sports_taxi.png";
+    private final String ELECTRIC_TAXI_PATH = "src/main/png/electric_taxi.png";
+    private final String LIMO_TAXI_PATH = "src/main/png/limo_taxi.png";
+
     private Node[] nodes;
     private Edge[] edges;
     private Dispatch dispatch;
@@ -74,7 +79,7 @@ class NetworkVisualization extends JPanel {
 //                    else {
                         int x1 = node.getX() + 5;
                         int y1 = node.getY() + 5;
-                        g.drawImage(new ImageIcon("src/main/java/taxi.png").getImage(), x1, y1+(i*15), 20, 20, null);
+                        g.drawImage(new ImageIcon(TAXI_PATH).getImage(), x1, y1+(i*15), 20, 20, null);
 //                    }
                 }
             }
