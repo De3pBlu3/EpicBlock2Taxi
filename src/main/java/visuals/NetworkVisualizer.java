@@ -36,7 +36,7 @@ class NetworkVisualization extends JPanel {
         this.dispatch = dispatch;
         this.setBackground(DARK_GRAY);
         this.setFont(this.font);
-        this.setBorder(BorderFactory.createEmptyBorder());
+        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 450, 700));
         this.update();
     }
 
@@ -133,38 +133,71 @@ class NetworkVisualization extends JPanel {
     }
 }
 
-
+@SuppressWarnings("FieldCanBeLocal")
 public class NetworkVisualizer extends JFrame {
 
-    public NetworkVisualizer(Network network, Dispatch dispatch) {
+    private final static int WINDOW_WIDTH = 700;
+    private final static int WINDOW_HEIGHT = 500;
 
-        this.setSize(700, 450);
+    private final int xOffset = 150;
+    private final int yOffset = 100;
+
+    public NetworkVisualizer(Network network, Dispatch dispatch, NetworkLayout networkLayout) {
+
+        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setTitle("Network Visualization");
         this.setIconImage(new ImageIcon("src/main/png/map_icon.png").getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
-        // Beginning co-ordinates for first node
-        int x = 100;
-        int y = 50;
+        if (networkLayout == null) {
 
-        for (Node node: network.getNodesAsArray()) {
+            // Beginning co-ordinates for first node
+            int x = 100;
+            int y = 100;
 
-            // reset after every 5 nodes
-            if (x == 700) {
-                y += 100;  // Move y co-ord to new row
-                x = 100;    // Reset x co-ord to beginning of new row
+            for (Node node : network.getNodesAsArray()) {
+
+                // reset after every 5 nodes
+                if (x == WINDOW_WIDTH) {
+                    y += yOffset;  // Move y co-ord to new row
+                    x = 100;    // Reset x co-ord to beginning of new row
+                }
+
+                node.setX(x);
+                node.setY(y);
+                x += xOffset;
             }
 
-            node.setX(x);
-            node.setY(y);
-            x += 150;
+        } else {
+
+            for (NodeData nodeData : networkLayout) {
+
+                Node node = nodeData.node();
+                int x = nodeData.x();
+                int y = nodeData.y();
+
+                if (x < 0 || x > 700) {
+                    throw new IllegalStateException("X coordinate is out of bounds for network visualisation");
+                }
+
+                if (y < 0 || y > 500) {
+                    throw new IllegalStateException("Y coordinate is out of bounds for network visualisation");
+                }
+
+                node.setX(x);
+                node.setY(y);
+            }
         }
 
         NetworkVisualization networkVisualization = new NetworkVisualization(network, dispatch);
 
         this.add(networkVisualization);
         this.setVisible(true);
+    }
+
+    public NetworkVisualizer(Network network, Dispatch dispatch) {
+        this(network, dispatch, null);
     }
 
 }

@@ -11,6 +11,7 @@ import other.Util;
 import time.PartyRequestTaxi;
 import time.Timeline;
 import time.Scheduler;
+import visuals.NetworkLayout;
 import visuals.NetworkVisualizer;
 
 import javax.swing.*;
@@ -30,6 +31,8 @@ public class simulationMain {
                 "src/main/csv/network_data.csv",
                 network
         );
+
+        System.out.println(locationNames);
 
         for (int i = 0; i < amountoftaxis; i++) {
             int randomSize = Util.randInt(1, 3);
@@ -67,7 +70,25 @@ public class simulationMain {
 
         init();
 
-        NetworkVisualizer netVis = new NetworkVisualizer(network, dispatch);
+        NetworkLayout layout = new NetworkLayout(
+                "ISE Building, 90, 100",
+                "Dromroe Village, 350, 80",
+                "Cappavilla Village, 550, 95",
+                "Stables, 400, 165",
+                "Glucksman Library, 200, 250",
+                "Killmurray Village, 600, 230",
+                "Spar Castletroy, 100, 300",
+                "Plassey Village, 310, 340",
+                "Apache Pizza, 560, 350",
+                "Bank of Ireland, 80, 400",
+                "Chicken Shop, 400, 420",
+                "Troy/Groody Village, 95, 460",
+                "Subway, 520, 470"
+        );
+
+        layout.setNetwork(network);
+
+        NetworkVisualizer netVis = new NetworkVisualizer(network, dispatch, layout);
 
         timeline.extendTicks(150);
         System.out.println("Timeline length: " + timeline.getLength());
