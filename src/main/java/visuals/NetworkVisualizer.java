@@ -67,12 +67,12 @@ class NetworkVisualization extends JPanel {
                 if (x.get(i) instanceof Taxi) {
                     int x1 = node.getX() + 5;
                     int y1 = node.getY() + 5;
-                    g.drawImage(new ImageIcon("TAXI_PATH").getImage(), x1, y1+(i*15), 20, 20, null);
+                    g.drawImage(new ImageIcon(TAXI_PATH).getImage(), x1, y1+(i*15), 20, 20, null);
                 }
                 if (x.get(i) instanceof Party) {
                     int x1 = node.getX() + 5;
                     int y1 = node.getY() + 5;
-                    g.drawImage(new ImageIcon("USER_PATH").getImage(), x1, y1+(i*15), 20, 20, null);
+                    g.drawImage(new ImageIcon(USER_PATH).getImage(), x1, y1+(i*15), 20, 20, null);
                 }
             }
 
