@@ -10,6 +10,9 @@ import other.Util;
 import time.PartyRequestTaxi;
 import time.Timeline;
 import time.Scheduler;
+import visuals.NetworkVisualizer;
+
+import javax.swing.*;
 
 public class simulationMain {
 
@@ -20,7 +23,7 @@ public class simulationMain {
 
     public static void init() {
         int amountoftaxis = 5;
-        int amountofparties = 5;
+        int amountofparties = 10;
 
         DynamicArray<String> locationNames = CSVReader.processData(
                 "src/main/csv/network_data.csv",
@@ -63,14 +66,15 @@ public class simulationMain {
 
         init();
 
+        NetworkVisualizer netVis = new NetworkVisualizer(network, dispatch);
+
         timeline.extendTicks(150);
         System.out.println("Timeline length: " + timeline.getLength());
 
-        // randomly over 100 ticks add parties to map
+        // randomly over 150 ticks add parties to map
         for (Party party : dispatch.getAllParties()) {
             timeline.setCurrentTick(Util.randInt(0, 150));
             new PartyRequestTaxi(timeline.getCurrentTick(), party, dispatch);
-
         }
 
 
@@ -81,47 +85,22 @@ public class simulationMain {
         for (int i = 0; i < timeline.getLength(); i++){
             timeline.setCurrentTick(i);
             timeline.getCurrentTick().executeEvents();
-//
-////             PRINT OUT ALL VEHICLES TODO make this observer pattern
-//            Object[][] table = new String[dispatch.getAllVehicles().length()][];
-//            for (int x = 0; x < dispatch.getAllVehicles().length(); x++) {
-//                table[x] = new String[]{
-//                        dispatch.getAllVehicles().get(x).getRegistrationNumber(),
-//                        dispatch.getAllVehicles().get(x).getLocation().getCurrentNetLocation().toString(),
-//                        dispatch.getAllVehicles().get(x).getCount() + "",
-//                        dispatch.getAllVehicles().get(x).getCapacity() + "",
-//                        dispatch.getAllVehicles().get(x).getParty() == null ? "False": "True",
-//                        // if assigned, print party username, else print "none"
-//                        dispatch.getAllVehicles().get(x).getParty() == null ? "none" :
-//                                dispatch.getAllVehicles().get(x).getParty().getUsername(),
-//
-//                        dispatch.getAllVehicles().get(x).getParty() == null ? "none" :
-//                                dispatch.getAllVehicles().get(x).getDestination().getCurrentNetLocation().toString()
-//                };
-//            }
-//
-//            // print header
-//            System.out.format("%-15s\t%-35s\t%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t%n", "Registration", "Location", "Headcount", "Capacity", "Occupied", "Party", "Destination");
-//            for (final Object[] row : table) {
-//            // left justify all columns
-//                System.out.format("%-15s\t%-35s\t%-15s\t%-15s\t%-15s\t%-15s\t%-15s\t%n", row);
-//            }
-//
-//
-//            System.out.println("==================================");
-//            System.out.flush();
 
-            System.out.printf(
-                    "%-15s%-35s%-15s%-15s%-15s%-15s%-15s%n%s%n",
-                    "Registration", "Location", "Count", "Capacity", "Occupied", "Party", "Destination",
-                    "=".repeat(145)
-            );
+//            System.out.printf(
+//                    "%-15s %-35s %-15n %-15s %-15s %-15s %-15s %-15s %n%s%n",
+//                    "Registration", "Location", "Count", "Capacity", "Occupied", "Party", "Destination",
+//                    "=".repeat(145)
+//            );
 
             dispatch.getAllVehicles().forEach(
                     (vehicle) -> System.out.println(vehicle.asTableRow())
             );
 
             System.out.println();
+            netVis.repaint();
+            Util.sleep(0.25);
+
+
 
         }
 

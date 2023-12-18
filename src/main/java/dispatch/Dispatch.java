@@ -81,9 +81,10 @@ public final class Dispatch implements VehicleHiringTest {
             // remove party from list
             this.allParties.removeIfPresent(party);
             this.partiesOnMap.removeIfPresent(party);
-
         }
-        else throw new IllegalArgumentException("Taxi is not at the same location as the party");
+        else {
+            throw new IllegalArgumentException("Taxi is not at the same location as the party");
+        }
 
 
 

@@ -341,4 +341,11 @@ public class Network {
     }
 
 
+    public Node[] getNodesAsArray() {
+        Node[] nodesArray = new Node[this.nodes.length()];
+        for (int i = 0; i < this.nodes.length(); i++) {
+            nodesArray[i] = this.nodes.get(i);
+        }
+        return nodesArray;
+    }
 }

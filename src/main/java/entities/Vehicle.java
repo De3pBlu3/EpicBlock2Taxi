@@ -2,6 +2,7 @@ package entities;
 
 import network.Edge;
 import network.Location;
+import network.Node;
 
 import static other.Util.randomRegistrationString;
 
@@ -13,6 +14,8 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
     private final String registrationNumber;
     private Party occupyingParty;
     private final Driver driver;
+    private Node[] currentPath;
+    private int currentPathIndex = 0;
 
     public Vehicle(int size, String registrationNumber, Location loc) {
         super(loc);
@@ -30,6 +33,22 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
 
     public int getSize() {
         return this.size;
+    }
+
+
+
+    public Node getNextNode() {
+        if (this.currentPathIndex < this.currentPath.length - 1) {
+            this.currentPathIndex++;
+        }
+        else {
+            throw new IllegalArgumentException("Vehicle is at end of path");
+        }
+    	return this.currentPath[this.currentPathIndex];
+    }
+    public void setCurrentPath(Node[] currentPath) {
+        this.currentPathIndex = 0;
+    	this.currentPath = currentPath;
     }
 
     public void setSize(int size) {

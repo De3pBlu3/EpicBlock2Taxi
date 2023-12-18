@@ -29,12 +29,9 @@ public class Scheduler {
     }
 
     private static void scheduleMove(Taxi taxi, Node destination) {
-        Node[] x =  network.findPath( (Node) taxi.getLocation().getCurrentNetLocation(), destination);
-//        System.out.println(Arrays.toString(x));
-        int originalTick = timeline.getCurrentTick().getTickNumber();
+        Node[] x = network.findPath( (Node) taxi.getLocation().getCurrentNetLocation(), destination);
         for (int i = 0; i < x.length; i++) {
             try {
-//                System.out.println(i + ": " + x[i] + " to " + x[i+1] + " has weight: " +  x[i].getEdge(x[i+1]).getWeight());
                 timeline.extendTicks(x[i].getEdge(x[i+1]).getWeight());
                 new Move(timeline.getCurrentTick(), taxi, new Location(x[i+1]));
             }
@@ -42,26 +39,27 @@ public class Scheduler {
                 // do nothing, we're at the end of the path
             }
         }
-//        timeline.setCurrentTick(originalTick);
-//        System.out.println("");
 
+        taxi.setCurrentPath(x);
     }
 
     public static void scheduleJourney(Taxi taxi, Party party, Node destination) {
         int originalTick = timeline.getCurrentTick().getTickNumber();
+
         // trip to party
         Node partyLocation = party.getNode();
         scheduleMove(taxi, partyLocation);
+
         // pick up
         new Pickup(timeline.getCurrentTick(), taxi, party, dispatch);
         timeline.extendTicks(1);
-//        timeline.nextTick();
+
         // trip to destination
         scheduleMove(taxi, destination);
+
         // drop off
-       new Dropoff(timeline.getCurrentTick(), taxi, party, dispatch);
+        new Dropoff(timeline.getCurrentTick(), taxi, party, dispatch);
         timeline.extendTicks(1);
-//        timeline.nextTick();
         timeline.setCurrentTick(originalTick);
 
 

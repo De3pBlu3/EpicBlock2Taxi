@@ -51,13 +51,6 @@ public abstract class NetworkComponent {
     }
 
     public void removeOccupant(Entity occupant) {
-        // check if occupant is already in occupants
-        for (entities.Entity e : occupants) {
-            if (e == occupant) {
-                return;
-            }
-        }
-
         occupants.removeAllOccurrences(occupant);
     }
 
