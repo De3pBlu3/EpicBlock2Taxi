@@ -2,11 +2,17 @@ package entities;
 
 import network.Location;
 
+import javax.swing.ImageIcon;
+import java.awt.Image;
+
 /**
  * Party class
  */
 @SuppressWarnings("unused")
 public final class Party extends Entity {
+
+    private final static int IMG_HEIGHT = 30;
+    private final static int IMG_WIDTH = 25;
 
     private String username;
     private int count;
@@ -63,6 +69,16 @@ public final class Party extends Entity {
 
     public void setAssigned(boolean value) {
         this.assigned = value;
+    }
+
+    @Override
+    public Image getImage() {
+        return new ImageIcon("src/main/png/user.png").getImage();
+    }
+
+    @Override
+    public int getImageHeight() {
+        return 23;
     }
 
     @Override

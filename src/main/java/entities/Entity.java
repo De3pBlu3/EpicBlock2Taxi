@@ -3,6 +3,8 @@ package entities;
 import network.Location;
 import network.Node;
 
+import java.awt.Image;
+
 /**
  * Entity abstract class.
  * <p>
@@ -36,6 +38,16 @@ public abstract sealed class Entity permits Vehicle, Party {
     public abstract String toString();
 
     public abstract boolean equals(Object o);
+
+    public abstract Image getImage();
+
+    public int getImageWidth() {
+        return 20;
+    }
+
+    public int getImageHeight() {
+        return 20;
+    }
 
     // ================== METHODS FOR INNER USE ==================
 

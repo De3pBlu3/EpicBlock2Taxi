@@ -1,6 +1,7 @@
 import entities.Party;
 import entities.Taxi;
 import lists.DynamicArray;
+import network.Edge;
 import network.Location;
 import network.Network;
 import dispatch.Dispatch;
