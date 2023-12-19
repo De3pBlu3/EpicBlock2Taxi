@@ -47,7 +47,7 @@ class NetworkVisualization extends JPanel {
 
     private void updateNet() {
         this.nodes = network.getNodesAsArray();
-        this.edges = network.getEdgesAsArray();
+        this.edges = network.getEdgesWithIDAsArray();
     }
 
     private void drawLabelledNode(Graphics g, Node node) {
@@ -109,6 +109,8 @@ class NetworkVisualization extends JPanel {
     }
 
     private void drawEdgeConnection(Graphics g, Edge edge) {
+        g.setColor(LIGHTER_GRAY);
+
         int x1 = edge.getStart().getX();
         int y1 = edge.getStart().getY();
 
@@ -116,6 +118,33 @@ class NetworkVisualization extends JPanel {
         int y2 = edge.getEnd().getY();
 
         g.drawLine(x1, y1, x2, y2);
+        this.labelConnection(g, String.valueOf(edge.getWeight()), x1, y1, x2, y2);
+    }
+
+    private void labelConnection(Graphics g, String connectionID, int x1, int y1, int x2, int y2) {
+        int xMid = (x1 + x2) / 2;
+        int yMid = (y1 + y2) / 2;
+
+        int xOffset = 0;
+        int yOffset = 0;
+
+        if (x1 < x2) {
+            yOffset = 3;
+        } else {
+            yOffset = -3;
+        }
+
+        if (y1 < y2) {
+            xOffset = 3;
+        } else {
+            xOffset = -3;
+        }
+
+        g.setColor(Color.BLUE);
+
+        // Draw the rotated string
+        g.drawString(connectionID, xMid + xOffset, yMid + yOffset);
+
     }
 
     @Override
@@ -194,12 +223,17 @@ public class NetworkVisualizer extends JFrame {
 
         } else {
 
-            this.setSize(networkLayout.getMaxX() + 100, networkLayout.getMaxY() + 140);
+            int xOffset = Math.max(networkLayout.getMinX(), networkLayout.getMaxX());
+            int yOffset = Math.max(networkLayout.getMinY(), networkLayout.getMaxY());
+
+            this.setSize(xOffset + 100, yOffset + 140);
 
             for (Node node : networkLayout) {
 
                 int x = node.getX();
                 int y = node.getY();
+
+                System.out.println(x + ", " + y);
 
                 if (x < 0) {
                     throw new IllegalStateException("X coordinate is out of bounds for network visualisation");
@@ -212,6 +246,7 @@ public class NetworkVisualizer extends JFrame {
                 node.setX(x);
                 node.setY(y);
             }
+
         }
 
         this.add(new NetworkVisualization(network), BorderLayout.CENTER);

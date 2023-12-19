@@ -18,10 +18,12 @@ public class Network {
 
     private final DynamicArray<Node> nodes;
     private final DynamicArray<Edge> edges;
+    private final DynamicArray<Edge> edgesWithID;
 
     public Network() {
         this.nodes = new DynamicArray<>();
         this.edges = new DynamicArray<>();
+        this.edgesWithID = new DynamicArray<>();
     }
 
     private void addNodeToNodesArray(Node UserNode) {
@@ -131,6 +133,29 @@ public class Network {
         UserEdge.end = getNode(nodeID2);
         UserEdge.weight = weight; // TODO: make this be the distance between the two nodes (in ticks)
         addEdgeToEdgesArray(UserEdge);
+    }
+
+    public void addTwoWayEdge(String edgeID, String nodeID1, String nodeID2, int weight) {
+
+        if (!checkNodeExists(nodeID1)) {
+            Node node1 = new Node(nodeID1, 0, 0);
+            addNodeToNodesArray(node1);
+        }
+        if (!checkNodeExists(nodeID2)) {
+            Node node2 = new Node(nodeID2, 0, 0);
+            addNodeToNodesArray(node2);
+        }
+
+        Node firstNode = this.getNode(nodeID1);
+        Node secondNode = this.getNode(nodeID2);
+
+        Edge edge1 = new Edge(edgeID, firstNode, secondNode, weight);
+        addEdgeToEdgesArray(edge1);
+
+        Edge edge2 = new Edge(null, secondNode, firstNode, weight);
+        addEdgeToEdgesArray(edge2);
+
+        this.edgesWithID.append(edge1);
     }
 
     public Edge getEdge(String nodeID1, String nodeID2) {
@@ -376,4 +401,15 @@ public class Network {
         }
         return nodesArray;
     }
+
+    public Edge[] getEdgesWithIDAsArray() {
+        Edge[] edges = new Edge[this.edgesWithID.length()];
+
+        for (int i = 0; i < this.edgesWithID.length(); i++) {
+            edges[i] = this.edgesWithID.get(i);
+        }
+
+        return edges;
+    }
+
 }

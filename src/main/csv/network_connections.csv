@@ -1,27 +1,32 @@
 START_NODE, END_NODE, WEIGHT
-Troy/Groody Village, Subway, 4
-Troy/Groody Village, Chicken Shop, 7
-Troy/Groody Village, Plassey Village, 5
-Troy/Groody Village, Bank of Ireland, 3
-Bank of Ireland, Plassey Village, 2
-Bank of Ireland, Spar Castletroy, 1
-Spar Castletroy, Plassey Village, 2
-Spar Castletroy, Glucksman Library, 3
-Spar Castletroy, ISE Building, 6
-ISE Building, Glucksman Library, 5
-ISE Building, Dromroe Village, 4
-Dromroe Village, Stables, 3
-Dromroe Village, Cappavilla Village, 4
-Cappavilla Village, Stables, 4
-Cappavilla Village, Killmurray Village, 5
-Killmurray Village, Stables, 3
-Killmurray Village, Plassey Village, 6
-Killmurray Village, Apache Pizza, 1
-Apache Pizza, Plassey Village, 5
-Apache Pizza, Chicken Shop, 2
-Chicken Shop, Plassey Village, 2
-Chicken Shop, Subway, 1
-Plassey Village, Glucksman Library, 2
-Glucksman Library, Stables, 1
-Subway, Costa, 2
-Costa, Apache Pizza, 2
+0, ISE Building, Glucksman Library, 2
+1, ISE Building, Dromroe Village, 8
+2, ISE Building, Spar Castletroy, 4
+3, Dromroe Village, Applegreen, 2
+4, Dromroe Village, Cappavilla Village, 6
+5, Dromroe Village, Stables, 3
+6, Cappavilla Village, Stables, 2
+7, Cappavilla Village, Killmurray Village, 1
+8, Glucksman Library, Spar Castletroy, 2
+9, Glucksman Library, Plassey Village, 3
+10, Glucksman Library, Applegreen, 2
+11, Applegreen, Stables, 2
+12, Stables, Killmurray Village, 4
+13, Killmurray Village, Plassey Village, 9
+14, Killmurray Village, Apache Pizza, 3
+15, Killmurray Village, Lifestyle Sports, 2
+16, Spar Castletroy, Bank of Ireland, 2
+17, Spar Castletroy, Plassey Village, 2
+18, Plassey Village, Bank of Ireland, 6
+19, Plassey Village, Troy/Groody Village, 5
+20, Plassey Village, Penneys, 1
+21, Bank of Ireland, Troy/Groody Village, 2
+22, Penneys, Troy/Groody Village, 6
+23, Penneys, Subway, 2
+24, Penneys, Apache Pizza, 1
+25, Apache Pizza, Costa, 2
+26, Apache Pizza, Lifestyle Sports, 1
+27, Lifestyle Sports, Costa, 2
+28, Troy/Groody Village, Zara, 3
+29, Zara, Subway, 2
+30, Subway, Costa, 3

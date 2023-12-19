@@ -3,6 +3,8 @@ package network;
 import entities.Entity;
 import lists.DynamicArray;
 
+import java.util.Objects;
+
 import static other.Util.randInt;
 
 public abstract class NetworkComponent {
@@ -12,7 +14,9 @@ public abstract class NetworkComponent {
     DynamicArray<Entity> occupants = new DynamicArray<>();
 
     public NetworkComponent(String id) {
-        this.id = id;
+        this.id = Objects.requireNonNullElseGet(
+                id, () -> String.valueOf(randInt(1, Integer.MAX_VALUE))
+        );
     }
 
     public NetworkComponent() {
