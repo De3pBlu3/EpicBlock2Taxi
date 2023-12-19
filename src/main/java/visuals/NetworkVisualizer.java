@@ -30,12 +30,10 @@ class NetworkVisualization extends JPanel {
 
     private Node[] nodes;
     private Edge[] edges;
-    private final Dispatch dispatch;
     private final Network network;
 
-    NetworkVisualization(Network network, Dispatch dispatch) {
+    NetworkVisualization(Network network) {
         this.network = network;
-        this.dispatch = dispatch;
         this.setBackground(DARK_GRAY);
         this.setFont(this.font);
         this.update();
@@ -199,11 +197,10 @@ public class NetworkVisualizer extends JFrame {
 
             this.setSize(networkLayout.getMaxX() + 100, networkLayout.getMaxY() + 100);
 
-            for (NodeData nodeData : networkLayout) {
+            for (Node node : networkLayout) {
 
-                Node node = nodeData.node();
-                int x = nodeData.x();
-                int y = nodeData.y();
+                int x = node.getX();
+                int y = node.getY();
 
                 if (x < 0) {
                     throw new IllegalStateException("X coordinate is out of bounds for network visualisation");
@@ -218,7 +215,7 @@ public class NetworkVisualizer extends JFrame {
             }
         }
 
-        this.add(new NetworkVisualization(network, dispatch));
+        this.add(new NetworkVisualization(network));
     }
 
     public void start() {

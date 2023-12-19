@@ -1,29 +1,30 @@
 package visuals;
 
 import lists.DynamicArray;
+import network.Node;
 
 
 import java.util.Iterator;
 
-public class NetworkLayout implements Iterable<NodeData> {
+public class NetworkLayout implements Iterable<Node> {
 
-    private final DynamicArray<NodeData> nodeDataList;
+    private final DynamicArray<Node> nodes;
     private final DynamicArray<String> locationNames;
 
     private int maxX = 0;
     private int maxY = 0;
 
     public NetworkLayout() {
-        this.nodeDataList = new DynamicArray<>();
+        this.nodes = new DynamicArray<>();
         this.locationNames = new DynamicArray<>();
     }
 
-    public void addNodeData(NodeData nodeData) {
-        this.nodeDataList.append(nodeData);
-        this.locationNames.append(nodeData.node().getId());
+    public void addNode(Node node) {
+        this.nodes.append(node);
+        this.locationNames.append(node.getId());
 
-        int x = nodeData.x();
-        int y = nodeData.y();
+        int x = node.getX();
+        int y = node.getY();
 
         if (x < 0)
             throw new IllegalStateException("X coordinate is out of bounds for network visualisation");
@@ -51,19 +52,20 @@ public class NetworkLayout implements Iterable<NodeData> {
         return this.maxY;
     }
 
-    public Iterator<NodeData> iterator() {
+    @Override
+    public Iterator<Node> iterator() {
 
         return new Iterator<>() {
             private int index = 0;
 
             @Override
             public boolean hasNext() {
-                return index < nodeDataList.size();
+                return index < nodes.size();
             }
 
             @Override
-            public NodeData next() {
-                return nodeDataList.get(index++);
+            public Node next() {
+                return nodes.get(index++);
             }
 
             @Override
