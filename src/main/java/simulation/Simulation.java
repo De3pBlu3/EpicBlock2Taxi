@@ -20,18 +20,21 @@ public class Simulation {
     private final Network network;
     private final Dispatch dispatch;
     private final DynamicArray<String> locationNames;
-    private final NetworkVisualizer visualizer;
+    private final NetworkLayout layout;
     private final int partyCount;
     private final int taxiCount;
     private final double tickTimeout;
+    private boolean userPause = false;
 
-    public Simulation(
-            int numberOfParties,
-            int numberOfTaxis,
-            int timelineLength,
-            double tickTimeout,
-            String networkConnectionDataFile,
-            String networkPointDataFile
+    private static Simulation single_instance = null;
+
+    private Simulation(
+        int numberOfParties,
+        int numberOfTaxis,
+        int timelineLength,
+        double tickTimeout,
+        String networkConnectionDataFile,
+        String networkPointDataFile
     ) {
         this.partyCount = numberOfParties;
         this.taxiCount = numberOfTaxis;
@@ -44,15 +47,43 @@ public class Simulation {
         this.dispatch = new Dispatch();
 
         DataProcessor.processNetworkConnections(networkConnectionDataFile, this.network);
-        NetworkLayout layout = DataProcessor.createNetworkPointLayout(networkPointDataFile, this.network);
+        this.layout = DataProcessor.createNetworkPointLayout(networkPointDataFile, this.network);
 
-        this.locationNames = layout.getLocationNames();
+        this.locationNames = this.layout.getLocationNames();
 
         this.addTaxisToMap();
         this.addPartiesToMap();
 
         Scheduler.init(this.timeline, this.network, this.dispatch);
-        this.visualizer = new NetworkVisualizer(this.network, this.dispatch, layout);
+
+    }
+
+    public static Simulation getInstance(
+            int numberOfParties,
+            int numberOfTaxis,
+            int timelineLength,
+            double tickTimeout,
+            String networkConnectionDataFile,
+            String networkPointDataFile
+    ) {
+        if (single_instance == null)
+            single_instance = new Simulation(
+                    numberOfParties,
+                    numberOfTaxis,
+                    timelineLength,
+                    tickTimeout,
+                    networkConnectionDataFile,
+                    networkPointDataFile
+            );
+
+        return single_instance;
+    }
+
+    public static Simulation getInstance() {
+        if (single_instance == null){
+            throw new IllegalStateException("Simulation has not been initialised");
+        }
+        return single_instance;
     }
 
     private void addTaxisToMap() {
@@ -103,7 +134,8 @@ public class Simulation {
 
     public void start() {
 
-        this.visualizer.start();
+        NetworkVisualizer visualizer = new NetworkVisualizer(this.network, this.layout);
+        visualizer.start();
 
         System.out.println("Timeline length: " + this.timeline.getLength() + '\n');
 
@@ -121,7 +153,18 @@ public class Simulation {
         this.timeline.appendTick();
         this.timeline.setCurrentTick(0);
 
+
         for (int i = 0; i < timeline.getLength(); i++){
+            if (userPause) {
+                Util.print(Util.Color.YELLOW, "Simulation paused.");
+                Util.print(Util.Color.YELLOW, "Press enter to continue...");
+
+                // read a string and throw it away
+                while (userPause) {
+                    System.out.print("");
+                }
+            }
+
             this.timeline.setCurrentTick(i);
             this.timeline.getCurrentTick().executeEvents();
 
@@ -137,11 +180,14 @@ public class Simulation {
             this.dispatch.getAllVehicles().forEach(Vehicle::printTableRow);
             System.out.println();
 
-            this.visualizer.repaint();
+            visualizer.repaint();
             Util.sleep(this.tickTimeout);
         }
 
         Util.print(Util.Color.GREEN, "Simulation finished!");
     }
 
+    public void togglePause() {
+        userPause = !userPause;
+    }
 }
