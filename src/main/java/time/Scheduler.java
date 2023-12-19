@@ -21,11 +21,10 @@ public class Scheduler {
     static Network network;
     static Dispatch dispatch;
 
-    public Scheduler(Timeline timeline, Network network, Dispatch dispatch) {
+    public static void init(Timeline timeline, Network network, Dispatch dispatch) {
         Scheduler.timeline = timeline;
         Scheduler.network = network;
         Scheduler.dispatch = dispatch;
-
     }
 
     private static void scheduleMove(Taxi taxi, Node destination) {

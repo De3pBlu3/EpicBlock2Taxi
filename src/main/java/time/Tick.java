@@ -55,8 +55,6 @@ public class Tick {
 
     @Override
     public String toString() {
-        return "Tick{" +
-                "tick=" + tickNumber +
-                '}';
+        return "Tick[" + tickNumber + ']';
     }
 }

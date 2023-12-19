@@ -16,7 +16,7 @@ public class Timeline {
     }
 
     public Tick getCurrentTick() {
-        return currentTick;
+        return currentTick;  // FIXME: Returns null at some stage?
     }
 
     public void setCurrentTick(int currentTickNumber) {

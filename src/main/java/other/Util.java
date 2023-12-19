@@ -147,7 +147,7 @@ public class Util {
      * @param message   Message to be displayed.
      * @see Color
      */
-    public static void print(Color color, String message) {
+    public static <T> void print(Color color, T message) {
         System.out.println(color.getValue() + message + Color.NONE.getValue());
     }
 
