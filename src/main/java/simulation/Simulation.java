@@ -14,6 +14,7 @@ import time.Timeline;
 import visuals.NetworkLayout;
 import visuals.NetworkVisualizer;
 
+
 public class Simulation {
 
     private static final String[] networkLocationCords = {
@@ -37,12 +38,15 @@ public class Simulation {
     private final Dispatch dispatch;
     private final NetworkLayout layout;
     private final DynamicArray<String> locationNames;
-    private final NetworkVisualizer visualizer;
+    private NetworkVisualizer visualizer;
     private final int partyCount;
     private final int taxiCount;
     private final double tickTimeout;
+    boolean userPause = false;
+    private static Simulation single_instance = null;
 
-    public Simulation(int numberOfParties, int numberOfTaxis, int timelineLength, double tickTimeout) {
+
+    private Simulation(int numberOfParties, int numberOfTaxis, int timelineLength, double tickTimeout) {
         this.partyCount = numberOfParties;
         this.taxiCount = numberOfTaxis;
 
@@ -59,7 +63,18 @@ public class Simulation {
         this.addPartiesToMap();
 
         Scheduler.init(this.timeline, this.network, this.dispatch);
-        this.visualizer = new NetworkVisualizer(this.network, this.dispatch, this.layout);
+    }
+    public static Simulation getInstance(int numberOfParties, int numberOfTaxis, int timelineLength, double tickTimeout) {
+        if (single_instance == null)
+            single_instance = new Simulation(numberOfParties, numberOfTaxis, timelineLength, tickTimeout);
+
+        return single_instance;
+    }
+    public static Simulation getInstance() {
+        if (single_instance == null){
+            throw new IllegalStateException("Simulation has not been initialised");
+        }
+        return single_instance;
     }
 
     private void addTaxisToMap() {
@@ -110,7 +125,10 @@ public class Simulation {
 
     public void start() {
 
+        this.visualizer = new NetworkVisualizer(this.network, this.dispatch, this.layout);
+
         this.visualizer.start();
+
 
         System.out.println("Timeline length: " + this.timeline.getLength() + '\n');
 
@@ -128,7 +146,18 @@ public class Simulation {
         this.timeline.appendTick();
         this.timeline.setCurrentTick(0);
 
+
         for (int i = 0; i < timeline.getLength(); i++){
+            if (userPause) {
+                Util.print(Util.Color.YELLOW, "Simulation paused.");
+                Util.print(Util.Color.YELLOW, "Press enter to continue...");
+
+                // read a string and throw it away
+                while (userPause) {
+                    System.out.print("");
+                }
+            }
+
             this.timeline.setCurrentTick(i);
             this.timeline.getCurrentTick().executeEvents();
 
@@ -151,4 +180,7 @@ public class Simulation {
         Util.print(Util.Color.GREEN, "Simulation finished!");
     }
 
+    public void togglePause() {
+        userPause = !userPause;
+    }
 }

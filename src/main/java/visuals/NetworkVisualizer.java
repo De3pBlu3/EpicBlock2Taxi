@@ -6,6 +6,7 @@ import entities.Party;
 import network.Edge;
 import network.Network;
 import network.Node;
+import simulation.Simulation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -156,11 +157,22 @@ public class NetworkVisualizer extends JFrame {
     private final int xOffset = 150;
     private final int yOffset = 100;
 
+    private final Simulation simulation;
+
+
+
     public NetworkVisualizer(Network network, Dispatch dispatch, NetworkLayout networkLayout) {
 
         this.setTitle("Network Visualization");
         this.setIconImage(new ImageIcon("src/main/png/map_icon.png").getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.simulation = Simulation.getInstance();
+
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.addActionListener(e -> simulation.togglePause());
+        this.add(pauseButton, BorderLayout.SOUTH);
+
 
         if (networkLayout == null) {
 
