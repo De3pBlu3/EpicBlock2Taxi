@@ -40,14 +40,16 @@ public class Simulation {
     private final NetworkVisualizer visualizer;
     private final int partyCount;
     private final int taxiCount;
+    private final double tickTimeout;
 
-    public Simulation(int numberOfParties, int numberOfTaxis, int timelineLength) {
+    public Simulation(int numberOfParties, int numberOfTaxis, int timelineLength, double tickTimeout) {
         this.partyCount = numberOfParties;
         this.taxiCount = numberOfTaxis;
 
         this.timeline = new Timeline();
         this.timeline.extendTicks(timelineLength);
 
+        this.tickTimeout = tickTimeout;
         this.network = new Network();
         this.dispatch = new Dispatch();
         this.layout = new NetworkLayout(this.network, networkLocationCords);
@@ -143,7 +145,7 @@ public class Simulation {
             System.out.println();
 
             this.visualizer.repaint();
-            Util.sleep(0.01);
+            Util.sleep(this.tickTimeout);
         }
 
         Util.print(Util.Color.GREEN, "Simulation finished!");
