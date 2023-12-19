@@ -14,37 +14,21 @@ import time.Timeline;
 import visuals.NetworkLayout;
 import visuals.NetworkVisualizer;
 
-
 public class Simulation {
-
-    private static final String[] networkLocationCords = {
-            "ISE Building, 90, 100",
-            "Dromroe Village, 350, 80",
-            "Cappavilla Village, 550, 95",
-            "Stables, 400, 165",
-            "Glucksman Library, 200, 250",
-            "Killmurray Village, 600, 230",
-            "Spar Castletroy, 100, 300",
-            "Plassey Village, 310, 340",
-            "Apache Pizza, 560, 350",
-            "Bank of Ireland, 80, 400",
-            "Chicken Shop, 400, 420",
-            "Troy/Groody Village, 95, 560",
-            "Subway, 520, 500"
-    };
 
     private final Timeline timeline;
     private final Network network;
     private final Dispatch dispatch;
-    private final NetworkLayout layout;
     private final DynamicArray<String> locationNames;
     private NetworkVisualizer visualizer;
     private final int partyCount;
     private final int taxiCount;
     private final double tickTimeout;
-    boolean userPause = false;
-    private static Simulation single_instance = null;
+    private final NetworkLayout layout;
+    private boolean userPause = false;
 
+
+    private static Simulation single_instance = null;
 
     private Simulation(int numberOfParties, int numberOfTaxis, int timelineLength, double tickTimeout) {
         this.partyCount = numberOfParties;
@@ -56,13 +40,17 @@ public class Simulation {
         this.tickTimeout = tickTimeout;
         this.network = new Network();
         this.dispatch = new Dispatch();
-        this.layout = new NetworkLayout(this.network, networkLocationCords);
-        this.locationNames = DataProcessor.processData(network);
+
+        DataProcessor.processNetworkData(this.network);
+
+        this.layout = DataProcessor.createNetworkLayout(this.network);
+        this.locationNames = layout.getLocationNames();
 
         this.addTaxisToMap();
         this.addPartiesToMap();
 
         Scheduler.init(this.timeline, this.network, this.dispatch);
+
     }
     public static Simulation getInstance(int numberOfParties, int numberOfTaxis, int timelineLength, double tickTimeout) {
         if (single_instance == null)
@@ -128,7 +116,6 @@ public class Simulation {
         this.visualizer = new NetworkVisualizer(this.network, this.dispatch, this.layout);
 
         this.visualizer.start();
-
 
         System.out.println("Timeline length: " + this.timeline.getLength() + '\n');
 
