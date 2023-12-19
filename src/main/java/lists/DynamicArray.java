@@ -1,6 +1,8 @@
 package lists;
 
 // To implement enhanced for-loop capability
+import other.Util;
+
 import java.util.Iterator;
 
 import java.util.Optional;
@@ -128,7 +130,11 @@ public final class DynamicArray<T> implements Iterable<T> {
         if (this.count < 1)
             throw new ArrayIndexOutOfBoundsException("Cannot invoke getLast() on empty list");
 
-        return this.array[count - 1];
+        return this.array[this.count - 1];
+    }
+
+    public T getRandom() {
+        return this.array[Util.randInt(0, this.count - 1)];
     }
 
     public void set(int index, T element) {

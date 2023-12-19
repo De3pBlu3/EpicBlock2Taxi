@@ -16,4 +16,14 @@ public final class SportsTaxi extends Taxi {
         return new ImageIcon("src/main/png/sports_taxi.png").getImage();
     }
 
+    @Override
+    public int getImageWidth() {
+        return 30;
+    }
+
+    @Override
+    public int getImageHeight() {
+        return 35;
+    }
+
 }

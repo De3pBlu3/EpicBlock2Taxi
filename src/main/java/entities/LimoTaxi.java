@@ -16,4 +16,9 @@ public final class LimoTaxi extends Taxi {
         return new ImageIcon("src/main/png/limo_taxi.png").getImage();
     }
 
+    @Override
+    public int getImageWidth() {
+        return 50;
+    }
+
 }

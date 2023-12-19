@@ -7,11 +7,7 @@ import network.Network;
 import network.Node;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 @SuppressWarnings("FieldCanBeLocal")
 class NetworkVisualization extends JPanel {
@@ -39,7 +35,6 @@ class NetworkVisualization extends JPanel {
         this.network = network;
         this.dispatch = dispatch;
         this.setBackground(DARK_GRAY);
-        this.setBorder(BorderFactory.createRaisedBevelBorder());
         this.setFont(this.font);
         this.update();
     }
@@ -144,7 +139,7 @@ class NetworkVisualization extends JPanel {
     }
 }
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 public class NetworkVisualizer extends JFrame {
 
     private final static int DEFAULT_WINDOW_WIDTH = 700;

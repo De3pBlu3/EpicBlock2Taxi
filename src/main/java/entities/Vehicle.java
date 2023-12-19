@@ -138,7 +138,7 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         this.setLocation(loc);
     }
 
-    public String asTableRow() {
+    public void printTableRow() {
         StringBuilder row = new StringBuilder();
 
         row.append(String.format("%-15s", this.registrationNumber));
@@ -155,7 +155,7 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
             row.append(String.format("%-15s", "N/A"));
         }
 
-        return row.toString();
+        System.out.println(row);
     }
 
     @Override
