@@ -144,13 +144,10 @@ public class Simulation {
 
         // randomly over 150 ticks add parties to map
         for (Party party : this.dispatch.getAllParties()) {
-            this.timeline.setCurrentTick(Util.randInt(0, this.timeline.getLength()));
-            try {
-                new PartyRequestTaxi(this.timeline.getCurrentTick(), party, this.dispatch);  // FIXME: Throws NullPointerException on occasion
-            } catch (NullPointerException e) {
-                // idk
+            this.timeline.setCurrentTick(Util.randInt(0, this.timeline.getLength())-1);
+                new PartyRequestTaxi(this.timeline.getCurrentTick(), party, this.dispatch);
             }
-        }
+
 
         // LOOP THROUGH ALL TICKS
         this.timeline.appendTick();
