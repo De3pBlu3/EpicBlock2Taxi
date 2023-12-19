@@ -166,7 +166,10 @@ public class NetworkVisualizer extends JFrame {
         this.simulation = Simulation.getInstance();
 
         JButton pauseButton = new JButton("Pause");
-        pauseButton.addActionListener(e -> simulation.togglePause());
+        pauseButton.addActionListener(e -> {
+            simulation.togglePause();
+            pauseButton.setText(simulation.isPaused() ? "Resume" : "Pause");
+        });
         this.add(pauseButton, BorderLayout.SOUTH);
 
 

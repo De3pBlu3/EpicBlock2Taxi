@@ -190,4 +190,7 @@ public class Simulation {
     public void togglePause() {
         userPause = !userPause;
     }
+    public boolean isPaused() {
+        return userPause;
+    }
 }
