@@ -7,7 +7,11 @@ import network.Network;
 import network.Node;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 @SuppressWarnings("FieldCanBeLocal")
 class NetworkVisualization extends JPanel {
@@ -35,8 +39,8 @@ class NetworkVisualization extends JPanel {
         this.network = network;
         this.dispatch = dispatch;
         this.setBackground(DARK_GRAY);
+        this.setBorder(BorderFactory.createRaisedBevelBorder());
         this.setFont(this.font);
-        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 450, 700));
         this.update();
     }
 
@@ -114,6 +118,13 @@ class NetworkVisualization extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
 
+        // Magic rendering method to make quality good :3
+        // Eliminates the jaggedness of the text & shapes somehow
+        ((Graphics2D) g).setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON
+        );
+
         // Clear the screen
         g.clearRect(0, 0, 10000, 10000);
         super.paintComponent(g);
@@ -136,21 +147,21 @@ class NetworkVisualization extends JPanel {
 @SuppressWarnings("FieldCanBeLocal")
 public class NetworkVisualizer extends JFrame {
 
-    private final static int WINDOW_WIDTH = 700;
-    private final static int WINDOW_HEIGHT = 500;
+    private final static int DEFAULT_WINDOW_WIDTH = 700;
+    private final static int DEFAULT_WINDOW_HEIGHT = 500;
 
     private final int xOffset = 150;
     private final int yOffset = 100;
 
     public NetworkVisualizer(Network network, Dispatch dispatch, NetworkLayout networkLayout) {
 
-        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setTitle("Network Visualization");
         this.setIconImage(new ImageIcon("src/main/png/map_icon.png").getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
 
         if (networkLayout == null) {
+
+            this.setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 
             // Beginning co-ordinates for first node
             int x = 100;
@@ -159,9 +170,9 @@ public class NetworkVisualizer extends JFrame {
             for (Node node : network.getNodesAsArray()) {
 
                 // reset after every 5 nodes
-                if (x == WINDOW_WIDTH) {
+                if (x == DEFAULT_WINDOW_WIDTH) {
                     y += yOffset;  // Move y co-ord to new row
-                    x = 100;    // Reset x co-ord to beginning of new row
+                    x = 100;         // Reset x co-ord to beginning of new row
                 }
 
                 node.setX(x);
@@ -171,13 +182,15 @@ public class NetworkVisualizer extends JFrame {
 
         } else {
 
+            this.setSize(networkLayout.getMaxX() + 100, networkLayout.getMaxY() + 100);
+
             for (NodeData nodeData : networkLayout) {
 
                 Node node = nodeData.node();
                 int x = nodeData.x();
                 int y = nodeData.y();
 
-                if (x < 0 || x > 700) {
+                if (x < 0) {
                     throw new IllegalStateException("X coordinate is out of bounds for network visualisation");
                 }
 
@@ -193,6 +206,7 @@ public class NetworkVisualizer extends JFrame {
         NetworkVisualization networkVisualization = new NetworkVisualization(network, dispatch);
 
         this.add(networkVisualization);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

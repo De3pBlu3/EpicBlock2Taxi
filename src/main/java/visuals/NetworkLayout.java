@@ -11,31 +11,54 @@ public class NetworkLayout implements Iterable<NodeData> {
     private final DynamicArray<String> map;
     private Network network;
 
-    private int minX;
-    private int maxX;
-    private int minY;
-    private int maxY;
+    private int maxX = 0;
+    private int maxY = 0;
 
     public NetworkLayout(Network network, String... nodeAndLocationMap) {
-        this.map = new DynamicArray<String>(nodeAndLocationMap);
+        this.map = new DynamicArray<>(nodeAndLocationMap);
         this.network = network;
         this.processDimensionData();
     }
 
     public NetworkLayout(String... nodeAndLocationMap) {
-        this(null, nodeAndLocationMap);
+        this.map = new DynamicArray<>(nodeAndLocationMap);
     }
 
     public void setNetwork(Network network) {
         this.network = network;
+        this.processDimensionData();
     }
 
     public Network getNetwork() {
         return this.network;
     }
 
-    // Ignore for now
+    public int getMaxX() {
+        return this.maxX;
+    }
+
+    public int getMaxY() {
+        return this.maxY;
+    }
+
     private void processDimensionData() {
+        for (NodeData data : this) {
+            int x = data.x();
+            int y = data.y();
+
+            if (x < 0)
+                throw new IllegalStateException("X coordinate is out of bounds for network visualisation");
+
+            if (y < 0)
+                throw new IllegalStateException("Y coordinate is out of bounds for network visualisation");
+
+            if (x > this.maxX)
+                this.maxX = x;
+
+            if (y > this.maxY)
+                this.maxY = y;
+
+        }
     }
 
     @Override
