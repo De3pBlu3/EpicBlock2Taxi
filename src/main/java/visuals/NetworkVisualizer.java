@@ -169,12 +169,6 @@ public class NetworkVisualizer extends JFrame {
         JButton pauseButton = new JButton("Pause");
 
         this.applyButtonAttributes(pauseButton);
-
-        pauseButton.addActionListener(e -> {
-            simulation.togglePause();
-            pauseButton.setText(simulation.isPaused() ? "Resume" : "Pause");
-        });
-
         this.add(pauseButton, BorderLayout.SOUTH);
 
         if (networkLayout == null) {
@@ -233,7 +227,8 @@ public class NetworkVisualizer extends JFrame {
 
         button.addActionListener(e -> {
             simulation.togglePause();
-            simulation.togglePauseButtonStyle(button);
+            button.setText(simulation.isPaused() ? "Resume" : "Pause");
+            button.setBackground(simulation.isPaused() ? Color.LIGHT_GRAY : Color.WHITE);
         });
 
         button.addKeyListener(new KeyListener() {
