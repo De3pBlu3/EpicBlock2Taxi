@@ -16,26 +16,9 @@ import visuals.NetworkVisualizer;
 
 public class Simulation {
 
-    private static final String[] networkLocationCords = {
-            "ISE Building, 90, 100",
-            "Dromroe Village, 350, 80",
-            "Cappavilla Village, 550, 95",
-            "Stables, 400, 165",
-            "Glucksman Library, 200, 250",
-            "Killmurray Village, 600, 230",
-            "Spar Castletroy, 100, 300",
-            "Plassey Village, 310, 340",
-            "Apache Pizza, 560, 350",
-            "Bank of Ireland, 80, 400",
-            "Chicken Shop, 400, 420",
-            "Troy/Groody Village, 95, 560",
-            "Subway, 520, 500"
-    };
-
     private final Timeline timeline;
     private final Network network;
     private final Dispatch dispatch;
-    private final NetworkLayout layout;
     private final DynamicArray<String> locationNames;
     private final NetworkVisualizer visualizer;
     private final int partyCount;
@@ -52,14 +35,17 @@ public class Simulation {
         this.tickTimeout = tickTimeout;
         this.network = new Network();
         this.dispatch = new Dispatch();
-        this.layout = new NetworkLayout(this.network, networkLocationCords);
-        this.locationNames = DataProcessor.processData(network);
+
+        DataProcessor.processNetworkData(this.network);
+
+        NetworkLayout layout = DataProcessor.createNetworkLayout(this.network);
+        this.locationNames = layout.getLocationNames();
 
         this.addTaxisToMap();
         this.addPartiesToMap();
 
         Scheduler.init(this.timeline, this.network, this.dispatch);
-        this.visualizer = new NetworkVisualizer(this.network, this.dispatch, this.layout);
+        this.visualizer = new NetworkVisualizer(this.network, this.dispatch, layout);
     }
 
     private void addTaxisToMap() {
