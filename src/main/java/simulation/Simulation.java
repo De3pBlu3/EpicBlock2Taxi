@@ -204,4 +204,8 @@ public class Simulation {
         }
     }
 
+    public boolean isPaused() {
+        return userPause;
+    }
+
 }
