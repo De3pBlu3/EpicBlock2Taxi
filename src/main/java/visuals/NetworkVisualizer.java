@@ -1,6 +1,5 @@
 package visuals;
 
-import dispatch.Dispatch;
 import entities.Entity;
 import entities.Party;
 import network.Edge;
@@ -10,6 +9,8 @@ import simulation.Simulation;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 @SuppressWarnings("FieldCanBeLocal")
 class NetworkVisualization extends JPanel {
@@ -166,13 +167,12 @@ public class NetworkVisualizer extends JFrame {
         this.simulation = Simulation.getInstance();
 
         JButton pauseButton = new JButton("Pause");
-        pauseButton.addActionListener(e -> simulation.togglePause());
+        this.applyButtonAttributes(pauseButton);
         this.add(pauseButton, BorderLayout.SOUTH);
-
 
         if (networkLayout == null) {
 
-            this.setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
+            this.setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT + 40);
 
             // Beginning co-ordinates for first node
             int x = 100;
@@ -193,7 +193,7 @@ public class NetworkVisualizer extends JFrame {
 
         } else {
 
-            this.setSize(networkLayout.getMaxX() + 100, networkLayout.getMaxY() + 100);
+            this.setSize(networkLayout.getMaxX() + 100, networkLayout.getMaxY() + 140);
 
             for (Node node : networkLayout) {
 
@@ -213,7 +213,39 @@ public class NetworkVisualizer extends JFrame {
             }
         }
 
-        this.add(new NetworkVisualization(network));
+        this.add(new NetworkVisualization(network), BorderLayout.CENTER);
+    }
+
+    private void applyButtonAttributes(JButton button) {
+
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setBackground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setPreferredSize(new Dimension(this.getMaximumSize().width, 40));
+
+        button.addActionListener(e -> {
+            simulation.togglePause();
+            simulation.togglePauseButtonStyle(button);
+        });
+
+        button.addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_PAUSE)
+                    simulation.togglePause();
+            }
+
+        });
+
+        this.add(button, BorderLayout.SOUTH);
     }
 
     public void start() {

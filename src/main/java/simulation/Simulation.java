@@ -14,6 +14,9 @@ import time.Timeline;
 import visuals.NetworkLayout;
 import visuals.NetworkVisualizer;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Simulation {
 
     private final Timeline timeline;
@@ -153,11 +156,10 @@ public class Simulation {
         this.timeline.appendTick();
         this.timeline.setCurrentTick(0);
 
-
         for (int i = 0; i < timeline.getLength(); i++){
             if (userPause) {
                 Util.print(Util.Color.YELLOW, "Simulation paused.");
-                Util.print(Util.Color.YELLOW, "Press enter to continue...");
+                Util.print(Util.Color.YELLOW, "Press space or the 'Pause' button to continue.");
 
                 // read a string and throw it away
                 while (userPause) {
@@ -190,4 +192,16 @@ public class Simulation {
     public void togglePause() {
         userPause = !userPause;
     }
+
+    public void togglePauseButtonStyle(JButton pauseButton) {
+
+        if (pauseButton.getBackground().equals(Color.WHITE)) {
+            pauseButton.setBackground(Color.LIGHT_GRAY);
+            pauseButton.setText("Resume");
+        } else {
+            pauseButton.setBackground(Color.WHITE);
+            pauseButton.setText("Pause");
+        }
+    }
+
 }
