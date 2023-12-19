@@ -31,8 +31,8 @@ public class simulationMain {
             "Apache Pizza, 560, 350",
             "Bank of Ireland, 80, 400",
             "Chicken Shop, 400, 420",
-            "Troy/Groody Village, 95, 460",
-            "Subway, 520, 470"
+            "Troy/Groody Village, 95, 560",
+            "Subway, 520, 600"
     };
 
     public static void init() {
@@ -85,6 +85,7 @@ public class simulationMain {
 
         NetworkLayout layout = new NetworkLayout(network, networkLocations);
         NetworkVisualizer netVis = new NetworkVisualizer(network, dispatch, layout);
+        netVis.start();
 
         timeline.extendTicks(150);
         System.out.println("Timeline length: " + timeline.getLength());

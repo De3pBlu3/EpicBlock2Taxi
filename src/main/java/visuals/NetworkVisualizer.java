@@ -2,6 +2,7 @@ package visuals;
 
 import dispatch.Dispatch;
 import entities.Entity;
+import entities.Party;
 import network.Edge;
 import network.Network;
 import network.Node;
@@ -85,16 +86,23 @@ class NetworkVisualization extends JPanel {
 
     private void drawNodeOccupants(Graphics g, Node node) {
 
-        int index = 0;
+        int partyCount = 0;
+        int otherCount = 0;
 
         for (Entity occupant : node.getOccupants()) {
 
             Image image = occupant.getImage();
             int width = occupant.getImageWidth();
             int height = occupant.getImageHeight();
+            int x1, y1;
 
-            int x1 = node.getX() + 5;
-            int y1 = node.getY() + 5 + (index++ * 15);
+            if (occupant instanceof Party) {
+                x1 = node.getX() - this.nodeRadius - width;
+                y1 = node.getY() + this.nodeRadius + (partyCount++ * 20);
+            } else {
+                x1 = node.getX() + this.nodeRadius;
+                y1 = node.getY() + this.nodeRadius + (otherCount++ * 20);
+            }
 
             g.drawImage(image, x1, y1, width, height, null);
         }
@@ -189,7 +197,7 @@ public class NetworkVisualizer extends JFrame {
                     throw new IllegalStateException("X coordinate is out of bounds for network visualisation");
                 }
 
-                if (y < 0 || y > 500) {
+                if (y < 0 ) {
                     throw new IllegalStateException("Y coordinate is out of bounds for network visualisation");
                 }
 
@@ -198,11 +206,14 @@ public class NetworkVisualizer extends JFrame {
             }
         }
 
-        NetworkVisualization networkVisualization = new NetworkVisualization(network, dispatch);
+        this.add(new NetworkVisualization(network, dispatch));
+    }
 
-        this.add(networkVisualization);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+    public void start() {
+        SwingUtilities.invokeLater(() -> {
+            this.setLocationRelativeTo(null);
+            this.setVisible(true);
+        });
     }
 
     public NetworkVisualizer(Network network, Dispatch dispatch) {

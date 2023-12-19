@@ -18,7 +18,7 @@ public final class LimoTaxi extends Taxi {
 
     @Override
     public int getImageWidth() {
-        return 50;
+        return 55;
     }
 
 }

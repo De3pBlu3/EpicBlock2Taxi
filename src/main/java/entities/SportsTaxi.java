@@ -17,13 +17,8 @@ public final class SportsTaxi extends Taxi {
     }
 
     @Override
-    public int getImageWidth() {
-        return 30;
-    }
-
-    @Override
     public int getImageHeight() {
-        return 35;
+        return 15;
     }
 
 }

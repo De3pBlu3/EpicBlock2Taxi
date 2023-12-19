@@ -16,4 +16,8 @@ public final class ElectricTaxi extends Taxi {
         return new ImageIcon("src/main/png/electric_taxi.png").getImage();
     }
 
+    @Override
+    public int getImageWidth() {
+        return 38;
+    }
 }
