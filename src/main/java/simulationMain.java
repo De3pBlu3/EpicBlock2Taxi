@@ -39,7 +39,7 @@
 //        int numParties = 12;
 //        int numTaxis = 5;
 //
-//        DynamicArray<String> locationNames = CSVReader.processData("src/main/csv/network_data.csv", network);
+//        DynamicArray<String> locationNames = CSVReader.processData("src/main/csv/network_connections.csv", network);
 //
 //        for (int i = 0; i < numParties; i++) {
 //

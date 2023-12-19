@@ -13,9 +13,6 @@ import java.util.function.Consumer;
 
 public final class DataProcessor {
 
-    private static final String NETWORK_DATA_PATH = "src/main/csv/network_data.csv";
-    private static final String NETWORK_LAYOUT_PATH = "src/main/csv/network_layout.csv";
-
     /**
      * For each line in the given CSV file, the given consumer executes its
      * accept() method.
@@ -48,11 +45,12 @@ public final class DataProcessor {
      * Process the network data and adds given nodes and edges
      * to network.
      *
+     * @param filePath File path to CSV file.
      * @param network Main network object.
      */
-    public static void processNetworkData(Network network) {
+    public static void processNetworkConnections(String filePath, Network network) {
 
-        forEachLine(NETWORK_DATA_PATH, (line) -> {
+        forEachLine(filePath, (line) -> {
             String[] row = line.split(", ");
 
             String start = row[0];
@@ -68,14 +66,15 @@ public final class DataProcessor {
     /**
      * Creates and returns a network layout
      *
+     * @param filePath File path to CSV file.
      * @param network Main network object. Needed to access the
      * node references.
      */
-    public static NetworkLayout createNetworkLayout(Network network) {
+    public static NetworkLayout createNetworkPointLayout(String filePath, Network network) {
 
         NetworkLayout layout = new NetworkLayout();
 
-        forEachLine(NETWORK_LAYOUT_PATH, (line) -> {
+        forEachLine(filePath, (line) -> {
             String[] mappedArray = line.split(", ");
 
             Node node = network.getNode(mappedArray[0]);

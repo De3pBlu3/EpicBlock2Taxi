@@ -25,7 +25,14 @@ public class Simulation {
     private final int taxiCount;
     private final double tickTimeout;
 
-    public Simulation(int numberOfParties, int numberOfTaxis, int timelineLength, double tickTimeout) {
+    public Simulation(
+            int numberOfParties,
+            int numberOfTaxis,
+            int timelineLength,
+            double tickTimeout,
+            String networkConnectionDataFile,
+            String networkPointDataFile
+    ) {
         this.partyCount = numberOfParties;
         this.taxiCount = numberOfTaxis;
 
@@ -36,9 +43,9 @@ public class Simulation {
         this.network = new Network();
         this.dispatch = new Dispatch();
 
-        DataProcessor.processNetworkData(this.network);
+        DataProcessor.processNetworkConnections(networkConnectionDataFile, this.network);
+        NetworkLayout layout = DataProcessor.createNetworkPointLayout(networkPointDataFile, this.network);
 
-        NetworkLayout layout = DataProcessor.createNetworkLayout(this.network);
         this.locationNames = layout.getLocationNames();
 
         this.addTaxisToMap();

@@ -20,7 +20,7 @@
 //
 //        // Process CSV file, returns list of all possible locations
 //        DynamicArray<String> locationNames = CSVReader.processData(
-//                "src/main/csv/network_data.csv",
+//                "src/main/csv/network_connections.csv",
 //                network
 //        );
 //
