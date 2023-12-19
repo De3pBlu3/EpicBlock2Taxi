@@ -21,10 +21,10 @@ public class Node extends NetworkComponent {
         this.edges = temp_edges;
     }
 
-    public Node(String id, float x, float y) {
+    public Node(String id, int x, int y) {
         super(id);
-        this.x = (int) x;   // TODO: to float or not to float?
-        this.y = (int) y;
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -102,7 +102,11 @@ public class Node extends NetworkComponent {
     public void setX(int x) {
         this.x = x;
     }
-    public void setY(int y) { this.y = y; }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
 //
 //    public static boolean equals(Node n, Node userNode) {   // added for redundancy
 //        return n.id.equals(userNode.id);

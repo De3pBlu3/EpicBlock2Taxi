@@ -3,7 +3,6 @@ package other;
 import network.Network;
 import network.Node;
 import visuals.NetworkLayout;
-import visuals.NodeData;
 
 // For processing csv file
 import java.io.BufferedReader;
@@ -82,8 +81,10 @@ public final class DataProcessor {
             Node node = network.getNode(mappedArray[0]);
             int x = Integer.parseInt(mappedArray[1]);
             int y = Integer.parseInt(mappedArray[2]);
+            node.setX(x);
+            node.setY(y);
 
-            layout.addNodeData(new NodeData(node, x, y));
+            layout.addNode(node);
 
         });
 
