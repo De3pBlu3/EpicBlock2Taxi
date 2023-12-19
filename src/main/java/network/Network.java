@@ -52,7 +52,7 @@ public class Network {
         return null;
     }
 
-//    SEARCHING FOR NODES AND EDGES IN NETWORK ---- TODO: implement searching algorithms
+//    SEARCHING FOR NODES AND EDGES IN NETWORK
     private boolean checkNodeExists(Node UserNode) {
         // check if node exists in network
         for (Node n : this.nodes) {
@@ -100,7 +100,7 @@ public class Network {
 
     }
 
-    // with weight should be default, NOT other way round TODO invert this
+    // with weight should be default, NOT other way round
     public void addEdge(Node node1, Node node2, int weight) {
         // add edge to network
         if (!checkNodeExists(node1)) {
@@ -112,7 +112,7 @@ public class Network {
         Edge UserEdge = new Edge();
         UserEdge.start = node1;
         UserEdge.end = node2;
-        UserEdge.weight = weight; // TODO: make this be the distance between the two nodes (in ticks)
+        UserEdge.weight = weight;
         addEdgeToEdgesArray(UserEdge);
     }
 
@@ -218,50 +218,78 @@ public class Network {
 
         startNode.dist = 0;
 
+        // sort nodes by distance
 
         DijkstraNode[] nodesArray = new DijkstraNode[dijkstraNodes.length()];
 
         for (int i = 0; i < dijkstraNodes.length(); i++) {
             nodesArray[i] = dijkstraNodes.get(i);
         }
+
         Arrays.sort(nodesArray, (a, b) -> a.dist - b.dist);
 
-        dijkstraNodes = new DynamicArray<>(nodesArray);
+
+        dijkstraNodes = new DynamicArray<>(nodesArray); // turn array back into dynamic array
 
         while (!dijkstraNodes.isEmpty()) {
+
+            // ========== FIND SMALLEST DISTANCE NODE ==========
             DijkstraNode u = dijkstraNodes.get(0);
+
             for (DijkstraNode dn : dijkstraNodes) {
                 if (dn.dist < u.dist) {
                     u = dn;
                 }
             }
-            if (u.node == nodeEnd) {
+
+            if (u.node == nodeEnd) {    // if we have reached the end node, break
                 break;
             }
 
+            // =================================================
+
+
+
+            // remove u from dijkstraNodes array
             DijkstraNode[] temp_Q = new DijkstraNode[dijkstraNodes.length() - 1];
+
             int temp_Q_index = 0;
+
             for (DijkstraNode dn : dijkstraNodes) {
                 if (dn != u) {
                     temp_Q[temp_Q_index] = dn;
                     temp_Q_index++;
                 }
             }
+
+
+            // turn array back into dynamic array
             dijkstraNodes = new DynamicArray<>(temp_Q);
 
+            // ================================================
+
+
+            // for edge in the smallest distance node
             for (Edge e : u.node.edges) {
+
                 DijkstraNode v = null;
+
+                // for each other node in the network (not current smallest)
                 for (DijkstraNode dn : dijkstraNodes) {
-                    if (dn.node == e.end) {
+                    if (dn.node == e.end) { // IF the end of the edge lands on a new node (i,e the direction is outwards)
                         v = dn;
                         break;
                     }
                 }
-                int alt = u.dist + e.weight;
-                if (v == null) {
+
+                if (v == null) { // if edge points inwards
                     continue;
                 }
-                if (alt < v.dist) {
+
+                int alt = u.dist + e.weight; // current distance to node + weight of edge (new distance)
+
+                if (alt < v.dist) { // if new distance is less than current distance
+
                     v.dist = alt;
                     v.prev = u;
                 }
