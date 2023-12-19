@@ -150,11 +150,14 @@ public final class Dispatch implements VehicleHiringTest {
 
             int index = this.vehiclesOnMap.indexOf(vehicle);
 
-            if (index != -1)  // If on map
-
+            if (index != -1) { // If on map
+                vehicle.getLocation().getCurrentNetLocation().removeOccupant(vehicle);  // Remove from old location
+                vehicle.setLocation(loc);  // Set new location
+                loc.getCurrentNetLocation().addOccupant(vehicle);  // Add to new location
                 return true;
-        }
+            }
 
+        }
         return false;
     }
 
