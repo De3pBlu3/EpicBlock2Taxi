@@ -1,4 +1,4 @@
-package other;
+package entities;
 
 import lists.DynamicArray;
 import other.Util;
