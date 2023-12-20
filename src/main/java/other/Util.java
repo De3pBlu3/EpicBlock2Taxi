@@ -62,6 +62,30 @@ public class Util {
     }
 
     /**
+     * Prompts the user to hit enter.
+     *
+     * @param prompt to be displayed to the user.
+     * @param strict Whether to accept inputs other than empty input.
+     */
+    public static void waitForEnter(String prompt, boolean strict) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+
+            if (input.isEmpty() && strict) {
+                Util.print(Color.RED, "Please enter a valid input");
+                continue;
+            }
+
+            return;
+        }
+    }
+
+    public static void waitForEnter(String prompt) {
+        waitForEnter(prompt, false);
+    }
+
+    /**
      * Returns the appropriate error message based on
      * the given input string.
      *
@@ -104,33 +128,89 @@ public class Util {
     }
 
     /**
-     * Repeatedly asks the user for an integer input within
+     * Repeatedly asks the user a yes/no question util either
+     * a valid positive or negative answer is given.
+     *
+     * @param prompt Prompt to be displayed to the user.
+     * @param errMsg Error message to display on invalid input.
+     * @see Util#getInput(String)
+     */
+    public static boolean getBooleanInput(String prompt, String errMsg) {
+        String input;
+
+        while (true) {
+            switch (Util.getInput(prompt)) {
+                case "y", "yes", "true" -> {
+                    return true;
+                }
+                case "n", "no", "false" -> {
+                    return false;
+                }
+            }
+
+            Util.print(Color.RED, errMsg);
+        }
+
+    }
+
+    /**
+     * Repeatedly asks the user for an integer value within
+     * the specified range (inclusive), until a valid integer
+     * is given.
+     *
+     * @see Util#getDoubleInput(String, double, double, String, String, String)
+     */
+    public static int getIntInput(String prompt, int min, int max, String errMsgNaN, String errMsgLT, String errMsgGT) {
+
+        while (true) {
+            double input = Util.getDoubleInput(prompt, min, max, errMsgNaN, errMsgLT, errMsgGT);
+
+            if (!((input % 1) == 0)) {
+                Util.print(Color.RED, errMsgNaN);
+                continue;
+            }
+
+            return (int) input;
+        }
+    }
+
+    /**
+     * Repeatedly asks the user for a double value within
      * the specified range (inclusive), until a valid input is
      * given.
      *
      * @param prompt Prompt to be displayed to the user.
      * @param min Minimum number in the range.
      * @param max Maximum number in the range.
-     * @param errMsg Error message to display on invalid integer.
-     * @return Integer input.
+     * @param errMsgNaN Error message to display on not a number.
+     * @param errMsgLT Error message to display on number below {@code min}.
+     * @param errMsgGT Error message to display on number above {@code max}.
+     * @return Double input.
+     *
+     * @see Util#getInput
      */
-    public static int getIntInput(String prompt, int min, int max, String errMsg) {
+    public static double getDoubleInput(String prompt, double min, double max, String errMsgNaN, String errMsgLT, String errMsgGT) {
 
         String input;
-        int number;
+        double number;
 
         while (true) {
             input = Util.getInput(prompt);
 
             try {
-                number = Integer.parseInt(input);
+                number = Double.parseDouble(input);
             } catch (NumberFormatException e) {
-                Util.print(Util.Color.RED, "Please enter a number");
+                Util.print(Util.Color.RED, errMsgNaN);
                 continue;
             }
 
-            if (number < min || number > max) {
-                Util.print(Util.Color.RED, errMsg);
+            if (number < min) {
+                Util.print(Util.Color.RED, errMsgLT);
+                continue;
+            }
+
+            if (number > max) {
+                Util.print(Util.Color.RED, errMsgGT);
                 continue;
             }
 

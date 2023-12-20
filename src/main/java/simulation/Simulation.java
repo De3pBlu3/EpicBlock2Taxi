@@ -143,7 +143,7 @@ public class Simulation {
         NetworkVisualizer visualizer = new NetworkVisualizer(this.network, this.layout, this.showWeights);
         visualizer.start();
 
-        System.out.println("Timeline length: " + this.timeline.getLength() + '\n');
+        System.out.println("\nTimeline length: " + this.timeline.getLength() + '\n');
 
         // randomly over 150 ticks add parties to map
         for (Party party : this.dispatch.getAllParties()) {
@@ -170,8 +170,11 @@ public class Simulation {
             this.timeline.setCurrentTick(i);
             this.timeline.getCurrentTick().executeEvents();
 
-            Util.print(Util.Color.CYAN, "Tick: ");
-            Util.print(Util.Color.YELLOW, this.timeline.getCurrentTick().getTickNumber());
+            Util.print(
+                    Util.Color.CYAN,
+                    "Tick: " + Util.Color.YELLOW.getValue() + this.timeline.getCurrentTick().getTickNumber() + Util.Color.NONE.getValue()
+            );
+
             System.out.println('\n' + "=".repeat(145));
             System.out.printf(
                     "%-15s%-35s%-15s%-15s%-15s%-15s%-15s%n%s%n",

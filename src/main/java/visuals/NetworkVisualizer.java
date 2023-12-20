@@ -242,8 +242,6 @@ public class NetworkVisualizer extends JFrame {
                 int x = node.getX();
                 int y = node.getY();
 
-                System.out.println(x + ", " + y);
-
                 if (x < 0) {
                     throw new IllegalStateException("X coordinate is out of bounds for network visualisation");
                 }
