@@ -18,6 +18,7 @@ class NetworkVisualization extends JPanel {
     private static final Color LIGHT_GRAY = new Color(200, 200, 200);
     private static final Color LIGHTER_GRAY = new Color(211, 211, 211);
     private static final Color DARK_GRAY = new Color(76, 78, 82);
+    private static final Color LIGHT_BLUE = new Color(83, 133, 176);
 
     private final int nodeRadius = 13;
     private final int nodeDiameter = nodeRadius * 2;
@@ -32,9 +33,11 @@ class NetworkVisualization extends JPanel {
     private Node[] nodes;
     private Edge[] edges;
     private final Network network;
+    private final boolean showWeights;
 
-    NetworkVisualization(Network network) {
+    NetworkVisualization(Network network, boolean showWeights) {
         this.network = network;
+        this.showWeights = showWeights;
         this.setBackground(DARK_GRAY);
         this.setFont(this.font);
         this.update();
@@ -109,41 +112,47 @@ class NetworkVisualization extends JPanel {
     }
 
     private void drawEdgeConnection(Graphics g, Edge edge) {
-        g.setColor(LIGHTER_GRAY);
-
         int x1 = edge.getStart().getX();
         int y1 = edge.getStart().getY();
 
         int x2 = edge.getEnd().getX();
         int y2 = edge.getEnd().getY();
 
+        g.setColor(LIGHTER_GRAY);
         g.drawLine(x1, y1, x2, y2);
-        this.labelConnection(g, String.valueOf(edge.getWeight()), x1, y1, x2, y2);
-    }
 
-    private void labelConnection(Graphics g, String connectionID, int x1, int y1, int x2, int y2) {
+        if (!this.showWeights)
+            return;
+
         int xMid = (x1 + x2) / 2;
         int yMid = (y1 + y2) / 2;
 
-        int xOffset = 0;
-        int yOffset = 0;
+        int maxX = Math.max(x1, x2);
+        int minX = x2 == maxX ? x1 : x2;
 
-        if (x1 < x2) {
-            yOffset = 3;
+        int maxY = Math.max(y1, y2);
+        int minY = y2 == maxY ? y1 : y2;
+
+        int opp = maxY - minY;
+        int adj = maxX - minX;
+
+        double angle = (Math.atan((double) opp/adj) * (180/Math.PI));
+
+        boolean left = maxX == x1 ? (x2 < x1) : (x1 < x2);
+        int offsetMultiplicand = left ? 1 : -1;
+
+        int xOffset = offsetMultiplicand;
+        int yOffset = offsetMultiplicand;
+        int magicMultiplicand = angle > 75 ? 5 : 3;  // Don't ask, I don't know
+
+        if (angle > 25) {
+            xOffset *= (int) Math.round((((90 - angle) / 10) * magicMultiplicand) / 10) * 10;
         } else {
-            yOffset = -3;
+            yOffset *= (int) Math.round(((angle / 10) * 10) / 10) * 10;
         }
 
-        if (y1 < y2) {
-            xOffset = 3;
-        } else {
-            xOffset = -3;
-        }
-
-        g.setColor(Color.BLUE);
-
-        // Draw the rotated string
-        g.drawString(connectionID, xMid + xOffset, yMid + yOffset);
+        g.setColor(LIGHT_BLUE);
+        g.drawString(String.valueOf(edge.getWeight()), xMid + xOffset, yMid + yOffset);
 
     }
 
@@ -187,7 +196,7 @@ public class NetworkVisualizer extends JFrame {
 
     private final Simulation simulation;
 
-    public NetworkVisualizer(Network network, NetworkLayout networkLayout) {
+    public NetworkVisualizer(Network network, NetworkLayout networkLayout, boolean showWeights) {
 
         this.setTitle("Network Visualization");
         this.setIconImage(new ImageIcon("src/main/png/map_icon.png").getImage());
@@ -249,7 +258,7 @@ public class NetworkVisualizer extends JFrame {
 
         }
 
-        this.add(new NetworkVisualization(network), BorderLayout.CENTER);
+        this.add(new NetworkVisualization(network, showWeights), BorderLayout.CENTER);
     }
 
     private void applyButtonAttributes(JButton button) {
@@ -293,7 +302,7 @@ public class NetworkVisualizer extends JFrame {
     }
 
     public NetworkVisualizer(Network network) {
-        this(network, null);
+        this(network, null, false);
     }
 
 }

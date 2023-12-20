@@ -53,13 +53,12 @@ public final class DataProcessor {
         forEachLine(filePath, (line) -> {
             String[] row = line.split(", ");
 
-            String connectionName = row[0];
-            String start = row[1];
-            String end = row[2];
-            int weight = Integer.parseInt(row[3]);
+            String start = row[0];
+            String end = row[1];
+            int weight = Integer.parseInt(row[2]);
 
             // Bi-directional connection
-            network.addTwoWayEdge(connectionName, start, end, weight);
+            network.addTwoWayEdge(start, end, weight);
 
         });
     }

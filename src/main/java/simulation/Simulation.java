@@ -14,8 +14,6 @@ import time.Timeline;
 import visuals.NetworkLayout;
 import visuals.NetworkVisualizer;
 
-import javax.swing.*;
-import java.awt.*;
 
 public class Simulation {
 
@@ -28,6 +26,7 @@ public class Simulation {
     private final int taxiCount;
     private final double tickTimeout;
     private boolean userPause = false;
+    private final boolean showWeights;
 
     private static Simulation single_instance = null;
 
@@ -37,7 +36,8 @@ public class Simulation {
         int timelineLength,
         double tickTimeout,
         String networkConnectionDataFile,
-        String networkPointDataFile
+        String networkPointDataFile,
+        boolean showWeights
     ) {
         this.partyCount = numberOfParties;
         this.taxiCount = numberOfTaxis;
@@ -48,6 +48,7 @@ public class Simulation {
         this.tickTimeout = tickTimeout;
         this.network = new Network();
         this.dispatch = new Dispatch();
+        this.showWeights = showWeights;
 
         DataProcessor.processNetworkConnections(networkConnectionDataFile, this.network);
         this.layout = DataProcessor.createNetworkPointLayout(networkPointDataFile, this.network);
@@ -67,7 +68,8 @@ public class Simulation {
             int timelineLength,
             double tickTimeout,
             String networkConnectionDataFile,
-            String networkPointDataFile
+            String networkPointDataFile,
+            boolean showWeights
     ) {
         if (single_instance == null)
             single_instance = new Simulation(
@@ -76,7 +78,8 @@ public class Simulation {
                     timelineLength,
                     tickTimeout,
                     networkConnectionDataFile,
-                    networkPointDataFile
+                    networkPointDataFile,
+                    showWeights
             );
 
         return single_instance;
@@ -137,7 +140,7 @@ public class Simulation {
 
     public void start() {
 
-        NetworkVisualizer visualizer = new NetworkVisualizer(this.network, this.layout);
+        NetworkVisualizer visualizer = new NetworkVisualizer(this.network, this.layout, this.showWeights);
         visualizer.start();
 
         System.out.println("Timeline length: " + this.timeline.getLength() + '\n');
@@ -156,7 +159,7 @@ public class Simulation {
         for (int i = 0; i < timeline.getLength(); i++){
             if (userPause) {
                 Util.print(Util.Color.YELLOW, "Simulation paused.");
-                Util.print(Util.Color.YELLOW, "Press space or the 'Pause' button to continue.");
+                Util.print(Util.Color.YELLOW, "Press space or the 'Resume' button to continue.");
 
                 // read a string and throw it away
                 while (userPause) {
@@ -188,17 +191,6 @@ public class Simulation {
 
     public void togglePause() {
         userPause = !userPause;
-    }
-
-    public void togglePauseButtonStyle(JButton pauseButton) {
-
-        if (pauseButton.getBackground().equals(Color.WHITE)) {
-            pauseButton.setBackground(Color.LIGHT_GRAY);
-            pauseButton.setText("Resume");
-        } else {
-            pauseButton.setBackground(Color.WHITE);
-            pauseButton.setText("Pause");
-        }
     }
 
     public boolean isPaused() {

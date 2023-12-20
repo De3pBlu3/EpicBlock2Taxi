@@ -1,32 +1,32 @@
 START_NODE, END_NODE, WEIGHT
-0, ISE Building, Glucksman Library, 2
-1, ISE Building, Dromroe Village, 8
-2, ISE Building, Spar Castletroy, 4
-3, Dromroe Village, Applegreen, 2
-4, Dromroe Village, Cappavilla Village, 6
-5, Dromroe Village, Stables, 3
-6, Cappavilla Village, Stables, 2
-7, Cappavilla Village, Killmurray Village, 1
-8, Glucksman Library, Spar Castletroy, 2
-9, Glucksman Library, Plassey Village, 3
-10, Glucksman Library, Applegreen, 2
-11, Applegreen, Stables, 2
-12, Stables, Killmurray Village, 4
-13, Killmurray Village, Plassey Village, 9
-14, Killmurray Village, Apache Pizza, 3
-15, Killmurray Village, Lifestyle Sports, 2
-16, Spar Castletroy, Bank of Ireland, 2
-17, Spar Castletroy, Plassey Village, 2
-18, Plassey Village, Bank of Ireland, 6
-19, Plassey Village, Troy/Groody Village, 5
-20, Plassey Village, Penneys, 1
-21, Bank of Ireland, Troy/Groody Village, 2
-22, Penneys, Troy/Groody Village, 6
-23, Penneys, Subway, 2
-24, Penneys, Apache Pizza, 1
-25, Apache Pizza, Costa, 2
-26, Apache Pizza, Lifestyle Sports, 1
-27, Lifestyle Sports, Costa, 2
-28, Troy/Groody Village, Zara, 3
-29, Zara, Subway, 2
-30, Subway, Costa, 3
+ISE Building, Glucksman Library, 2
+ISE Building, Dromroe Village, 8
+ISE Building, Spar Castletroy, 4
+Dromroe Village, Applegreen, 2
+Dromroe Village, Cappavilla Village, 6
+Dromroe Village, Stables, 3
+Cappavilla Village, Stables, 2
+Cappavilla Village, Killmurray Village, 1
+Glucksman Library, Spar Castletroy, 2
+Glucksman Library, Plassey Village, 3
+Glucksman Library, Applegreen, 2
+Applegreen, Stables, 2
+Stables, Killmurray Village, 4
+Killmurray Village, Plassey Village, 9
+Killmurray Village, Apache Pizza, 3
+Killmurray Village, Lifestyle Sports, 2
+Spar Castletroy, Bank of Ireland, 2
+Spar Castletroy, Plassey Village, 2
+Plassey Village, Bank of Ireland, 6
+Plassey Village, Troy/Groody Village, 5
+Plassey Village, Penneys, 1
+Bank of Ireland, Troy/Groody Village, 2
+Penneys, Troy/Groody Village, 6
+Penneys, Subway, 2
+Penneys, Apache Pizza, 1
+Apache Pizza, Costa, 2
+Apache Pizza, Lifestyle Sports, 1
+Lifestyle Sports, Costa, 2
+Troy/Groody Village, Zara, 3
+Zara, Subway, 2
+Subway, Costa, 3

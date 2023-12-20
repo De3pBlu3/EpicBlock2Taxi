@@ -11,9 +11,10 @@ public class Main {
                 20,
                 8,
                 200,
-                5,
+                0.25,
                 NETWORK_DATA_PATH,
-                NETWORK_LAYOUT_PATH
+                NETWORK_LAYOUT_PATH,
+                false
         );
 
         simulation.start();
