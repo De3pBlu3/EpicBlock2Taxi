@@ -22,12 +22,8 @@ public class Wallet {
         return this.balance;
     }
 
-    public void addMoola(double yummyMoolaUwU) {
+    public void addCash(double yummyMoolaUwU) {
         this.balance += yummyMoolaUwU;
-    }
-
-    public String getFormattedBalance() {
-        return String.format("%.2f", this.balance);
     }
 
 }

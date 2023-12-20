@@ -159,7 +159,7 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
 
     public void showDriverSummary() {
         System.out.printf(
-                "%-15s%-20s%-15d%-25s%-15d%-25.2f%-15s%n",
+                "%-15s%-20s%-20d%-25s%-15d%-25.2f%-15s%n",
                 this.getVehicleName(),
                 this.registrationNumber,
                 this.driver.getTripsComplete(),
@@ -172,6 +172,10 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
 
     public String getVehicleName() {
         return this.getClass().getSimpleName();
+    }
+
+    protected int getVehicleCharge() {
+        return 0;
     }
 
     @Override

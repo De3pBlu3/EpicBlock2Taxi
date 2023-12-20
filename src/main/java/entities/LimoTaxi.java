@@ -21,4 +21,9 @@ public final class LimoTaxi extends Taxi {
         return 55;
     }
 
+    @Override
+    protected int getVehicleCharge() {
+        return 100;
+    }
+
 }

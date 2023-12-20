@@ -20,4 +20,9 @@ public final class ElectricTaxi extends Taxi {
     public int getImageWidth() {
         return 38;
     }
+
+    @Override
+    protected int getVehicleCharge() {
+        return 5;
+    }
 }

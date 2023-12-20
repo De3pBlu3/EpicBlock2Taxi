@@ -21,4 +21,9 @@ public final class SportsTaxi extends Taxi {
         return 15;
     }
 
+    @Override
+    protected int getVehicleCharge() {
+        return 20;
+    }
+
 }

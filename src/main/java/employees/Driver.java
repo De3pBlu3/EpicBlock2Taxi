@@ -37,7 +37,7 @@ public final class Driver {
     }
 
     public void pay(double moola) {
-        this.wallet.addMoola(moola);
+        this.wallet.addCash(moola);
     }
 
     public String getFirstName() {

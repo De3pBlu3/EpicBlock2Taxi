@@ -32,7 +32,7 @@ public sealed class Taxi extends Vehicle permits ElectricTaxi, LimoTaxi, SportsT
     }
 
     public void pay() {
-        this.pay(runningTotal);
+        this.pay(runningTotal + this.getVehicleCharge());
         this.getDriver().incrementTrips();
         this.runningTotal = randInt(0, 99) / 100.0;
     }
