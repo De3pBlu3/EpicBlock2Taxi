@@ -10,7 +10,7 @@ public final class Driver {
     private final String lastName;
     private final int age;
     private final DynamicArray<Double> ratings = new DynamicArray<>();
-    private double rating = 0;
+    private double rating = Util.randInt(0, 5);
 
 
     public Driver(String fullName, int age) {

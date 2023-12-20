@@ -7,6 +7,7 @@ import dispatch.Dispatch;
 import entities.Taxi;
 import data_structures.network.Node;
 import data_structures.network.Location;
+import other.Util;
 
 public class Scheduler {
     // will be used to schedule events based on weights
@@ -56,6 +57,7 @@ public class Scheduler {
 
         // drop off
         new Dropoff(timeline.getCurrentTick(), taxi, party, dispatch);
+        taxi.rate(Util.randInt(0, 5));
         timeline.extendTicks(1);
         timeline.setCurrentTick(originalTick);
 

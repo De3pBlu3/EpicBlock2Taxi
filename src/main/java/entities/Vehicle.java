@@ -5,6 +5,7 @@ import data_structures.network.Location;
 import data_structures.network.Node;
 
 import java.util.Arrays;
+import java.util.SimpleTimeZone;
 
 import static other.Util.randomRegistrationString;
 
@@ -36,8 +37,6 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
     public int getSize() {
         return this.size;
     }
-
-
 
     public Node getNextNode() {
         if (this.currentPathIndex < this.currentPath.length - 1) {
@@ -156,6 +155,21 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         }
 
         System.out.println(row);
+    }
+
+    public void showDriverSummary() {
+        System.out.printf(
+                "%-15s%-15s%-25s%-15d%-15s%n",
+                this.getVehicleName(),
+                this.registrationNumber,
+                this.driver.getName(),
+                this.driver.getAge(),
+                ((int) this.driver.getRating()) + "/5"
+        );
+    }
+
+    public String getVehicleName() {
+        return this.getClass().getSimpleName();
     }
 
     @Override

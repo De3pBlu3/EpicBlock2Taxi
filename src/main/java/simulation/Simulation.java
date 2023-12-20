@@ -190,6 +190,23 @@ public class Simulation {
         }
 
         Util.print(Util.Color.GREEN, "Simulation finished!");
+        this.showTaxiSummary();
+    }
+
+    public void showTaxiSummary() {
+        System.out.println("\nTaxi Driver Summary");
+        System.out.println("=".repeat(85));
+
+        System.out.printf(
+                "%-15s%-15s%-25s%-15s%-15s%n",
+                "Vehicle", "Registration", "Driver Name", "Driver Age", "Rating"
+        );
+
+        System.out.println("=".repeat(85));
+
+        for (Vehicle vehicle : this.dispatch.getAllVehicles()) {
+            vehicle.showDriverSummary();
+        }
     }
 
     public void togglePause() {
