@@ -1,8 +1,8 @@
 package entities;
 
-import network.Edge;
-import network.Location;
-import network.Node;
+import data_structures.network.Edge;
+import data_structures.network.Location;
+import data_structures.network.Node;
 
 import java.util.Arrays;
 

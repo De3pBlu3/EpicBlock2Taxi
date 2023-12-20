@@ -1,7 +1,7 @@
 //import dispatch.Dispatch;
 //import entities.Taxi;
-//import network.Location;
-//import network.Network;
+//import data_structures.network.Location;
+//import data_structures.network.Network;
 //import time.Scheduler;
 //import time.Timeline;
 //

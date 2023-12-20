@@ -1,6 +1,6 @@
 //import dispatch.Dispatch;
 //import entities.Party;
-//import lists.DynamicArray;
+//import data_structures.lists.DynamicArray;
 //import network.*;
 //import other.*;
 //import entities.Taxi;

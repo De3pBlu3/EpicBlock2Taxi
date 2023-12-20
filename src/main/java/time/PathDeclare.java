@@ -2,7 +2,7 @@ package time;
 
 
 import entities.Taxi;
-import network.Node;
+import data_structures.network.Node;
 
 public class PathDeclare extends Event {
     private final Taxi taxi;

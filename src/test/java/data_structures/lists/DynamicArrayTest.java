@@ -1,6 +1,8 @@
-package lists;
+package data_structures.lists;
 
 import static org.junit.Assert.*;
+
+import data_structures.lists.DynamicArray;
 import org.junit.Test;
 import org.junit.Ignore;
 

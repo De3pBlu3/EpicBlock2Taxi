@@ -1,4 +1,4 @@
-package lists;
+package data_structures.lists;
 
 // To implement enhanced for-loop capability
 import other.Util;
@@ -460,7 +460,7 @@ public final class DynamicArray<T> implements Iterable<T> {
 
     /**
      * Doubles the size of the allocated memory available for the
-     * array that is used in the lists.DynamicArray implementation.
+     * array that is used in the data_structures.lists.DynamicArray implementation.
      */
     private void doubleSize() {
         T[] newArray = (T[]) new Object[this.count * 2];  // Warning-inducing line (irrelevant)

@@ -1,7 +1,7 @@
 package visuals;
 
-import lists.DynamicArray;
-import network.Node;
+import data_structures.lists.DynamicArray;
+import data_structures.network.Node;
 
 
 import java.util.Iterator;

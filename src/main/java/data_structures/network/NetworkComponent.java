@@ -1,7 +1,7 @@
-package network;
+package data_structures.network;
 
 import entities.Entity;
-import lists.DynamicArray;
+import data_structures.lists.DynamicArray;
 
 import java.util.Objects;
 

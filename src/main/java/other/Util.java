@@ -1,6 +1,6 @@
 package other;
 
-import lists.DynamicArray;
+import data_structures.lists.DynamicArray;
 
 import java.util.Scanner;
 

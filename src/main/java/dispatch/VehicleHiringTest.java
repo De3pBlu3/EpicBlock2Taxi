@@ -1,7 +1,7 @@
 package dispatch;
 
-import lists.DynamicArray;
-import network.Location;
+import data_structures.lists.DynamicArray;
+import data_structures.network.Location;
 
 public sealed interface VehicleHiringTest permits Dispatch {
 

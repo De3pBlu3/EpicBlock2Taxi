@@ -2,9 +2,9 @@ package visuals;
 
 import entities.Entity;
 import entities.Party;
-import network.Edge;
-import network.Network;
-import network.Node;
+import data_structures.network.Edge;
+import data_structures.network.Network;
+import data_structures.network.Node;
 import simulation.Simulation;
 
 import javax.swing.*;

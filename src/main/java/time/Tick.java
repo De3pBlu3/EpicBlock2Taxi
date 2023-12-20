@@ -1,6 +1,6 @@
 package time;
 
-import lists.DynamicArray;
+import data_structures.lists.DynamicArray;
 
 public class Tick {
     private final int tickNumber;

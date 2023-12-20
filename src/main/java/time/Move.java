@@ -1,6 +1,6 @@
 package time;
 import entities.Taxi;
-import network.Location;
+import data_structures.network.Location;
 public class Move extends Event{
 
     Taxi target; // parties are static and do not move UNLESS they are in a taxi

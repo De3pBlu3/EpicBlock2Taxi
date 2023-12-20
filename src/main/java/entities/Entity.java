@@ -1,7 +1,7 @@
 package entities;
 
-import network.Location;
-import network.Node;
+import data_structures.network.Location;
+import data_structures.network.Node;
 
 import java.awt.Image;
 

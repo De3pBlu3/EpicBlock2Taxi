@@ -1,7 +1,7 @@
 package other;
 
-import network.Network;
-import network.Node;
+import data_structures.network.Network;
+import data_structures.network.Node;
 import visuals.NetworkLayout;
 
 // For processing csv file

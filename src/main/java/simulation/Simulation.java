@@ -2,10 +2,10 @@ package simulation;
 
 import dispatch.Dispatch;
 import entities.*;
-import lists.DynamicArray;
-import network.Location;
-import network.Network;
-import network.Node;
+import data_structures.lists.DynamicArray;
+import data_structures.network.Location;
+import data_structures.network.Network;
+import data_structures.network.Node;
 import other.DataProcessor;
 import other.Util;
 import time.PartyRequestTaxi;

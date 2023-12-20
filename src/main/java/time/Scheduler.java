@@ -2,13 +2,11 @@
 package time;
 
 import entities.Party;
-import network.Network;
+import data_structures.network.Network;
 import dispatch.Dispatch;
 import entities.Taxi;
-import network.Node;
-import network.Location;
-
-import java.util.Arrays;
+import data_structures.network.Node;
+import data_structures.network.Location;
 
 public class Scheduler {
     // will be used to schedule events based on weights

@@ -1,6 +1,6 @@
 package entities;
 
-import lists.DynamicArray;
+import data_structures.lists.DynamicArray;
 import other.Util;
 
 @SuppressWarnings("unused")

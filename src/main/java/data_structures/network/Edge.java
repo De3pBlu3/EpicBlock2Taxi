@@ -1,4 +1,4 @@
-package network;
+package data_structures.network;
 
 @SuppressWarnings("unused")
 public class Edge extends NetworkComponent {

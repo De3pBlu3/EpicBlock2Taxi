@@ -1,6 +1,6 @@
 package entities;
 
-import network.Location;
+import data_structures.network.Location;
 
 import javax.swing.ImageIcon;
 import java.awt.Image;

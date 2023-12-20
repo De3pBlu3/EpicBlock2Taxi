@@ -1,10 +1,10 @@
 package dispatch;
 
 import entities.Taxi;
-import lists.DynamicArray;
-import network.Network;
-import network.Location;
-import network.Node;
+import data_structures.lists.DynamicArray;
+import data_structures.network.Network;
+import data_structures.network.Location;
+import data_structures.network.Node;
 import org.junit.Test;
 
 import java.util.List;

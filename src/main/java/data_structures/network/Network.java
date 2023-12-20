@@ -1,6 +1,6 @@
-package network;
+package data_structures.network;
 
-import lists.DynamicArray;
+import data_structures.lists.DynamicArray;
 
 import java.util.Arrays;
 
