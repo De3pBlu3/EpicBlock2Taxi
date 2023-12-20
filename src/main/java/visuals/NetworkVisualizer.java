@@ -296,6 +296,9 @@ public class NetworkVisualizer extends JFrame {
         SwingUtilities.invokeLater(() -> {
             this.setLocationRelativeTo(null);
             this.setVisible(true);
+            this.toFront();
+            this.requestFocus();
+            this.setAlwaysOnTop(true);
         });
     }
 

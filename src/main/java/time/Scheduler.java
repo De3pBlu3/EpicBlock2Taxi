@@ -1,6 +1,7 @@
 
 package time;
 
+import data_structures.network.Edge;
 import entities.Party;
 import data_structures.network.Network;
 import dispatch.Dispatch;
@@ -30,7 +31,9 @@ public class Scheduler {
         Node[] x = network.findPath( (Node) taxi.getLocation().getCurrentNetLocation(), destination);
         for (int i = 0; i < x.length; i++) {
             try {
-                timeline.extendTicks(x[i].getEdge(x[i+1]).getWeight());
+                int weight = x[i].getEdge(x[i+1]).getWeight();
+                taxi.updateRunningTotal(weight);
+                timeline.extendTicks(weight);
                 new Move(timeline.getCurrentTick(), taxi, new Location(x[i+1]));
             }
             catch (ArrayIndexOutOfBoundsException e) {
@@ -44,23 +47,27 @@ public class Scheduler {
 
         // trip to party
         Node partyLocation = party.getNode();
-        new PathDeclare(timeline.getCurrentTick(), taxi, partyLocation, network.findPath((Node) taxi.getLocation().getCurrentNetLocation(), partyLocation));
+        Node[] pathToParty = network.findPath((Node) taxi.getLocation().getCurrentNetLocation(), partyLocation);
+
+        new PathDeclare(timeline.getCurrentTick(), taxi, partyLocation, pathToParty);
         scheduleMove(taxi, partyLocation);
 
         // pick up
         new Pickup(timeline.getCurrentTick(), taxi, party, dispatch);
         timeline.extendTicks(1);
 
-        new PathDeclare(timeline.getCurrentTick(), taxi, destination, network.findPath((Node) taxi.getLocation().getCurrentNetLocation(), destination));
+        Node[] pathToDestination = network.findPath((Node) taxi.getLocation().getCurrentNetLocation(), destination);
+        new PathDeclare(timeline.getCurrentTick(), taxi, destination, pathToDestination);
+
         // trip to destination
         scheduleMove(taxi, destination);
 
         // drop off
         new Dropoff(timeline.getCurrentTick(), taxi, party, dispatch);
         taxi.rate(Util.randInt(0, 5));
+        taxi.pay();
         timeline.extendTicks(1);
         timeline.setCurrentTick(originalTick);
-
 
     }
 

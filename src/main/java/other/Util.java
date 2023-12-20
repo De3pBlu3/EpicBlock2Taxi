@@ -239,7 +239,7 @@ public class Util {
      */
     public static int randInt(int min, int max) {
         int range = max - min + 1;
-        return (int)(Math.random() * range) + min;
+        return (int) (Math.random() * range) + min;
     }
 
     /**

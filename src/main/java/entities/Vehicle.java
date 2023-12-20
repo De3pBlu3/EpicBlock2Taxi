@@ -3,9 +3,9 @@ package entities;
 import data_structures.network.Edge;
 import data_structures.network.Location;
 import data_structures.network.Node;
+import employees.Driver;
 
 import java.util.Arrays;
-import java.util.SimpleTimeZone;
 
 import static other.Util.randomRegistrationString;
 
@@ -159,11 +159,13 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
 
     public void showDriverSummary() {
         System.out.printf(
-                "%-15s%-15s%-25s%-15d%-15s%n",
+                "%-15s%-20s%-15d%-25s%-15d%-25.2f%-15s%n",
                 this.getVehicleName(),
                 this.registrationNumber,
+                this.driver.getTripsComplete(),
                 this.driver.getName(),
                 this.driver.getAge(),
+                this.driver.getBalance(),
                 ((int) this.driver.getRating()) + "/5"
         );
     }

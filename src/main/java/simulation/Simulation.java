@@ -195,18 +195,15 @@ public class Simulation {
 
     public void showTaxiSummary() {
         System.out.println("\nTaxi Driver Summary");
-        System.out.println("=".repeat(85));
+        System.out.println("=".repeat(130));
 
         System.out.printf(
-                "%-15s%-15s%-25s%-15s%-15s%n",
-                "Vehicle", "Registration", "Driver Name", "Driver Age", "Rating"
+                "%-15s%-20s%-15s%-25s%-15s%-25s%-15s%n",
+                "Vehicle", "Registration", "Trips Complete", "Driver Name", "Driver Age", "Earnings (EUR)", "Rating"
         );
 
-        System.out.println("=".repeat(85));
-
-        for (Vehicle vehicle : this.dispatch.getAllVehicles()) {
-            vehicle.showDriverSummary();
-        }
+        System.out.println("=".repeat(130));
+        this.dispatch.getAllVehicles().forEach(Vehicle::showDriverSummary);
     }
 
     public void togglePause() {
