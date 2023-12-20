@@ -11,8 +11,9 @@ Glucksman Library, Spar Castletroy, 2
 Glucksman Library, Plassey Village, 3
 Glucksman Library, Applegreen, 2
 Applegreen, Stables, 2
+Applegreen, Train Station, 2
 Stables, Killmurray Village, 4
-Killmurray Village, Plassey Village, 9
+Killmurray Village, Train Station, 4
 Killmurray Village, Apache Pizza, 3
 Killmurray Village, Lifestyle Sports, 2
 Spar Castletroy, Bank of Ireland, 2
@@ -20,6 +21,7 @@ Spar Castletroy, Plassey Village, 2
 Plassey Village, Bank of Ireland, 6
 Plassey Village, Troy/Groody Village, 5
 Plassey Village, Penneys, 1
+Plassey Village, Train Station, 5
 Bank of Ireland, Troy/Groody Village, 2
 Penneys, Troy/Groody Village, 6
 Penneys, Subway, 2
@@ -30,3 +32,9 @@ Lifestyle Sports, Costa, 2
 Troy/Groody Village, Zara, 3
 Zara, Subway, 2
 Subway, Costa, 3
+Train Station, Apache Pizza, 1
+Train Station, Stables, 1
+Train Station, Penneys, 3
+Dunnes Stores, ISE Building, 6
+Dunnes Stores, Spar Castletroy, 7
+Dunnes Stores, Bank of Ireland, 5

@@ -11,9 +11,7 @@ public class NetworkLayout implements Iterable<Node> {
     private final DynamicArray<Node> nodes;
     private final DynamicArray<String> locationNames;
 
-    private int minX = 0;
     private int maxX = 0;
-    private int minY = 0;
     private int maxY = 0;
 
     public NetworkLayout() {
@@ -37,14 +35,8 @@ public class NetworkLayout implements Iterable<Node> {
         if (x > this.maxX)
             this.maxX = x;
 
-        if (x < this.minX)
-            this.minX = x;
-
         if (y > this.maxY)
             this.maxY = y;
-
-        if (y < this.minY)
-            this.minY = y;
 
     }
 
@@ -53,16 +45,8 @@ public class NetworkLayout implements Iterable<Node> {
     }
 
 
-    public int getMinX() {
-        return this.minX;
-    }
-
     public int getMaxX() {
         return this.maxX;
-    }
-
-    public int getMinY() {
-        return this.minY;
     }
 
     public int getMaxY() {

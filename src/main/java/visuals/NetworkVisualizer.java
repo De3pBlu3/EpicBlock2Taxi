@@ -18,7 +18,7 @@ class NetworkVisualization extends JPanel {
     private static final Color LIGHT_GRAY = new Color(200, 200, 200);
     private static final Color LIGHTER_GRAY = new Color(211, 211, 211);
     private static final Color DARK_GRAY = new Color(76, 78, 82);
-    private static final Color LIGHT_BLUE = new Color(83, 133, 176);
+    private static final Color MINT = new Color(180, 217, 192);
 
     private final int nodeRadius = 13;
     private final int nodeDiameter = nodeRadius * 2;
@@ -151,7 +151,7 @@ class NetworkVisualization extends JPanel {
             yOffset *= (int) Math.round(((angle / 10) * 10) / 10) * 10;
         }
 
-        g.setColor(LIGHT_BLUE);
+        g.setColor(MINT);
         g.drawString(String.valueOf(edge.getWeight()), xMid + xOffset, yMid + yOffset);
 
     }
@@ -232,10 +232,7 @@ public class NetworkVisualizer extends JFrame {
 
         } else {
 
-            int xOffset = Math.max(networkLayout.getMinX(), networkLayout.getMaxX());
-            int yOffset = Math.max(networkLayout.getMinY(), networkLayout.getMaxY());
-
-            this.setSize(xOffset + 100, yOffset + 140);
+            this.setSize(networkLayout.getMaxX() + 100, networkLayout.getMaxY() + 140);
 
             for (Node node : networkLayout) {
 
@@ -296,9 +293,9 @@ public class NetworkVisualizer extends JFrame {
         SwingUtilities.invokeLater(() -> {
             this.setLocationRelativeTo(null);
             this.setVisible(true);
-            this.toFront();
             this.requestFocus();
-            this.setAlwaysOnTop(true);
+            this.setAlwaysOnTop(true);  // Bring to front
+            this.setAlwaysOnTop(false);
         });
     }
 
