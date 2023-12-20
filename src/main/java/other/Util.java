@@ -1,6 +1,5 @@
 package other;
 
-import entities.Driver;
 import lists.DynamicArray;
 
 import java.util.Scanner;
