@@ -1,12 +1,12 @@
-package other;
+package misc;
 
 import org.junit.Test;
 import java.io.PrintStream;
 
 import static org.junit.Assert.*;
-import static other.Util.generateInputErrorMessage;
-import static other.Util.Color;
-import static other.Util.print;
+import static misc.Util.generateInputErrorMessage;
+import static misc.Util.Color;
+import static misc.Util.print;
 
 /**
  * A {@code TestPrintStream} object is used in tandem with

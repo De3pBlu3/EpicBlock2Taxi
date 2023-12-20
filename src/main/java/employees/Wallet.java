@@ -1,6 +1,6 @@
 package employees;
 
-public class Wallet {
+public final class Wallet {
 
     private final String name;
     private double balance;

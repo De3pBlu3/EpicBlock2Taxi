@@ -1,14 +1,13 @@
 
 package time;
 
-import data_structures.network.Edge;
 import entities.Party;
 import data_structures.network.Network;
 import dispatch.Dispatch;
 import entities.Taxi;
 import data_structures.network.Node;
 import data_structures.network.Location;
-import other.Util;
+import misc.Util;
 
 public class Scheduler {
     // will be used to schedule events based on weights

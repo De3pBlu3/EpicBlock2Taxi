@@ -7,7 +7,7 @@ import employees.Driver;
 
 import java.util.Arrays;
 
-import static other.Util.randomRegistrationString;
+import static misc.Util.randomRegistrationString;
 
 @SuppressWarnings("unused")
 abstract public sealed class Vehicle extends Entity permits Taxi {

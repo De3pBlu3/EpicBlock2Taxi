@@ -5,7 +5,6 @@ import data_structures.lists.DynamicArray;
 import data_structures.network.Edge;
 import data_structures.network.Location;
 import data_structures.network.Node;
-import other.Util;
 import time.Scheduler;
 
 import java.util.Optional;

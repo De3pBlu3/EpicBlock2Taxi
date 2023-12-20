@@ -1,7 +1,7 @@
 package employees;
 
 import data_structures.lists.DynamicArray;
-import other.Util;
+import misc.Util;
 
 @SuppressWarnings("unused")
 public final class Driver {

@@ -1,6 +1,6 @@
-import other.Util;
+import misc.Util;
 import simulation.Simulation;
-import other.Introduction;
+import misc.Introduction;
 
 public class Main {
 

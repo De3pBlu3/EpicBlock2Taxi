@@ -1,7 +1,7 @@
 package data_structures.lists;
 
 // To implement enhanced for-loop capability
-import other.Util;
+import misc.Util;
 
 import java.util.Iterator;
 

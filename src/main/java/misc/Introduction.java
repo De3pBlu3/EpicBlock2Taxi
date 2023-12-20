@@ -1,4 +1,4 @@
-package other;
+package misc;
 
 public final class Introduction {
 

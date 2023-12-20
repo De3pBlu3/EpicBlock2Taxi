@@ -5,8 +5,8 @@ import data_structures.network.Location;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
-import static other.Util.randInt;
-import static other.Util.randomRegistrationString;
+import static misc.Util.randInt;
+import static misc.Util.randomRegistrationString;
 
 /**
  * Taxi class

@@ -5,7 +5,7 @@ import data_structures.lists.DynamicArray;
 
 import java.util.Objects;
 
-import static other.Util.randInt;
+import static misc.Util.randInt;
 
 public abstract class NetworkComponent {
 

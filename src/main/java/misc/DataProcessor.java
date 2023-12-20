@@ -1,4 +1,4 @@
-package other;
+package misc;
 
 import data_structures.network.Network;
 import data_structures.network.Node;
