@@ -25,9 +25,15 @@ public abstract sealed class Entity permits Vehicle, Party {
         this.location = location;
     }
 
-    public abstract String toString();
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Entity entity)
+            return entity == this;
 
-    public abstract boolean equals(Object o);
+        return false;
+    }
+
+    public abstract String toString();
 
     public abstract Image getImage();
 

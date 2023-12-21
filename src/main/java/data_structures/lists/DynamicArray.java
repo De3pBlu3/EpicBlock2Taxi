@@ -1,6 +1,10 @@
 package data_structures.lists;
 
 // To implement enhanced for-loop capability
+import data_structures.network.Location;
+import data_structures.network.Node;
+import entities.Party;
+import misc.DataProcessor;
 import misc.Util;
 
 import java.util.Iterator;
@@ -303,6 +307,7 @@ public final class DynamicArray<T> implements Iterable<T> {
         this.remove(index);
 
         while ((index = this.indexOf(element)) != -1) {
+            System.out.println(index);
             this.remove(index);
         }
 
@@ -348,8 +353,9 @@ public final class DynamicArray<T> implements Iterable<T> {
      */
     public int indexOf(T element) {
         for (int i = 0; i < this.count; i++) {
-            if (this.array[i].equals(element))
+            if (this.array[i] == element || this.array[i].equals(element) )
                 return i;
+
         }
         return -1;
     }
@@ -363,7 +369,7 @@ public final class DynamicArray<T> implements Iterable<T> {
      */
     public int lastIndexOf(T element) {
         for (int i = this.count - 1; i >= 0; i--) {
-            if (this.array[i].equals(element))
+            if (this.array[i] == element || this.array[i].equals(element))
                 return i;
         }
         return -1;

@@ -90,12 +90,4 @@ public final class Party extends Entity {
         return "Party['" + this.username + "', " + this.count + ']';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Party party) {
-            return (party.getLocation() == this.getLocation());
-        }
-
-        return false;
-    }
 }

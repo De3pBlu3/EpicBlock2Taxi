@@ -183,13 +183,4 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         return this.getClass().getSimpleName() + "['" + this.registrationNumber + "']";
     }
 
-    // Two vehicles will be considered equal if their registration numbers are the same
-    @Override
-    public final boolean equals(Object o) {
-        if (o instanceof Vehicle vehicle)
-            return vehicle.getRegistrationNumber().equals(this.registrationNumber);
-
-        return false;
-    }
-
 }
