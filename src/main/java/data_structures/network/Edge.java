@@ -53,13 +53,5 @@ public class Edge extends NetworkComponent {
         return false;
     }
 
-    public boolean isSameAs(Edge edge) {
-        return (
-                ((this.start.equals(edge.start) && this.end.equals(edge.end))
-              || (this.start.equals(edge.end) && this.end.equals(edge.start)))
-              && this.weight == edge.weight
-        );
-    }
-
 }
 

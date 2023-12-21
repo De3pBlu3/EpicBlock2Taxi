@@ -7,7 +7,7 @@ public class Tick {
     private Tick prevTick = null;
     private Tick nextTick = null;
 
-    private DynamicArray<Event> events = new DynamicArray<Event>();
+    private final DynamicArray<Event> events = new DynamicArray<>();
 
     public Tick(int tick) {
         this.tickNumber = tick;

@@ -14,7 +14,6 @@ public class Event {
         return parentTick;
     }
 
-
     public void execute() {
     }
 

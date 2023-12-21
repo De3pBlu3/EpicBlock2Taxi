@@ -5,8 +5,8 @@ import data_structures.lists.DynamicArray;
 @SuppressWarnings("unused")
 public class Node extends NetworkComponent {
 
-    int x;
-    int y;
+    int x;  // X-coordinate
+    int y;  // Y-coordinate
     Edge[] edges;
 
     public void addEdge(Edge UserEdge){
@@ -15,7 +15,8 @@ public class Node extends NetworkComponent {
             this.edges[0] = UserEdge;
             return;
         }
-        Edge[] temp_edges = new Edge[this.edges.length + 1]; // TODO create new array with more space, maybe create dynamic array
+
+        Edge[] temp_edges = new Edge[this.edges.length + 1];
         System.arraycopy(this.edges, 0, temp_edges, 0, this.edges.length);
         temp_edges[this.edges.length] = UserEdge;
         this.edges = temp_edges;
@@ -30,8 +31,9 @@ public class Node extends NetworkComponent {
     /**
      * Returns all edges within a certain range of this node.
      * If the weightLimit is 0, then nothing is returned.
-     * @param weightLimit how far down the network to go
-     * @return an array of edges within range
+     *
+     * @param weightLimit How far down the network to go.
+     * @return an array of edges within range.
      */
     @Override
     public Edge[] getEdgesInRange(int weightLimit) {
@@ -48,12 +50,11 @@ public class Node extends NetworkComponent {
             }
         }
 
-
-
         Edge[] componentsInRangeArray = new Edge[componentsInRange.length()];
         for (int i = 0; i < componentsInRange.length(); i++) {
             componentsInRangeArray[i] = componentsInRange.get(i);
         }
+
         return componentsInRangeArray;
     }
 
@@ -106,10 +107,5 @@ public class Node extends NetworkComponent {
     public void setY(int y) {
         this.y = y;
     }
-
-//
-//    public static boolean equals(Node n, Node userNode) {   // added for redundancy
-//        return n.id.equals(userNode.id);
-//    }
 
 }

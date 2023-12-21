@@ -27,7 +27,7 @@ public class Scheduler {
     }
 
     private static void scheduleMove(Taxi taxi, Node destination) {
-        Node[] x = network.findPath( (Node) taxi.getLocation().getCurrentNetLocation(), destination);
+        Node[] x = network.findPath( (Node) taxi.getLocation().currentNetLocation(), destination);
         for (int i = 0; i < x.length; i++) {
             try {
                 int weight = x[i].getEdge(x[i+1]).getWeight();
@@ -46,7 +46,7 @@ public class Scheduler {
 
         // trip to party
         Node partyLocation = party.getNode();
-        Node[] pathToParty = network.findPath((Node) taxi.getLocation().getCurrentNetLocation(), partyLocation);
+        Node[] pathToParty = network.findPath((Node) taxi.getLocation().currentNetLocation(), partyLocation);
 
         new PathDeclare(timeline.getCurrentTick(), taxi, partyLocation, pathToParty);
         scheduleMove(taxi, partyLocation);
@@ -55,14 +55,14 @@ public class Scheduler {
         new Pickup(timeline.getCurrentTick(), taxi, party, dispatch);
         timeline.extendTicks(1);
 
-        Node[] pathToDestination = network.findPath((Node) taxi.getLocation().getCurrentNetLocation(), destination);
+        Node[] pathToDestination = network.findPath((Node) taxi.getLocation().currentNetLocation(), destination);
         new PathDeclare(timeline.getCurrentTick(), taxi, destination, pathToDestination);
 
         // trip to destination
         scheduleMove(taxi, destination);
 
         // drop off
-        new Dropoff(timeline.getCurrentTick(), taxi, party, dispatch);
+        new DropOff(timeline.getCurrentTick(), taxi, party, dispatch);
         taxi.rate(Util.randInt(0, 5));
         taxi.pay();
         timeline.extendTicks(1);

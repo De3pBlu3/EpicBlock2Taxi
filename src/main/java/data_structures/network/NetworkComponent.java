@@ -2,10 +2,10 @@ package data_structures.network;
 
 import entities.Entity;
 import data_structures.lists.DynamicArray;
+import static misc.Util.randInt;
 
 import java.util.Objects;
 
-import static misc.Util.randInt;
 
 public abstract class NetworkComponent {
 
@@ -14,6 +14,7 @@ public abstract class NetworkComponent {
     DynamicArray<Entity> occupants = new DynamicArray<>();
 
     public NetworkComponent(String id) {
+        // Set random ID if id is null
         this.id = Objects.requireNonNullElseGet(
                 id, () -> String.valueOf(randInt(1, Integer.MAX_VALUE))
         );
@@ -43,7 +44,13 @@ public abstract class NetworkComponent {
         return null;
     }
 
-    public void addOccupant(entities.Entity occupant) {
+    /**
+     * Adds an entity to the network component if
+     * not already present.
+     *
+     * @param occupant Entity to be added.
+     */
+    public void addOccupant(Entity occupant) {
         // check if occupant is already in occupants
         for (Entity e : occupants) {
             if (e == occupant) {
@@ -54,6 +61,11 @@ public abstract class NetworkComponent {
         occupants.append(occupant);
     }
 
+    /**
+     * Removes an entity from the network component.
+     *
+     * @param occupant Entity to be removed.
+     */
     public void removeOccupant(Entity occupant) {
         occupants.removeAllOccurrences(occupant);
     }

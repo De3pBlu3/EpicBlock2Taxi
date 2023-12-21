@@ -122,18 +122,18 @@ abstract public sealed class Vehicle extends Entity permits Taxi {
         Location oldLoc = this.getLocation();
 
         // if vehicle is already at location, do nothing
-        if (oldLoc.getCurrentNetLocation().equals(loc.getCurrentNetLocation())){
+        if (oldLoc.currentNetLocation().equals(loc.currentNetLocation())){
             return;
         }
         // if vehicle is at edge, do not move
-        if (oldLoc.getCurrentNetLocation().getClass() == Edge.class){
+        if (oldLoc.currentNetLocation().getClass() == Edge.class){
             return;
         }
 
         // is there an edge between the two locations?
 
-        oldLoc.getCurrentNetLocation().removeOccupant(this);
-        loc.getCurrentNetLocation().addOccupant(this);
+        oldLoc.currentNetLocation().removeOccupant(this);
+        loc.currentNetLocation().addOccupant(this);
         this.setLocation(loc);
     }
 

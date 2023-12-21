@@ -14,22 +14,24 @@ public final class Dispatch implements VehicleHiringTest {
 
     private final DynamicArray<Vehicle> allVehicles = new DynamicArray<>();
     private final DynamicArray<Vehicle> vehiclesOnMap = new DynamicArray<>();
-
     private final DynamicArray<Party> allParties = new DynamicArray<>();
     private final DynamicArray<Party> partiesOnMap = new DynamicArray<>();
 
 
-
     // ======================== PRIVATE METHODS ========================
-    private boolean isVehicleRegistered(Vehicle vehicle) {
-        return this.allVehicles.contains(vehicle);
-    }
 
+    /**
+     * Returns whether the given vehicle is present
+     * on the map.
+     *
+     * @param vehicle Vehicle to check presence of.
+     */
     private boolean isVehicleOnMap(Vehicle vehicle) {
         return this.vehiclesOnMap.contains(vehicle);
     }
 
     // ======================== GETTERS ========================
+
     public DynamicArray<Vehicle> getAllVehicles() {
         return allVehicles;
     }
@@ -47,15 +49,33 @@ public final class Dispatch implements VehicleHiringTest {
     }
 
     // ======================== ADD METHODS ========================
+
+    /**
+     * Registers the given vehicle.
+     *
+     * @param vehicle Vehicle to be registered.
+     */
     public void registerVehicle(Vehicle vehicle) {
         allVehicles.addIfNotPresent(vehicle);
     }
 
+    /**
+     * Registers the given party.
+     *
+     * @param party Party to be registered.
+     */
     public void registerParty(Party party) {
         allParties.addIfNotPresent(party);
     }
 
     // ======================== PUBLIC METHODS ========================
+
+    /**
+     * Returns the registered vehicle whose registration number
+     * matches the given one.
+     *
+     * @param reg Registration number of vehicle.
+     */
     public Optional<Vehicle> getVehicleFromReg(String reg){
         return this.allVehicles.getFirstMatch(
                 (v) -> v.getRegistrationNumber().equals(reg)
@@ -63,18 +83,19 @@ public final class Dispatch implements VehicleHiringTest {
     }
 
     public void pickUpParty(Vehicle taxi,Party party) {
-        if (taxi.getLocation().getCurrentNetLocation().equals(party.getLocation().getCurrentNetLocation())) {
+        if (taxi.getLocation().currentNetLocation().equals(party.getLocation().currentNetLocation())) {
             taxi.setParty(party);
             party.setAssigned(true);
+            party.getLocation().currentNetLocation().removeOccupant(party);
 
         }
         else throw new IllegalArgumentException("Taxi is not at the same location as the party");
     }
+
     public void dropOffParty(Vehicle taxi,Party party) {
-        if (taxi.getLocation().getCurrentNetLocation().equals(party.getDestination().getCurrentNetLocation())) {
+        if (taxi.getLocation().currentNetLocation().equals(party.getDestination().currentNetLocation())) {
             taxi.setParty(null);
             // remove party from map
-            party.getLocation().getCurrentNetLocation().removeOccupant(party);
             party.setNode(null);
             party.setLocation(null);
             party.setAssigned(false);
@@ -86,10 +107,7 @@ public final class Dispatch implements VehicleHiringTest {
             throw new IllegalArgumentException("Taxi is not at the same location as the party");
         }
 
-
-
     }
-
 
     public Taxi findNearestApplicableTaxi(Party party) {
         int range = 5;
@@ -113,11 +131,10 @@ public final class Dispatch implements VehicleHiringTest {
         return null;
     }
 
-
     public void handlePartyRequest(Party party) {
         Taxi taxi = findNearestApplicableTaxi(party);
         if (taxi != null) {
-            Scheduler.scheduleJourney(taxi, party, (Node) party.getDestination().getCurrentNetLocation());
+            Scheduler.scheduleJourney(taxi, party, (Node) party.getDestination().currentNetLocation());
         }
         else {throw new IllegalArgumentException("No taxi found");}
     }
@@ -131,7 +148,7 @@ public final class Dispatch implements VehicleHiringTest {
 
         if (vehicle != null)  // If registered
             if (this.vehiclesOnMap.addIfNotPresent(vehicle)) {  // If vehicle not on map (could add)
-                loc.getCurrentNetLocation().addOccupant(vehicle);  // Add to map
+                loc.currentNetLocation().addOccupant(vehicle);  // Add to map
                 return true;
             }
 
@@ -148,9 +165,9 @@ public final class Dispatch implements VehicleHiringTest {
             int index = this.vehiclesOnMap.indexOf(vehicle);
 
             if (index != -1) { // If on map
-                vehicle.getLocation().getCurrentNetLocation().removeOccupant(vehicle);  // Remove from old location
+                vehicle.getLocation().currentNetLocation().removeOccupant(vehicle);  // Remove from old location
                 vehicle.setLocation(loc);  // Set new location
-                loc.getCurrentNetLocation().addOccupant(vehicle);  // Add to new location
+                loc.currentNetLocation().addOccupant(vehicle);  // Add to new location
                 return true;
             }
 
@@ -165,7 +182,7 @@ public final class Dispatch implements VehicleHiringTest {
 
         if (vehicle != null)  // If registered
             if (this.vehiclesOnMap.removeIfPresent(vehicle)) {  // If on map (could remove)
-                vehicle.getLocation().getCurrentNetLocation().removeOccupant(vehicle);
+                vehicle.getLocation().currentNetLocation().removeOccupant(vehicle);
                 return true;
             }
 
@@ -188,9 +205,9 @@ public final class Dispatch implements VehicleHiringTest {
     public DynamicArray<String> testGetVehiclesInRange(Location loc, int r) {
 
         DynamicArray<String> regNumbers = new DynamicArray<>();
-        Edge[] edgesFromLoc = loc.getCurrentNetLocation().getEdgesInRange(r);
+        Edge[] edgesFromLoc = loc.currentNetLocation().getEdgesInRange(r);
 
-        DynamicArray<Entity> entitiesInNode = loc.getCurrentNetLocation().getOccupants();
+        DynamicArray<Entity> entitiesInNode = loc.currentNetLocation().getOccupants();
 
         for (Entity e : entitiesInNode) {
             try {
@@ -200,7 +217,7 @@ public final class Dispatch implements VehicleHiringTest {
 
         for (Edge e : edgesFromLoc) {
             for (Vehicle vehicle : this.vehiclesOnMap) {
-                if (vehicle.getLocation().getCurrentNetLocation().equals(e.getEnd()) || vehicle.getLocation().getCurrentNetLocation().equals(e.getStart())) {
+                if (vehicle.getLocation().currentNetLocation().equals(e.getEnd()) || vehicle.getLocation().currentNetLocation().equals(e.getStart())) {
                     regNumbers.addIfNotPresent(vehicle.getRegistrationNumber());
                 }
             }
@@ -208,7 +225,5 @@ public final class Dispatch implements VehicleHiringTest {
 
         return regNumbers;
     }
-
-
 
 }

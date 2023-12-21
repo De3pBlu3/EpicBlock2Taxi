@@ -71,6 +71,9 @@ public final class DynamicArray<T> implements Iterable<T> {
         return this.count;
     }
 
+    /**
+     * Synonymous with {@link DynamicArray#size}
+     */
     public int length() {
         return this.count;
     }
@@ -132,10 +135,20 @@ public final class DynamicArray<T> implements Iterable<T> {
         return this.array[this.count - 1];
     }
 
+    /**
+     * Returns a random element from the list.
+     */
     public T getRandom() {
         return this.array[Util.randInt(0, this.count - 1)];
     }
 
+    /**
+     * Sets the element at the given index to the
+     * provided element.
+     *
+     * @param index Index to set element at.
+     * @param element Element to be set.
+     */
     public void set(int index, T element) {
         this.outOfBoundsCheck(index);
 
@@ -191,6 +204,13 @@ public final class DynamicArray<T> implements Iterable<T> {
         this.count++;
     }
 
+    /**
+     * Adds an element to the list if the element is not
+     * already in the list.
+     *
+     * @param element Element to add (if not present).
+     * @return {@code true} if element was added; {@code false} otherwise.
+     */
     public boolean addIfNotPresent(T element) {
         if (!this.contains(element)) {
             this.append(element);
@@ -199,6 +219,12 @@ public final class DynamicArray<T> implements Iterable<T> {
         return false;
     }
 
+    /**
+     * Removes an element from the list if in the list.
+     *
+     * @param element Element to remove (if present).
+     * @return {@code true} if element was removed; {@code false} otherwise.
+     */
     public boolean removeIfPresent(T element) {
         if (!this.contains(element))
             return false;
@@ -432,7 +458,6 @@ public final class DynamicArray<T> implements Iterable<T> {
         };
     }
 
-
     /**
      * Returns a string representation of the list,
      * similar to how ArrayLists are printed:
@@ -453,8 +478,6 @@ public final class DynamicArray<T> implements Iterable<T> {
 
         return builder.append("]").toString();
     }
-
-
 
     // ======================== PRIVATE METHODS ========================
 

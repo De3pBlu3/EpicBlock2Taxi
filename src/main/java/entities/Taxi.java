@@ -27,8 +27,8 @@ public sealed class Taxi extends Vehicle permits ElectricTaxi, LimoTaxi, SportsT
         this.getDriver().pay(moola);
     }
 
-    public void updateRunningTotal(double mmmmmmm) {
-        this.runningTotal += mmmmmmm;
+    public void updateRunningTotal(double money) {
+        this.runningTotal += money;
     }
 
     public void pay() {

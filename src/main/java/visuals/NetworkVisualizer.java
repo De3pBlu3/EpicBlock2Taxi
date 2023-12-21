@@ -50,7 +50,7 @@ class NetworkVisualization extends JPanel {
 
     private void updateNet() {
         this.nodes = network.getNodesAsArray();
-        this.edges = network.getEdgesWithIDAsArray();
+        this.edges = network.getUniqueEdges();
     }
 
     private void drawLabelledNode(Graphics g, Node node) {
@@ -138,12 +138,14 @@ class NetworkVisualization extends JPanel {
 
         double angle = (Math.atan((double) opp/adj) * (180/Math.PI));
 
+        // Ignore these irrelevant calculations (to make layout as nice as possible)
         boolean left = maxX == x1 ? (x2 < x1) : (x1 < x2);
         int offsetMultiplicand = left ? 1 : -1;
 
         int xOffset = offsetMultiplicand;
         int yOffset = offsetMultiplicand;
-        int magicMultiplicand = angle > 75 ? 5 : 3;  // Don't ask, I don't know
+
+        int magicMultiplicand = angle > 75 ? 5 : 3;
 
         if (angle > 25) {
             xOffset *= (int) Math.round((((90 - angle) / 10) * magicMultiplicand) / 10) * 10;
