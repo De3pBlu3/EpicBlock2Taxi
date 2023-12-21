@@ -1,7 +1,6 @@
 package entities;
 
 import data_structures.network.Location;
-import data_structures.network.Node;
 
 import java.awt.Image;
 
@@ -13,7 +12,6 @@ import java.awt.Image;
 public abstract sealed class Entity permits Vehicle, Party {
 
     private Location location;
-    private Node node;
 
     public Entity(Location location) {
         this.location = location;
@@ -25,14 +23,6 @@ public abstract sealed class Entity permits Vehicle, Party {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public Node getNode() {
-        return this.node;
-    }
-
-    public void setNode(Node node) {
-        this.node = node;
     }
 
     public abstract String toString();

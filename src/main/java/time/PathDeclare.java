@@ -4,6 +4,8 @@ package time;
 import entities.Taxi;
 import data_structures.network.Node;
 
+
+@SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"})
 public class PathDeclare extends Event {
     private final Taxi taxi;
     private final Node destination;

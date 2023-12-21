@@ -4,7 +4,7 @@ import data_structures.lists.DynamicArray;
 
 import java.util.Scanner;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "SpellCheckingInspection"})
 public class Util {
 
     private static final Scanner scanner = new Scanner(System.in);

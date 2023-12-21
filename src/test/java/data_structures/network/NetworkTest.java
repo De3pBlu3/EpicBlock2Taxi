@@ -1,8 +1,5 @@
 package data_structures.network;
 
-import data_structures.network.Edge;
-import data_structures.network.Network;
-import data_structures.network.Node;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

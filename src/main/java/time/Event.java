@@ -1,8 +1,8 @@
-// Make explicit that this class is abstract and cannot be instantiated directly
-
 package time;
 
-public class Event {
+
+@SuppressWarnings("unused")
+abstract public class Event {
     private final Tick parentTick;
 
     public Event(Tick tick) {

@@ -10,6 +10,7 @@ import time.Scheduler;
 import java.util.Optional;
 
 
+@SuppressWarnings("unused")
 public final class Dispatch implements VehicleHiringTest {
 
     private final DynamicArray<Vehicle> allVehicles = new DynamicArray<>();
@@ -96,7 +97,6 @@ public final class Dispatch implements VehicleHiringTest {
         if (taxi.getLocation().currentNetLocation().equals(party.getDestination().currentNetLocation())) {
             taxi.setParty(null);
             // remove party from map
-            party.setNode(null);
             party.setLocation(null);
             party.setAssigned(false);
             // remove party from list

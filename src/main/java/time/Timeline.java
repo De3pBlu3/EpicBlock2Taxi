@@ -1,5 +1,7 @@
 package time;
 
+
+@SuppressWarnings("UnusedReturnValue")
 public class Timeline {
     // TODO throw exceptions
     private Tick currentTick;

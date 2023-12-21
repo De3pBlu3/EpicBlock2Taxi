@@ -107,7 +107,6 @@ public class Simulation {
                 default -> new Taxi(1, loc);
             };
 
-            taxi.setNode(node);  // For later use in main
             node.addOccupant(taxi);  // Add taxi to map!
             dispatch.registerVehicle(taxi);  // Add them to mister dispatch list thanks dispatch guy what a great guy
             dispatch.testAddToMap(taxi.getRegistrationNumber(), taxi.getLocation());  // Add them to the map thanks dispatch guy what a great guy
@@ -132,7 +131,6 @@ public class Simulation {
             Party party = new Party(partyCount + 1, "username_" + i, partyLoc, destLoc);
             this.dispatch.registerParty(party);
 
-            party.setNode(partyNode);
             partyNode.addOccupant(party);
         }
 

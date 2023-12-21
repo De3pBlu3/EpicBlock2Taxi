@@ -3,6 +3,7 @@ package dispatch;
 import data_structures.lists.DynamicArray;
 import data_structures.network.Location;
 
+@SuppressWarnings("unused")
 public sealed interface VehicleHiringTest permits Dispatch {
 
     /**

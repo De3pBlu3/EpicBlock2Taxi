@@ -3,6 +3,7 @@ package data_structures.network;
 import data_structures.lists.DynamicArray;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * Network class! Will have edges and nodes, and will be used to keep track of the network. once the network is created, we will
@@ -338,7 +339,7 @@ public class Network {
             nodesArray[i] = dijkstraNodes.get(i);
         }
 
-        Arrays.sort(nodesArray, (a, b) -> a.dist - b.dist);
+        Arrays.sort(nodesArray, Comparator.comparingInt(a -> a.dist));
 
         dijkstraNodes = new DynamicArray<>(nodesArray); // turn array back into dynamic array
 

@@ -1,5 +1,7 @@
 package employees;
 
+
+@SuppressWarnings("unused")
 public final class Wallet {
 
     private final String name;

@@ -45,7 +45,7 @@ public class Scheduler {
         int originalTick = timeline.getCurrentTick().getTickNumber();
 
         // trip to party
-        Node partyLocation = party.getNode();
+        Node partyLocation = (Node) party.getLocation().currentNetLocation();
         Node[] pathToParty = network.findPath((Node) taxi.getLocation().currentNetLocation(), partyLocation);
 
         new PathDeclare(timeline.getCurrentTick(), taxi, partyLocation, pathToParty);

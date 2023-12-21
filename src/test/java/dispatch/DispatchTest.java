@@ -15,7 +15,7 @@ public class DispatchTest {
 
     @Test
     public void getVehicleFromReg() {
-        DynamicArray<Taxi> allVehicles = new DynamicArray<Taxi>();
+        DynamicArray<Taxi> allVehicles = new DynamicArray<>();
 
         Taxi taxi1 = new Taxi(1, "ABC", null);
         Taxi taxi2 = new Taxi(1, "DEF", null);
@@ -192,10 +192,6 @@ public class DispatchTest {
         taxisInRange.append(taxi5.getRegistrationNumber());
         taxisInRange.append(taxi6.getRegistrationNumber());
         taxisInRange.append(taxi7.getRegistrationNumber());
-
-
-        for (int i = 0; i < 7; i++ ){
-        }
 
     }
 
